@@ -101,10 +101,10 @@ if df is not None:
         if st.button("➕ Dodaj obrok u moj dnevnik"):
             st.session_state['dnevnik_obroka'].append({
                 'Namirnica': izbor,
-                'Količina (g)': kolicina,
-                'Kalijum (mg)': ukupno_k,
-                'Fosfor (mg)': ukupno_f,
-                'Natrijum (mg)': ukupno_n
+                'Količina (g)': round(kolicina, 2),
+                'Kalijum (mg)': round(ukupno_k, 2),
+                'Fosfor (mg)': round(ukupno_f, 2),
+                'Natrijum (mg)': round(ukupno_n, 2)
             })
             st.toast(f"Dodato u dnevnik: {izbor} ({kolicina}g)", icon="✅")
 
@@ -130,7 +130,16 @@ if df is not None:
                 boje[prikaz_df.columns.get_loc('Kalijum (mg)')] = 'color: #00ffcc; font-weight: bold;'
             return boje
 
-        st.dataframe(prikaz_df.style.apply(oboji_tabelu, axis=1), use_container_width=True)
+        # Formatiramo prikaz tabele na dve decimale (.format("{:.2f}"))
+        st.dataframe(
+            prikaz_df.style.apply(oboji_tabelu, axis=1).format({
+                'Količina (g)': '{:.2f}',
+                'Kalijum (mg)': '{:.2f}',
+                'Fosfor (mg)': '{:.2f}',
+                'Natrijum (mg)': '{:.2f}'
+            }), 
+            use_container_width=True
+        )
         
         sum_k = prikaz_df['Kalijum (mg)'].sum()
         sum_f = prikaz_df['Fosfor (mg)'].sum()
