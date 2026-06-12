@@ -1,9 +1,12 @@
 import streamlit as st
 import pandas as pd
 
-# Podešavanje izgleda web stranice
-st.set_page_config(page_title="Dnevnik Ishrane", layout="centered")
-st.title("♠️♥️♦️♣️ Dnevnik Ishrane Sa Dnevnim Zbirom")
+# Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
+st.set_page_config(page_title="Dnevnik Ishrane", page_icon="🃏", layout="centered")
+st.title("♠️♥️ Dnevnik Ishrane - Sa Dnevnim Zbirom ♦️♣️")
+
+# Tekst napomene odmah ispod naslova
+st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
 if 'dnevnik_obroka' not in st.session_state:
@@ -24,6 +27,7 @@ def ucitaj_bazu():
 df = ucitaj_bazu()
 
 if df is not None:
+    st.write("") # Prazan prostor radi estetike
     st.subheader("🔍 Korak 1: Izaberite namirnicu")
     pretraga = st.text_input("Unesite naziv namirnice za pretragu (npr. svinjetina, govedina):")
     
@@ -38,7 +42,7 @@ if df is not None:
         izbor = st.selectbox("Izaberite tačnu namirnicu sa liste:", lista_namirnica)
         
         # Filtriranje reda za izabranu namirnicu
-        red = df[df['Namirnica'] == izbor].iloc[0]
+        red = df[df['Namirnica'] == izbor].iloc
         
         def ocisti_broj(vrednost):
             broj = pd.to_numeric(vrednost, errors='coerce')
@@ -101,3 +105,8 @@ if df is not None:
             st.rerun()
     else:
         st.write("Još uvek niste dodali nijednu namirnicu za danas.")
+
+# --- PROFI POTPIS AUTORA NA SAMOM DNUI STRANICE ---
+st.write("")
+st.write("")
+st.caption("Autor programa MAGICOMP & AI Gemini")
