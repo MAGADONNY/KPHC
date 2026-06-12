@@ -36,7 +36,9 @@ if df is not None:
     
     if lista_namirnica:
         izbor = st.selectbox("Izaberite tačnu namirnicu sa liste:", lista_namirnica)
-        red = df[df['Namirnica'] == izbor].iloc
+        
+        # POPRAVKA: Ispravan način izvlačenja reda preko filtriranja, bez .iloc greške
+        red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
             broj = pd.to_numeric(vrednost, errors='coerce')
@@ -77,18 +79,14 @@ if df is not None:
     st.subheader("📋 Vaš današnji dnevnik ishrane")
 
     if st.session_state['dnevnik_obroka']:
-        # Pretvaramo listu iz memorije u tabelu radi lepšeg prikaza
         prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
         
-        # Prikazujemo tabelu unetih obroka korisniku
         st.dataframe(prikaz_df, use_container_width=True)
         
-        # Računanje ukupnih vrednosti
         sum_k = prikaz_df['Kalijum (mg)'].sum()
         sum_f = prikaz_df['Fosfor (mg)'].sum()
         sum_n = prikaz_df['Natrijum (mg)'].sum()
         
-        # Prikaz ukupnog zbira u kolonama
         st.info("### 📊 UKUPAN DNEVNI ZBIR:")
         kol1, kol2, kol3 = st.columns(3)
         with kol1:
@@ -98,9 +96,8 @@ if df is not None:
         with kol3:
             st.metric(label="Ukupno Natrijum", value=f"{sum_n:.2f} mg")
             
-        # Dugme za brisanje dnevnika
         if st.button("🗑️ Isprazni dnevnik"):
             st.session_state['dnevnik_obroka'] = []
             st.rerun()
     else:
-        st.write("Još uvek niste dodali nijednu namirnicu za danas.")
+        st.write(
