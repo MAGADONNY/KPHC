@@ -70,7 +70,7 @@ if df is not None:
         if k_v > 200:
             k_boja = "#ff4b4b" # Crvena
         elif k_v < 100:
-            k_boja = "#00ffcc" # Jarko zelena/tirkizna
+            k_boja = "#00ffcc" # Jarko zelena
         else:
             k_boja = "#ffffff" # Bela
             
@@ -93,9 +93,9 @@ if df is not None:
         kolicina = st.number_input("Unesite ovde tačnu težinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
         faktor = kolicina / 100.0
-        ukupno_k = k_v * faktor
-        ukupno_f = f_v * faktor
-        ukupno_n = n_v * faktor
+        ukupno_k = k_v * factor
+        ukupno_f = f_v * factor
+        ukupno_n = n_v * factor
         
         # Dugme za dodavanje namirnice u dnevni zbir
         if st.button("➕ Dodaj obrok u moj dnevnik"):
@@ -151,8 +151,7 @@ if df is not None:
     else:
         st.write("Dnevnik je prazan. Izaberite namirnicu i dodajte obrok.")
 
-# --- POTPIS AUTORA NA SAMOM DNUI STRANICE ---
+# --- POTPIS AUTORA NA SAMOM DNU STRANICE ---
 st.write("")
 st.write("")
 st.markdown("<p style='font-size: 18px; text-align: center; color: #808495;'>Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>magy@usa.com &nbsp;&nbsp; Tel.+38163310850</p>", unsafe_allow_html=True)
-Use code with caution.
