@@ -3,7 +3,7 @@ import pandas as pd
 
 # Podešavanje izgleda web stranice
 st.set_page_config(page_title="Dnevnik Ishrane", layout="centered")
-st.title("🍏 Dnevnik Ishrane - Sa Dnevnim Zbirom")
+st.title("♠️♥️♦️♣️ Dnevnik Ishrane - Sa Dnevnim Zbirom")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
 if 'dnevnik_obroka' not in st.session_state:
