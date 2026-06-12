@@ -3,7 +3,7 @@ import pandas as pd
 
 # Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
 st.set_page_config(page_title="Dnevnik Ishrane by MAGY", page_icon="🃏", layout="centered")
-st.title("♠️♥️ Dnevnik Ishrane - Sa Dnevnim Zbirom ♦️♣️")
+st.title("♠️♥️ Dnevnik Ishrane ♦️♣️ sa dnevnim zbirom ")
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
