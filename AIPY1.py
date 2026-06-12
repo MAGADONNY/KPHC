@@ -1,74 +1,106 @@
 import streamlit as st
 import pandas as pd
 
-# Podešavanje naslova i izgleda web stranice
+# Podešavanje izgleda web stranice
 st.set_page_config(page_title="Dnevnik Ishrane", layout="centered")
-st.title("🍏 Dnevnik Ishrane - Kalijum i Fosfor")
+st.title("🍏 Dnevnik Ishrane - Sa Dnevnim Zbirom")
 
-# Učitavanje baze iz vašeg Excel fajla koji je u istom folderu na GitHub-u
+# Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
+if 'dnevnik_obroka' not in st.session_state:
+    st.session_state['dnevnik_obroka'] = []
+
+# Učitavanje baze uz preskakanje prvog praznog reda (header=1)
 @st.cache_data
 def ucitaj_bazu():
     try:
-        df = pd.read_excel("KPH-AI.xlsx")
-        
-        # Automatski preimenujemo prve tri kolone bez obzira na ukupan broj kolona
-        nove_kolone = list(df.columns)
-        nove_kolone[0] = 'Namirnica'
-        nove_kolone[1] = 'Kalijum'
-        nove_kolone[2] = 'Fosfor'
-        df.columns = nove_kolone
-        
+        df = pd.read_excel("KPH-AI.xlsx", header=1)
+        df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
+        df = df.dropna(subset=['Namirnica'])
         return df
     except Exception as e:
-        st.error(f"Greška pri učitavanju Excel tabele: {e}")
+        st.error(f"Greška pri čitavanju Excel tabele: {e}")
         return None
 
 df = ucitaj_bazu()
 
 if df is not None:
     st.subheader("🔍 Korak 1: Izaberite namirnicu")
+    pretraga = st.text_input("Unesite naziv namirnice za pretragu (npr. svinjetina, govedina):")
     
-    # Polje za pretragu uživo
-    pretraga = st.text_input("Unesite naziv namirnice za pretragu (npr. hleb, piletina):")
-    
-    # Filtriranje baze na osnovu unetog teksta
     if pretraga:
         filtrirano = df[df['Namirnica'].astype(str).str.contains(pretraga, case=False, na=False)]
     else:
         filtrirano = df
 
-    lista_namirnica = filtrirano['Namirnica'].dropna().tolist()
+    lista_namirnica = filtrirano['Namirnica'].tolist()
     
     if lista_namirnica:
-        # Padajući meni sa pronađenim namirnicama
         izbor = st.selectbox("Izaberite tačnu namirnicu sa liste:", lista_namirnica)
+        red = df[df['Namirnica'] == izbor].iloc
         
-        # Uzimanje vrednosti iz tabele za izabranu stavku (na 100g)
-        red = df[df['Namirnica'] == izbor].iloc[0]
+        def ocisti_broj(vrednost):
+            broj = pd.to_numeric(vrednost, errors='coerce')
+            return 0 if pd.isna(broj) else broj
+
+        k_v = ocisti_broj(red['Kalijum'])
+        f_v = ocisti_broj(red['Fosfor'])
+        n_v = ocisti_broj(red['Natrijum'])
         
-        # Pretvaranje u brojeve radi sigurnosti pri računanju
-        k_vrednost = pd.to_numeric(red['Kalijum'], errors='coerce') if 'Kalijum' in red else 0
-        f_vrednost = pd.to_numeric(red['Fosfor'], errors='coerce') if 'Fosfor' in red else 0
-        
-        st.info(f"Vrednosti na 100g -> Kalijum: {k_vrednost} mg | Fosfor: {f_vrednost} mg")
+        st.info(f"Vrednosti na 100g -> Kalijum: {k_v} mg | Fosfor: {f_v} mg | Natrijum: {n_v} mg")
         
         st.write("---")
-        st.subheader("⚖️ Korak 2: Unesite količinu")
+        st.subheader("⚖️ Korak 2: Unesite količinu i dodajte u dnevnik")
         
-        # Unos gramaže
         kolicina = st.number_input("Unesite količinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
-        # Računanje vrednosti za unetu gramažu
         faktor = kolicina / 100.0
-        ukupno_k = k_vrednost * faktor
-        ukupno_f = f_vrednost * faktor
+        ukupno_k = k_v * faktor
+        ukupno_f = f_v * faktor
+        ukupno_n = n_v * faktor
         
-        # Prikaz konačnih rezultata korisniku u lepim kolonama
-        st.success(f"### 📊 Rezultat za {kolicina}g namirnice **{izbor}**:")
-        kol1, kol2 = st.columns(2)
-        with kol1:
-            st.metric(label="Ukupno Kalijum (mg)", value=f"{ukupno_k:.2f}")
-        with kol2:
-            st.metric(label="Ukupno Fosfor (mg)", value=f"{ukupno_f:.2f}")
+        # Dugme za dodavanje namirnice u dnevni zbir
+        if st.button("➕ Dodaj u dnevni zbir"):
+            st.session_state['dnevnik_obroka'].append({
+                'Namirnica': izbor,
+                'Količina (g)': kolicina,
+                'Kalijum (mg)': ukupno_k,
+                'Fosfor (mg)': ukupno_f,
+                'Natrijum (mg)': ukupno_n
+            })
+            st.toast(f"Dodato: {izbor} ({kolicina}g)", icon="✅")
+
     else:
         st.warning("Nijedna namirnica ne odgovara pretrazi. Pokušajte ponovo.")
+
+    # --- PRIKAZ DNEVNOG ZBIRA ---
+    st.write("---")
+    st.subheader("📋 Vaš današnji dnevnik ishrane")
+
+    if st.session_state['dnevnik_obroka']:
+        # Pretvaramo listu iz memorije u tabelu radi lepšeg prikaza
+        prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
+        
+        # Prikazujemo tabelu unetih obroka korisniku
+        st.dataframe(prikaz_df, use_container_width=True)
+        
+        # Računanje ukupnih vrednosti
+        sum_k = prikaz_df['Kalijum (mg)'].sum()
+        sum_f = prikaz_df['Fosfor (mg)'].sum()
+        sum_n = prikaz_df['Natrijum (mg)'].sum()
+        
+        # Prikaz ukupnog zbira u kolonama
+        st.info("### 📊 UKUPAN DNEVNI ZBIR:")
+        kol1, kol2, kol3 = st.columns(3)
+        with kol1:
+            st.metric(label="Ukupno Kalijum", value=f"{sum_k:.2f} mg")
+        with kol2:
+            st.metric(label="Ukupno Fosfor", value=f"{sum_f:.2f} mg")
+        with kol3:
+            st.metric(label="Ukupno Natrijum", value=f"{sum_n:.2f} mg")
+            
+        # Dugme za brisanje dnevnika
+        if st.button("🗑️ Isprazni dnevnik"):
+            st.session_state['dnevnik_obroka'] = []
+            st.rerun()
+    else:
+        st.write("Još uvek niste dodali nijednu namirnicu za danas.")
