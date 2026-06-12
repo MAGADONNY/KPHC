@@ -93,9 +93,9 @@ if df is not None:
         kolicina = st.number_input("Unesite ovde tačnu težinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
         faktor = kolicina / 100.0
-        ukupno_k = k_v * factor
-        ukupno_f = f_v * factor
-        ukupno_n = n_v * factor
+        ukupno_k = k_v * faktor
+        ukupno_f = f_v * faktor
+        ukupno_n = n_v * faktor
         
         # Dugme za dodavanje namirnice u dnevni zbir
         if st.button("➕ Dodaj obrok u moj dnevnik"):
