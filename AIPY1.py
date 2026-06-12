@@ -109,4 +109,4 @@ if df is not None:
 # --- POTPIS AUTORA NA SAMOM DNUI STRANICE ---
 st.write("")
 st.write("")
-st.caption("Autor programa MAGICOMP & AI Gemini")
+st.caption("Autor programa ♦️♣️♠️♥️MAGICOMP & AI Gemini")
