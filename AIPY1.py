@@ -22,7 +22,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("♠️♥️ Dnevnik Ishrane - Sa Dnevnim Zbirom ♦️♣️")
+st.title("♠️♥️ Dnevnik Ishrane ♦️♣️ sa dnevnim zbirom ")
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
@@ -128,4 +128,4 @@ if df is not None:
 # --- POTPIS AUTORA NA SAMOM DNUI STRANICE ---
 st.write("")
 st.write("")
-st.caption("Autor programa MAGICOMP & AI Gemini")
+st.caption("Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini  magy@usa.com  Tel.+38163310850")
