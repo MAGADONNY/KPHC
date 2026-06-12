@@ -1,9 +1,28 @@
 import streamlit as st
 import pandas as pd
 
-# Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
-st.set_page_config(page_title="Dnevnik Ishrane by MAGY", page_icon="🃏", layout="centered")
-st.title("♠️♥️ Dnevnik Ishrane ♦️♣️ sa dnevnim zbirom ")
+# Podešavanje izgleda web stranice i forsiranje tamnog režima (theme="dark")
+st.set_page_config(
+    page_title="Dnevnik Ishrane", 
+    page_icon="🃏", 
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
+
+# Forsiranje crne teme preko konfiguracije
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #0e1117;
+        color: #ffffff;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.title("♠️♥️ Dnevnik Ishrane - Sa Dnevnim Zbirom ♦️♣️")
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
@@ -41,7 +60,7 @@ if df is not None:
     if lista_namirnica:
         izbor = st.selectbox("Izaberite tačnu namirnicu sa liste:", lista_namirnica)
         
-        # TAČNA POPRAVKA: Dodat je [0] na kraj da se uzme tačan red
+        # Izvlačenje reda za izabranu namirnicu
         red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -109,4 +128,4 @@ if df is not None:
 # --- POTPIS AUTORA NA SAMOM DNUI STRANICE ---
 st.write("")
 st.write("")
-st.caption("Autor ♦️♣️♠️♥️MAGICOMP & AI Gemini magy@usa.com +38163310850")
+st.caption("Autor programa MAGICOMP & AI Gemini")
