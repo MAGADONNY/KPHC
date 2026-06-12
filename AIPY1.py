@@ -41,8 +41,8 @@ if df is not None:
     if lista_namirnica:
         izbor = st.selectbox("Izaberite tačnu namirnicu sa liste:", lista_namirnica)
         
-        # Filtriranje reda za izabranu namirnicu
-        red = df[df['Namirnica'] == izbor].iloc
+        # TAČNA POPRAVKA: Dodat je [0] na kraj da se uzme tačan red
+        red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
             broj = pd.to_numeric(vrednost, errors='coerce')
@@ -106,7 +106,7 @@ if df is not None:
     else:
         st.write("Još uvek niste dodali nijednu namirnicu za danas.")
 
-# --- PROFI POTPIS AUTORA NA SAMOM DNUI STRANICE ---
+# --- POTPIS AUTORA NA SAMOM DNUI STRANICE ---
 st.write("")
 st.write("")
 st.caption("Autor programa MAGICOMP & AI Gemini")
