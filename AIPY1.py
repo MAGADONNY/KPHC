@@ -37,7 +37,7 @@ if df is not None:
     if lista_namirnica:
         izbor = st.selectbox("Izaberite tačnu namirnicu sa liste:", lista_namirnica)
         
-        # POPRAVKA: Ispravan način izvlačenja reda preko filtriranja, bez .iloc greške
+        # Filtriranje reda za izabranu namirnicu
         red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -100,4 +100,4 @@ if df is not None:
             st.session_state['dnevnik_obroka'] = []
             st.rerun()
     else:
-        st.write(
+        st.write("Još uvek niste dodali nijednu namirnicu za danas.")
