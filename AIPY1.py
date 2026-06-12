@@ -21,6 +21,7 @@ st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevni
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
+st.write("⚠️ *Preporuceni dnevni unos *")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
 if 'dnevnik_obroka' not in st.session_state:
