@@ -1,13 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-# Podešavanje izgleda web stranice i forsiranje tamnog režima (theme="dark")
-st.set_page_config(
-    page_title="Dnevnik Ishrane", 
-    page_icon="🃏", 
-    layout="centered",
-    initial_sidebar_state="collapsed"
-)
+# Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
+st.set_page_config(page_title="Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
 # Forsiranje crne teme preko konfiguracije
 st.markdown(
@@ -22,7 +17,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown("<h1 style='font-size: 38px; text-align: center;'>♠️♥️ DNEVNIK ISHRANE ♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>sa zbirom dnevnog unosa</span> </h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️ Dnevnik Ishrane <br><span style='font-size: 22px; font-weight: normal;'>Sa Dnevnim Zbirom</span> ♦️♣️</h1>", unsafe_allow_html=True)
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
@@ -47,8 +42,8 @@ df = ucitaj_bazu()
 
 if df is not None:
     st.write("") # Prazan prostor radi estetike
-    st.subheader("🔍 Korak 1: Izaberite namirnicu")
-    pretraga = st.text_input("Unesite naziv namirnice za pretragu (npr. svinjetina, govedina):")
+    st.subheader("🔍 Korak 1: Izaberite namirnicu iz baze podataka")
+    pretraga = st.text_input("Unesite naziv namirnice za pretragu:")
     
     if pretraga:
         filtrirano = df[df['Namirnica'].astype(str).str.contains(pretraga, case=False, na=False)]
@@ -58,9 +53,9 @@ if df is not None:
     lista_namirnica = filtrirano['Namirnica'].tolist()
     
     if lista_namirnica:
-        izbor = st.selectbox("Izaberite tačnu namirnicu sa liste:", lista_namirnica)
+        izbor = st.selectbox("Klikni i izaberi namirnicu sa liste:", lista_namirnica)
         
-        # Izvlačenje reda za izabranu namirnicu
+        # Filtriranje reda za izabranu namirnicu
         red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -71,12 +66,31 @@ if df is not None:
         f_v = ocisti_broj(red['Fosfor'])
         n_v = ocisti_broj(red['Natrijum'])
         
-        st.info(f"Vrednosti na 100g -> Kalijum: {k_v} mg | Fosfor: {f_v} mg | Natrijum: {n_v} mg")
+        # LOGIKA ZA BOJU KALIJUMA (Na 100g)
+        if k_v > 200:
+            k_boja = "#ff4b4b" # Crvena
+        elif k_v < 100:
+            k_boja = "#00ffcc" # Jarko zelena/tirkizna
+        else:
+            k_boja = "#ffffff" # Bela
+            
+        # Prikaz sa obojenim Kalijumom u lepom okviru
+        st.markdown(
+            f"""
+            <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja};'>
+                Vrednosti na 100g -> 
+                <span style='color: {k_boja}; font-weight: bold; font-size: 17px;'>Kalijum: {k_v} mg</span> | 
+                Fosfor: {f_v} mg | 
+                Natrijum: {n_v} mg
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
         
         st.write("---")
-        st.subheader("⚖️ Korak 2: Unesite količinu i dodajte u dnevnik")
+        st.subheader("⚖️ Korak 2: Izmerite gramažu namirnice na vagici")
         
-        kolicina = st.number_input("Unesite količinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
+        kolicina = st.number_input("Unesite ovde tačnu težinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
         faktor = kolicina / 100.0
         ukupno_k = k_v * faktor
@@ -84,7 +98,7 @@ if df is not None:
         ukupno_n = n_v * faktor
         
         # Dugme za dodavanje namirnice u dnevni zbir
-        if st.button("➕ Dodaj u dnevni zbir"):
+        if st.button("➕ Dodaj obrok u moj dnevnik"):
             st.session_state['dnevnik_obroka'].append({
                 'Namirnica': izbor,
                 'Količina (g)': kolicina,
@@ -92,25 +106,37 @@ if df is not None:
                 'Fosfor (mg)': ukupno_f,
                 'Natrijum (mg)': ukupno_n
             })
-            st.toast(f"Dodato: {izbor} ({kolicina}g)", icon="✅")
+            st.toast(f"Dodato u dnevnik: {izbor} ({kolicina}g)", icon="✅")
 
     else:
         st.warning("Nijedna namirnica ne odgovara pretrazi. Pokušajte ponovo.")
 
     # --- PRIKAZ DNEVNOG ZBIRA ---
     st.write("---")
-    st.subheader("📋 Vaš današnji dnevnik ishrane")
+    st.subheader("📋 Vaš današnji dnevnik ishrane i uneti obroci")
 
     if st.session_state['dnevnik_obroka']:
         prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
         
-        st.dataframe(prikaz_df, use_container_width=True)
+        # Funkcija koja boji samo cifru Kalijuma u tabeli
+        def oboji_tabelu(red_tabele):
+            boje = [''] * len(red_tabele)
+            val = red_tabele['Kalijum (mg)']
+            k_na_100g = (val / red_tabele['Količina (g)']) * 100
+            
+            if k_na_100g > 200:
+                boje[prikaz_df.columns.get_loc('Kalijum (mg)')] = 'color: #ff4b4b; font-weight: bold;'
+            elif k_na_100g < 100:
+                boje[prikaz_df.columns.get_loc('Kalijum (mg)')] = 'color: #00ffcc; font-weight: bold;'
+            return boje
+
+        st.dataframe(prikaz_df.style.apply(oboji_tabelu, axis=1), use_container_width=True)
         
         sum_k = prikaz_df['Kalijum (mg)'].sum()
         sum_f = prikaz_df['Fosfor (mg)'].sum()
         sum_n = prikaz_df['Natrijum (mg)'].sum()
         
-        st.info("### 📊 UKUPAN DNEVNI ZBIR:")
+        st.info("### 📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:")
         kol1, kol2, kol3 = st.columns(3)
         with kol1:
             st.metric(label="Ukupno Kalijum", value=f"{sum_k:.2f} mg")
@@ -119,13 +145,14 @@ if df is not None:
         with kol3:
             st.metric(label="Ukupno Natrijum", value=f"{sum_n:.2f} mg")
             
-        if st.button("🗑️ Isprazni dnevnik"):
+        if st.button("🗑️ Isprazni kompletan dnevnik"):
             st.session_state['dnevnik_obroka'] = []
             st.rerun()
     else:
-        st.write("Još uvek niste dodali nijednu namirnicu za danas.")
+        st.write("Dnevnik je prazan. Izaberite namirnicu i dodajte obrok.")
 
 # --- POTPIS AUTORA NA SAMOM DNUI STRANICE ---
 st.write("")
 st.write("")
 st.markdown("<p style='font-size: 18px; text-align: center; color: #808495;'>Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>magy@usa.com &nbsp;&nbsp; Tel.+38163310850</p>", unsafe_allow_html=True)
+Use code with caution.
