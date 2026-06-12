@@ -21,8 +21,7 @@ st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevni
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
-st.write("ⓘ *Preporuceni dnevni unos Kalijuma max 1200-1500mg *")
-st.write("ⓘ *Preporuceni dnevni unos Fosfora max 800-1000mg *")
+st.write("ⓘ *Preporuceni dnevni unos: Kalijum max 1200-1500mg | Fosfor max 800-1000mg *")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
 if 'dnevnik_obroka' not in st.session_state:
