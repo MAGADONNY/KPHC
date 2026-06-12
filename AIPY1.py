@@ -128,4 +128,5 @@ if df is not None:
 # --- POTPIS AUTORA NA SAMOM DNUI STRANICE ---
 st.write("")
 st.write("")
-st.caption("Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini  magy@usa.com  Tel.+38163310850")
+st.markdown("<p style='font-size: 18px; text-align: center; color: #808495;'>Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>magy@usa.com &nbsp;&nbsp; Tel.+38163310850</p>", unsafe_allow_html=True)
+Use code with caution.
