@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
-st.set_page_config(page_title="Dnevnik Ishrane", page_icon="🃏", layout="centered")
+st.set_page_config(page_title="Dnevnik Ishrane by MAGY", page_icon="🃏", layout="centered")
 st.title("♠️♥️ Dnevnik Ishrane - Sa Dnevnim Zbirom ♦️♣️")
 
 # Tekst napomene odmah ispod naslova
