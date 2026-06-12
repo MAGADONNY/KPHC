@@ -1,63 +1,74 @@
 import streamlit as st
 import pandas as pd
 
-# Podešavanje naslova na web stranici
+# Podešavanje naslova i izgleda web stranice
 st.set_page_config(page_title="Dnevnik Ishrane", layout="centered")
 st.title("🍏 Dnevnik Ishrane - Kalijum i Fosfor")
 
-# Učitavanje baze iz istog foldera na GitHub-u
+# Učitavanje baze iz vašeg Excel fajla koji je u istom folderu na GitHub-u
 @st.cache_data
 def ucitaj_bazu():
     try:
-        # Čitanje Excel tabele
         df = pd.read_excel("KPH-AI.xlsx")
-        # Postavljanje naziva kolona (promenite ako se u vašem Excelu zovu drugačije)
-        df.columns = ['Namirnica', 'Kalijum', 'Fosfor']
+        
+        # Automatski preimenujemo prve tri kolone bez obzira na ukupan broj kolona
+        nove_kolone = list(df.columns)
+        nove_kolone[0] = 'Namirnica'
+        nove_kolone[1] = 'Kalijum'
+        nove_kolone[2] = 'Fosfor'
+        df.columns = nove_kolone
+        
         return df
     except Exception as e:
-        st.error(f"Greška pri učitavanju baze podaci: {e}")
+        st.error(f"Greška pri učitavanju Excel tabele: {e}")
         return None
 
 df = ucitaj_bazu()
 
 if df is not None:
-    st.subheader("🔍 Pretraga i unos")
+    st.subheader("🔍 Korak 1: Izaberite namirnicu")
     
-    # Polje za unos teksta za pretragu
-    pretraga = st.text_input("Unesite naziv namirnice (npr. hleb, piletina):")
+    # Polje za pretragu uživo
+    pretraga = st.text_input("Unesite naziv namirnice za pretragu (npr. hleb, piletina):")
     
-    # Filtriranje baze
+    # Filtriranje baze na osnovu unetog teksta
     if pretraga:
-        filtrirano = df[df['Namirnica'].str.contains(pretraga, case=False, na=False)]
+        filtrirano = df[df['Namirnica'].astype(str).str.contains(pretraga, case=False, na=False)]
     else:
         filtrirano = df
 
-    lista_namirnica = filtrirano['Namirnica'].tolist()
+    lista_namirnica = filtrirano['Namirnica'].dropna().tolist()
     
     if lista_namirnica:
         # Padajući meni sa pronađenim namirnicama
-        izbor = st.selectbox("Izaberite tačnu namirnicu:", lista_namirnica)
+        izbor = st.selectbox("Izaberite tačnu namirnicu sa liste:", lista_namirnica)
         
-        # Uzimanje vrednosti za izabranu stavku
+        # Uzimanje vrednosti iz tabele za izabranu stavku (na 100g)
         red = df[df['Namirnica'] == izbor].iloc[0]
-        st.text(f"Vrednosti na 100g -> Kalijum: {red['Kalijum']}mg | Fosfor: {red['Fosfor']}mg")
+        
+        # Pretvaranje u brojeve radi sigurnosti pri računanju
+        k_vrednost = pd.to_numeric(red['Kalijum'], errors='coerce') if 'Kalijum' in red else 0
+        f_vrednost = pd.to_numeric(red['Fosfor'], errors='coerce') if 'Fosfor' in red else 0
+        
+        st.info(f"Vrednosti na 100g -> Kalijum: {k_vrednost} mg | Fosfor: {f_vrednost} mg")
         
         st.write("---")
+        st.subheader("⚖️ Korak 2: Unesite količinu")
         
         # Unos gramaže
         kolicina = st.number_input("Unesite količinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
         # Računanje vrednosti za unetu gramažu
         faktor = kolicina / 100.0
-        ukupno_k = red['Kalijum'] * faktor
-        ukupno_f = red['Fosfor'] * faktor
+        ukupno_k = k_vrednost * faktor
+        ukupno_f = f_vrednost * faktor
         
-        # Prikaz rezultata korisniku
-        st.success(f"### 📊 Rezultat za {kolicina}g:")
+        # Prikaz konačnih rezultata korisniku u lepim kolonama
+        st.success(f"### 📊 Rezultat za {kolicina}g namirnice **{izbor}**:")
         kol1, kol2 = st.columns(2)
         with kol1:
-            st.metric(label="Ukupno Kalijum", value=f"{ukupno_k:.2f} mg")
+            st.metric(label="Ukupno Kalijum (mg)", value=f"{ukupno_k:.2f}")
         with kol2:
-            st.metric(label="Ukupno Fosfor", value=f"{ukupno_f:.2f} mg")
+            st.metric(label="Ukupno Fosfor (mg)", value=f"{ukupno_f:.2f}")
     else:
-        st.warning("Nema pronađenih namirnica sa tim nazivom.")
+        st.warning("Nijedna namirnica ne odgovara pretrazi. Pokušajte ponovo.")
