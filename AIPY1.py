@@ -22,7 +22,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("♠️♥️ Dnevnik Ishrane ♦️♣️ sa dnevnim zbirom ")
+st.markdown("<h1 style='font-size: 38px; text-align: center;'>♠️♥️ Tvoj Naslov Prvi Red <br> Drugi Red ♦️♣️</h1>", unsafe_allow_html=True)
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
