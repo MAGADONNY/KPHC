@@ -22,7 +22,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown("<h1 style='font-size: 38px; text-align: center;'>♠️♥️ DNEVNIK ISHRANE <br> sa zbirom ukupno unetih minerala ♦️♣️</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='font-size: 38px; text-align: center;'>♠️♥️ DNEVNIK ISHRANE ♦️♣️<br> sa zbirom ukupno unetih minerala </h1>", unsafe_allow_html=True)
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
