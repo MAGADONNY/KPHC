@@ -5,7 +5,8 @@ import pandas as pd
 st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", layout="centered")
 
 # Forsiranje crne teme preko konfiguracije
-"""
+st.markdown(
+    """
     <style>
     .stApp {
         background-color: #0e1117;
@@ -15,14 +16,18 @@ st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", la
     .veliko-dugme button {
         font-size: 22px !important;
         padding: 15px 30px !important;
-        color: #b0b3b8 !important; /* Svetlo siva boja teksta */
+        color: #b0b3b8 !important;
         border: 2px solid #b0b3b8 !important;
-        width: 100% !important; /* Širina prilagođena telefonu */
+        width: 100% !important;
     }
     /* Popravka za nevidljivi tekst u polju unosa količine kada je kursor unutra */
     div[data-baseweb="input"] input:focus {
-        color: #ffffff !important; /* Forsira beli tekst pri kucanju */
+        color: #ffffff !important;
     }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
     </style>
     """
     """,
