@@ -150,7 +150,7 @@ if df is not None:
         
         st.markdown(f"""
 <div style='font-size: 20px; font-weight: bold; line-height: 1.6;'>
-<span style='color: #279FF5;'>📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:</span><br><br>
+<span style='color: #279FF5; border: 2px solid #ffffff; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-bottom: 10px;'>📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:</span><br><br>
 <span style='color: {boja_kalijuma};'>Ukupno Kalijum: {sum_k:.2f} mg</span><br>
 <span style='color: #279FF5;'>Ukupno Fosfor: {sum_f:.2f} mg</span><br>
 <span style='color: #279FF5;'>Ukupno Natrijum: {sum_n:.2f} mg</span>
