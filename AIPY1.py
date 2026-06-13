@@ -164,5 +164,4 @@ if df is not None:
 # --- POTPIS AUTORA NA SAMOM DNU STRANICE ---
 st.write("")
 st.write("")
-st.markdown("<p style='font-size: 18px; text-align: center; color: #808495;'>Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>magy@usa.com &nbsp;&nbsp; Tel.+38163310850 <br>
-Powered by PYTHON </p>", unsafe_allow_html=True)
+st.markdown("<p style='font-size: 18px; text-align: center; color: #808495;'>Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>magy@usa.com &nbsp;&nbsp; Tel.+38163310850 Powered by PYTHON </p>", unsafe_allow_html=True)
