@@ -125,7 +125,7 @@ if df is not None:
             val = red_tabele['Kalijum (mg)']
             k_na_100g = (val / red_tabele['Količina (g)']) * 100
             
-            if k_na_100g > 200:
+            if k_na_100g > 1200:
                 boje[prikaz_df.columns.get_loc('Kalijum (mg)')] = 'color: #ff4b4b; font-weight: bold;'
             elif k_na_100g < 100:
                 boje[prikaz_df.columns.get_loc('Kalijum (mg)')] = 'color: #00ffcc; font-weight: bold;'
