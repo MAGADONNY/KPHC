@@ -20,14 +20,10 @@ if 'dnevnik_obroka' not in st.session_state:
 
 @st.cache_data(ttl=600)
 def ucitaj_bazu():
-        try:
-        df = pd.read_excel("KPH-AI.xlsx", header=1)
-        df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
-        df = df.dropna(subset=['Namirnica'])
-        return df
-    except Exception as e:
-        st.error(f"Greška pri čitavanju Excel tabele: {e}")
-        return None
+    df = pd.read_excel("KPH-AI.xlsx", header=1)
+    df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
+    df = df.dropna(subset=['Namirnica'])
+    return df
 
 df = ucitaj_bazu()
 
