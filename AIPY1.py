@@ -146,6 +146,8 @@ if df is not None:
         sum_f = prikaz_df['Fosfor (mg)'].sum()
         sum_n = prikaz_df['Natrijum (mg)'].sum()
         
+        boja_kalijuma = "#ff4b4b" if sum_k > 1199 else "#279FF5"
+        
         st.markdown(f"""
 <div style='font-size: 20px; font-weight: bold; line-height: 1.6;'>
 <span style='color: #279FF5;'>📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:</span><br><br>
