@@ -17,9 +17,11 @@ if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
 # Učitavanje baze uz preskakanje prvog praznog reda (header=1)
-@st.cache_data
+
+@st.cache_data(ttl=600)
 def ucitaj_bazu():
-    try:
+
+try:
         df = pd.read_excel("KPH-AI.xlsx", header=1)
         df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
         df = df.dropna(subset=['Namirnica'])
