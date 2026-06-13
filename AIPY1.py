@@ -192,7 +192,7 @@ st.write("")
 st.markdown(f"""
 <div style='text-align: center; margin-bottom: 15px;'>
     <p style='color: #808495; font-size: 16px; margin-bottom: 5px;'>
-        🔢 Ukupno poseta aplikaciji: <span style='color: #279FF5; font-weight: bold;'>{trenutni_broj}</span>
+         Ukupno poseta aplikaciji: <span style='color: #279FF5; font-weight: bold;'>{trenutni_broj}</span>
     </p>
 </div>
 """, unsafe_allow_html=True)
