@@ -20,8 +20,7 @@ if 'dnevnik_obroka' not in st.session_state:
 
 @st.cache_data(ttl=600)
 def ucitaj_bazu():
-
-try:
+        try:
         df = pd.read_excel("KPH-AI.xlsx", header=1)
         df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
         df = df.dropna(subset=['Namirnica'])
