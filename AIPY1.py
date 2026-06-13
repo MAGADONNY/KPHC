@@ -147,13 +147,13 @@ if df is not None:
         sum_n = prikaz_df['Natrijum (mg)'].sum()
         
         st.info("### 📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:")
-        kol1, kol2, kol3 = st.columns(3)
-        with kol1:
-            st.metric(label="Ukupno Kalijum", value=f"{sum_k:.2f} mg")
-        with kol2:
-            st.metric(label="Ukupno Fosfor", value=f"{sum_f:.2f} mg")
-        with kol3:
-            st.metric(label="Ukupno Natrijum", value=f"{sum_n:.2f} mg")
+        st.markdown(f"""
+<div style='color: #FFD700; font-size: 20px; font-weight: bold; line-height: 1.6;'>
+Ukupno Kalijum: {sum_k:.2f} mg<br>
+Ukupno Fosfor: {sum_f:.2f} mg<br>
+Ukupno Natrijum: {sum_n:.2f} mg
+</div>
+""", unsafe_allow_html=True)
             
         if st.button("🗑️ Isprazni kompletan dnevnik"):
             st.session_state['dnevnik_obroka'] = []
