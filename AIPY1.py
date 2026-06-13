@@ -148,7 +148,7 @@ if df is not None:
         
         st.info("### 📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:")
         st.markdown(f"""
-<div style='color: #FFD700; font-size: 20px; font-weight: bold; line-height: 1.6;'>
+<div style='color: #00FFFF; font-size: 20px; font-weight: bold; line-height: 1.6;'>
 Ukupno Kalijum: {sum_k:.2f} mg<br>
 Ukupno Fosfor: {sum_f:.2f} mg<br>
 Ukupno Natrijum: {sum_n:.2f} mg
