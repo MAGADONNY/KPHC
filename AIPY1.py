@@ -4,7 +4,8 @@ import pandas as pd
 # Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
 st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", layout="centered")
 
-st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} input,  input:focus, div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; background-color:transparent !important;}</style>", unsafe_allow_html=True)
+st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;}</style>", unsafe_allow_html=True)
+
 
 st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>sa zbirom dnevnog unosa minerala</span> </h1>", unsafe_allow_html=True)
 
