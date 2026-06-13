@@ -149,11 +149,13 @@ if df is not None:
         boja_kalijuma = "#ff4b4b" if sum_k > 1199 else "#279FF5"
         
         st.markdown(f"""
-<div style='font-size: 20px; font-weight: bold; line-height: 1.6;'>
-<span style='color: #279FF5; border: 2px solid #ffffff; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-bottom: 10px;'>📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:</span><br><br>
-<span style='color: {boja_kalijuma};'>Ukupno Kalijum: {sum_k:.2f} mg</span><br>
-<span style='color: #279FF5;'>Ukupno Fosfor: {sum_f:.2f} mg</span><br>
-<span style='color: #279FF5;'>Ukupno Natrijum: {sum_n:.2f} mg</span>
+<div style='font-size: 20px; font-weight: bold; line-height: 1.6; width: 100%;'>
+    <div style='border: 2px solid #ffffff; padding: 10px; border-radius: 5px; color: #279FF5; margin-bottom: 20px; width: 100%; box-sizing: border-box;'>
+        📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:
+    </div>
+    <span style='color: {boja_kalijuma};'>Ukupno Kalijum: {sum_k:.2f} mg</span><br>
+    <span style='color: #279FF5;'>Ukupno Fosfor: {sum_f:.2f} mg</span><br>
+    <span style='color: #279FF5;'>Ukupno Natrijum: {sum_n:.2f} mg</span>
 </div>
 """, unsafe_allow_html=True)
             
