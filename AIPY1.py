@@ -5,14 +5,26 @@ import pandas as pd
 st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", layout="centered")
 
 # Forsiranje crne teme preko konfiguracije
-st.markdown(
-    """
+"""
     <style>
     .stApp {
         background-color: #0e1117;
         color: #ffffff;
     }
+    /* Povećavanje dugmeta, fonta i promena boje u sivu */
+    .veliko-dugme button {
+        font-size: 22px !important;
+        padding: 15px 30px !important;
+        color: #b0b3b8 !important; /* Svetlo siva boja teksta */
+        border: 2px solid #b0b3b8 !important;
+        width: 100% !important; /* Širina prilagođena telefonu */
+    }
+    /* Popravka za nevidljivi tekst u polju unosa količine kada je kursor unutra */
+    div[data-baseweb="input"] input:focus {
+        color: #ffffff !important; /* Forsira beli tekst pri kucanju */
+    }
     </style>
+    """
     """,
     unsafe_allow_html=True
 )
@@ -99,7 +111,11 @@ if df is not None:
         ukupno_n = n_v * faktor
         
         # Dugme za dodavanje namirnice u dnevni zbir
-        if st.button("➕ Dodaj obrok u moj dnevnik"):
+        st.markdown("<div class='veliko-dugme'>", unsafe_allow_html=True)
+        izvrseno = st.button("➕ Dodaj obrok u moj dnevnik")
+        st.markdown("</div>", unsafe_allow_html=True)
+        
+        if izvrseno:
             st.session_state['dnevnik_obroka'].append({
                 'Namirnica': izbor,
                 'Količina (g)': round(kolicina, 2),
