@@ -5,7 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", layout="centered")
 
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;}div.stButton>button{font-size:22px!important;font-weight:bold!important;padding:15px 30px!important;color:#b0b3b8!important;border:2px solid #b0b3b8!important;width:100%!important;}div[data-baseweb='input'] input{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;}div[data-baseweb='input'] input:focus{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;}</style>", unsafe_allow_html=True)
-Use code with caution.
+
 
 st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>sa zbirom dnevnog unosa minerala</span> </h1>", unsafe_allow_html=True)
 
