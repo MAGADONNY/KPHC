@@ -158,9 +158,18 @@ if df is not None:
     else:
         st.write("Dnevnik je prazan. Izaberite namirnicu i dodajte obrok.")
 
-# --- POTPIS AUTORA NA SAMOM DNU STRANICE ---
+# --- POTPIS AUTORA I BROJAČ NA SAMOM DNU STRANICE ---
 st.write("")
 st.write("")
+
+# HTML kod za automatski brojač posetilaca sa početkom od 3002
+st.markdown("""
+<div style='text-align: center; margin-bottom: 15px;'>
+    <p style='color: #808495; font-size: 14px; margin-bottom: 5px;'>🔢 Ukupno poseta aplikaciji:</p>
+    <img src="https://hitwebcounter.com" title="Counter" Alt="Visit Counter" border="0" />
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown("""
 <p style='font-size: 18px; text-align: center; color: #808495;'>
 Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>
