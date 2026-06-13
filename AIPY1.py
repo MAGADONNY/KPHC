@@ -158,7 +158,7 @@ if df is not None:
     else:
         st.write("Dnevnik je prazan. Izaberite namirnicu i dodajte obrok.")
 
-        if st.button("🗑️ Isprazni kompletan dnevnik"):
+if st.button("🗑️ Isprazni kompletan dnevnik"):
             st.session_state['dnevnik_obroka'] = []
             st.rerun()
     else:
