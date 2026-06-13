@@ -162,11 +162,11 @@ if df is not None:
 st.write("")
 st.write("")
 
-# HTML kod za automatski brojač posetilaca sa početkom od 3002
+# Novi, pouzdani brojač posetilaca sa početkom od 3002
 st.markdown("""
 <div style='text-align: center; margin-bottom: 15px;'>
-    <p style='color: #808495; font-size: 14px; margin-bottom: 5px;'>🔢 Ukupno poseta aplikaciji:</p>
-    <img src="https://hitwebcounter.com" title="Counter" Alt="Visit Counter" border="0" />
+    <p style='color: #808495; font-size: 16px; margin-bottom: 5px;'>🔢 Ukupno poseta aplikaciji:</p>
+    <iframe src="https://as93.net" style="border:none; width:120px; height:30px; overflow:hidden;" scrolling="no"></iframe>
 </div>
 """, unsafe_allow_html=True)
 
