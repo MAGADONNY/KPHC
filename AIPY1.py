@@ -148,13 +148,13 @@ if df is not None:
         
         st.info("### 📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:")
         
-        boja_kalijuma = "#ff4b4b" if sum_k > 1199 else "#00FFFF"
+        boja_kalijuma = "#ff4b4b" if sum_k > 1199 else "#279FF5"
         
         st.markdown(f"""
 <div style='font-size: 20px; font-weight: bold; line-height: 1.6;'>
 <span style='color: {boja_kalijuma};'>Ukupno Kalijum: {sum_k:.2f} mg</span><br>
-<span style='color: #00FFFF;'>Ukupno Fosfor: {sum_f:.2f} mg</span><br>
-<span style='color: #00FFFF;'>Ukupno Natrijum: {sum_n:.2f} mg</span>
+<span style='color: #279FF5;'>Ukupno Fosfor: {sum_f:.2f} mg</span><br>
+<span style='color: #279FF5;'>Ukupno Natrijum: {sum_n:.2f} mg</span>
 </div>
 """, unsafe_allow_html=True)
             
