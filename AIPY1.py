@@ -158,15 +158,36 @@ if df is not None:
     else:
         st.write("Dnevnik je prazan. Izaberite namirnicu i dodajte obrok.")
 
-# --- POTPIS AUTORA I BROJAČ NA SAMOM DNU STRANICE ---
+# --- LOGIKA ZA INTERNI BROJAČ POSLOVA I POTPIS ---
+import os
+
+ime_fajla = "brojac.txt"
+pocetni_broj = 3002
+
+# Ako fajl ne postoji, kreiraj ga sa početnim brojem
+if not os.path.exists(ime_fajla):
+    with open(ime_fajla, "w") as f:
+        f.write(str(pocetni_broj))
+    trenutni_broj = pocetni_broj
+else:
+    # Pročitaj trenutni broj, uvećaj ga za 1 i sačuvaj nazad
+    with open(ime_fajla, "r") as f:
+        try:
+            trenutni_broj = int(f.read().strip()) + 1
+        except:
+            trenutni_broj = pocetni_broj
+    with open(ime_fajla, "w") as f:
+        f.write(str(trenutni_broj))
+
 st.write("")
 st.write("")
 
-# Novi, pouzdani brojač posetilaca sa početkom od 3002
-st.markdown("""
+# Prikaz brojača kao običan, čist HTML tekst koji niko ne može da blokira
+st.markdown(f"""
 <div style='text-align: center; margin-bottom: 15px;'>
-    <p style='color: #808495; font-size: 16px; margin-bottom: 5px;'>🔢 Ukupno poseta aplikaciji:</p>
-    <iframe src="https://as93.net" style="border:none; width:120px; height:30px; overflow:hidden;" scrolling="no"></iframe>
+    <p style='color: #808495; font-size: 16px; margin-bottom: 5px;'>
+        🔢 Ukupno poseta aplikaciji: <span style='color: #279FF5; font-weight: bold;'>{trenutni_broj}</span>
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -174,6 +195,9 @@ st.markdown("""
 <p style='font-size: 18px; text-align: center; color: #808495;'>
 Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>
 magy@usa.com &nbsp;&nbsp; Tel.+38163310850<br>
+Powered by PYTHON
+</p>
+""", unsafe_allow_html=True)r>
 Powered by PYTHON
 </p>
 """, unsafe_allow_html=True)
