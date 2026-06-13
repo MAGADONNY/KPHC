@@ -155,10 +155,6 @@ if df is not None:
         if st.button("🗑️ Isprazni kompletan dnevnik"):
             st.session_state['dnevnik_obroka'] = []
             st.rerun()
-    else:
-            else:
-        st.write("Dnevnik je prazan. Izaberite namirnicu i dodajte obrok.")
-
 # --- LOGIKA ZA INTERNI BROJAČ POSETA ---
 import os
 
@@ -209,3 +205,5 @@ magy@usa.com &nbsp;&nbsp; Tel.+38163310850<br>
 Powered by PYTHON
 </p>
 """, unsafe_allow_html=True)
+
+            
