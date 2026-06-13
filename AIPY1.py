@@ -158,31 +158,46 @@ if df is not None:
     else:
         st.write("Dnevnik je prazan. Izaberite namirnicu i dodajte obrok.")
 
-# --- LOGIKA ZA INTERNI BROJAČ POSLOVA I POTPIS ---
+        if st.button("🗑️ Isprazni kompletan dnevnik"):
+            st.session_state['dnevnik_obroka'] = []
+            st.rerun()
+    else:
+        st.write("Dnevnik je prazan. Izaberite namirnicu i dodajte obrok.")
+
+# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
 import os
 
 ime_fajla = "brojac.txt"
 pocetni_broj = 3002
 
-# Ako fajl ne postoji, kreiraj ga sa početnim brojem
-if not os.path.exists(ime_fajla):
-    with open(ime_fajla, "w") as f:
-        f.write(str(pocetni_broj))
-    trenutni_broj = pocetni_broj
+if 'poseta_uracunata' not in st.session_state:
+    if not os.path.exists(ime_fajla):
+        with open(ime_fajla, "w") as f:
+            f.write(str(pocetni_broj))
+        trenutni_broj = pocetni_broj
+    else:
+        with open(ime_fajla, "r") as f:
+            try:
+                trenutni_broj = int(f.read().strip()) + 1
+            except:
+                trenutni_broj = pocetni_broj
+        with open(ime_fajla, "w") as f:
+            f.write(str(trenutni_broj))
+    st.session_state['poseta_uracunata'] = trenutni_broj
 else:
-    # Pročitaj trenutni broj, uvećaj ga za 1 i sačuvaj nazad
-    with open(ime_fajla, "r") as f:
-        try:
-            trenutni_broj = int(f.read().strip()) + 1
-        except:
-            trenutni_broj = pocetni_broj
-    with open(ime_fajla, "w") as f:
-        f.write(str(trenutni_broj))
+    if os.path.exists(ime_fajla):
+        with open(ime_fajla, "r") as f:
+            try:
+                trenutni_broj = int(f.read().strip())
+            except:
+                trenutni_broj = pocetni_broj
+    else:
+        trenutni_broj = pocetni_broj
 
 st.write("")
 st.write("")
 
-# Prikaz brojača kao običan, čist HTML tekst koji niko ne može da blokira
+# Prikaz brojača kao čist HTML tekst
 st.markdown(f"""
 <div style='text-align: center; margin-bottom: 15px;'>
     <p style='color: #808495; font-size: 16px; margin-bottom: 5px;'>
@@ -191,13 +206,11 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# Potpis autora na samom dnu
 st.markdown("""
 <p style='font-size: 18px; text-align: center; color: #808495;'>
 Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>
 magy@usa.com &nbsp;&nbsp; Tel.+38163310850<br>
-Powered by PYTHON
-</p>
-""", unsafe_allow_html=True)r>
 Powered by PYTHON
 </p>
 """, unsafe_allow_html=True)
