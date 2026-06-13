@@ -4,36 +4,8 @@ import pandas as pd
 # Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
 st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", layout="centered")
 
-# Forsiranje crne teme preko konfiguracije
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-color: #0e1117;
-        color: #ffffff;
-    }
-    /* Povećavanje dugmeta, fonta i promena boje u sivu */
-    .veliko-dugme button {
-        font-size: 22px !important;
-        padding: 15px 30px !important;
-        color: #b0b3b8 !important;
-        border: 2px solid #b0b3b8 !important;
-        width: 100% !important;
-    }
-    /* Popravka za nevidljivi tekst u polju unosa količine kada je kursor unutra */
-    div[data-baseweb="input"] input:focus {
-        color: #ffffff !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-    </style>
-    """
-    """,
-    unsafe_allow_html=True
-)
-
+st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;}.veliko-dugme button{font-size:22px!important;padding:15px 30px!important;color:#b0b3b8!important;border:2px solid #b0b3b8!important;width:100%!important;}div[data-baseweb='input'] input:focus{color:#ffffff!important;}</style>", unsafe_allow_html=True)
+Use code with caution.
 st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>sa zbirom dnevnog unosa minerala</span> </h1>", unsafe_allow_html=True)
 
 # Tekst napomene odmah ispod naslova
