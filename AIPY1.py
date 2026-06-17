@@ -6,34 +6,31 @@ st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", la
 
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
-st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>sa zbirom dnevnog unosa minerala</span> </h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>provera nivoa minerala u namirnicama sa zbirom dnevnog unosa</span> </h1>", unsafe_allow_html=True)
 
 # Tekst napomene odmah ispod naslova
-st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
-st.write("ⓘ *Preporuceni dnevni unos: Kalijum max 1200-1500mg | Fosfor max 800-1000mg *")
+st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).* Nivo minerala odredjuje AI pretragom USDA baze.")
+st.write("ⓘ *Preporuceni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg *")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
 if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
 # Učitavanje baze uz preskakanje prvog praznog reda (header=1)
-@st.cache_data
+
+@st.cache_data(ttl=86400)
 def ucitaj_bazu():
-    try:
-        df = pd.read_excel("KPH-AI.xlsx", header=1)
-        df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
-        df = df.dropna(subset=['Namirnica'])
-        return df
-    except Exception as e:
-        st.error(f"Greška pri čitavanju Excel tabele: {e}")
-        return None
+    df = pd.read_excel("KPH-AI.xlsx", header=1)
+    df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
+    df = df.dropna(subset=['Namirnica'])
+    return df
 
 df = ucitaj_bazu()
 
 if df is not None:
     st.write("") # Prazan prostor radi estetike
     st.subheader("🔍 Korak 1: Izaberite namirnicu iz baze podataka")
-    pretraga = st.text_input("Unesite naziv namirnice za pretragu:")
+    pretraga = st.text_input("Unesite naziv namirnice za pretragu:(npr. meso, piletina, sarma, burek, pivo, spagete...)")
     
     if pretraga:
         filtrirano = df[df['Namirnica'].astype(str).str.contains(pretraga, case=False, na=False)]
@@ -43,7 +40,7 @@ if df is not None:
     lista_namirnica = filtrirano['Namirnica'].tolist()
     
     if lista_namirnica:
-        izbor = st.selectbox("Klikni i izaberi namirnicu sa liste:", lista_namirnica)
+        izbor = st.selectbox("🔍Korak 2. Klikni i izaberi namirnicu sa liste:", lista_namirnica)
         
         # Filtriranje reda za izabranu namirnicu
         red = df[df['Namirnica'] == izbor].iloc[0]
@@ -78,9 +75,9 @@ if df is not None:
         )
         
         st.write("---")
-        st.subheader("⚖️ Korak 2: Upisite kolicinu konzumirane namirnice")
+        st.subheader("⚖️ Korak 3: Upisite kolicinu konzumirane namirnice")
         
-        kolicina = st.number_input("Unesite ovde tačnu težinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
+        kolicina = st.number_input("Unesite kolicinu namirnice u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
         faktor = kolicina / 100.0
         ukupno_k = k_v * faktor
