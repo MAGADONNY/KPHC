@@ -17,14 +17,14 @@ if jezik == "English":
     t_napomena1 = "⚠️ *Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food. Levels are determined by AI search of the USDA database.*"
     t_napomena2 = "ⓘ *Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg*"
     t_korak1 = "🔍 Step 1: Search for a food item from the database"
-    t_input1 = "Enter food name to search (e.g., meat, chicken, beer...):"
+    t_input1 = "Enter food name to search (PRESS ENTER TO APPLY):"
     t_korak2 = "🔍 Step 2: Click and select food from the list:"
     t_okvir = "Values per 100g -> Potassium: {} mg | Phosphorus: {} mg | Sodium: {} mg"
     t_korak3 = "⚖️ Step 3: Enter the amount of food consumed"
     t_input2 = "Enter amount in grams (g):"
     t_dugme_dodaj = "➕ Add meal to my diary"
     t_toast = "Added to diary: {} ({}g)"
-    t_upozorenje = "No food items match your search. Please try again."
+    t_upozorenje = "No food items match your search or still typing. Please type a full word and press Enter."
     t_naslov_tabele = "📋 Your daily diet log and entered meals"
     t_zbir_okvir = "📊 TOTAL DAILY SUM OF ALL ENTERED MEALS:"
     t_ukupno_k = "Total Potassium: {:.2f} mg"
@@ -37,7 +37,7 @@ else: # Srpski
     t_napomena1 = "⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).* Nivo minerala odredjuje se AI pretragom USDA baze."
     t_napomena2 = "ⓘ *Preporuceni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg *"
     t_korak1 = "🔍 Korak 1: Izaberite namirnicu iz baze podataka"
-    t_input1 = "Unesite naziv namirnice za pretragu:(npr. meso, piletina, sarma, burek, pivo, spagete...)"
+    t_input1 = "Unesite naziv namirnice za pretragu (Pritisnite Enter za potvrdu):"
     t_korak2 = "🔍 Korak 2. Klikni i izaberi namirnicu sa liste:"
     t_okvir = "Vrednosti na 100g -> Kalijum: {} mg | Fosfor: {} mg | Natrijum: {} mg"
     t_korak3 = "⚖️ Korak 3: Upisite kolicinu konzumirane namirnice"
@@ -53,7 +53,7 @@ else: # Srpski
     t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
 
-# Prikaz zaglavlja na izabranom jeziku
+# Prikaz zaglavlja
 st.markdown(f"<h1 style='text-align: center; font-size: 38px;'>{t_naslov}</h1>", unsafe_allow_html=True)
 st.write(t_napomena1)
 st.write(t_napomena2)
@@ -73,25 +73,24 @@ df = ucitaj_bazu()
 if df is not None:
     st.write("")
     st.subheader(t_korak1)
-    pretraga = st.text_input(t_input1)
     
-    # Prevod se aktivira samo ako je korisnik zaista upisao nešto u polje
-    pojam_za_filter = pretraga
-    if pretraga and jezik == "English":
+    pretraga = st.text_input(t_input1, key="polje_pretrage")
+    pojam_za_filter = pretraga.strip()
+    
+    if pojam_za_filter and jezik == "English":
         try:
-            pojam_za_filter = GoogleTranslator(source='en', target='sr').translate(pretraga)
+            pojam_za_filter = GoogleTranslator(source='en', target='sr').translate(pojam_za_filter)
         except:
-            pojam_za_filter = pretraga
+            pass
 
     if pojam_za_filter:
         filtrirano = df[df['Namirnica'].astype(str).str.contains(pojam_za_filter, case=False, na=False)]
     else:
         filtrirano = df
 
-    # Priprema liste namirnica (prevodimo na engleski samo filtrirane stavke radi brzine)
     lista_namirnica_prikaz = {}
     if not filtrirano.empty:
-        za_prikaz = filtrirano.head(50)
+        za_prikaz = filtrirano.head(30)
         for n in za_prikaz['Namirnica'].tolist():
             if jezik == "English":
                 try:
@@ -106,6 +105,7 @@ if df is not None:
         izbor_prikaz = st.selectbox(t_korak2, list(lista_namirnica_prikaz.keys()))
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
+        # POPRAVLJENO: Dodat tačan indeks [0] na .iloc
         red = df[df['Namirnica'] == izbor_original].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -208,3 +208,7 @@ if df is not None:
             st.rerun()
 
 # --- LOGIKA ZA INTERNI BROJAČ POSETA ---
+ime_fajla = "brojac.txt"
+pocetni_broj = 3002
+
+if 'poseta_uracunata' not in st.session_state:
