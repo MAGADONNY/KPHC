@@ -128,13 +128,9 @@ if df is not None:
         izbor_prikaz = st.selectbox("👇", list(lista_namirnica_prikaz.keys()), label_visibility="collapsed")
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
-        red = df[df['Namirnica'] == izbor_original].iloc
+        red = df[df['Namirnica'] == izbor_original].iloc[0]
         
-        def ocisti_broj(vrednost):
-            broj = pd.to_numeric(vrednost, errors='coerce')
-            return 0 if pd.isna(broj) else calendar_error if pd.isna(broj) else broj
-
-        # Lokalna bezbedna zamena za ocisti_broj bez eksternih zavisnosti
+        # Očišćena i 100% bezbedna provera brojeva bez kvačica ili grešaka
         k_v = pd.to_numeric(red['Kalijum'], errors='coerce')
         k_v = 0 if pd.isna(k_v) else k_v
         
@@ -201,7 +197,15 @@ if st.session_state['dnevnik_obroka']:
             boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #00ffcc; font-weight: bold;'
         return boje
 
-    # POPRAVLJENO: Pravilno zatvorene sve zagrade formata i stilizovanja tabele
     st.dataframe(
         prikaz_df.style.apply(oboji_tabelu, axis=1).format({
             col_kolicina: '{:.2f}',
+            col_kalijum: '{:.2f}',
+            col_fosfor: '{:.2f}',
+            col_natrijum: '{:.2f}'
+        }), 
+        use_container_width=True
+    )
+    
+    sum_k = prikaz_df[col_kalijum].sum()
+    sum_f = prikaz_df[col_fosfor].sum()
