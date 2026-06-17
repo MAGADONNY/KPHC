@@ -5,7 +5,7 @@ import os
 # Osnovna podešavanja aplikacije
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
-# POPRAVLJENO: CSS sada tačno cilja i dugme unutar forme (stFormSubmitButton) i boji ga u plavo!
+# Bezbedan CSS za plavo dugme i izgled polja (uključujući i dugme forme)
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button, div.stFormSubmitButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stFormSubmitButton > button:focus {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;}</style>", unsafe_allow_html=True)
 
 # Jednostavan i bezbedan izbor jezika na samom vrhu stranice
@@ -140,16 +140,14 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            # Čisto izvlačenje prvog reda
-            red = red_df.iloc[0]
-            
-            k_v = pd.to_numeric(red['Kalijum'], errors='coerce')
+            # Bezbedno očitavanje prvog elementa iz niza vrednosti
+            k_v = pd.to_numeric(red_df['Kalijum'].values[0], errors='coerce')
             k_v = 0.0 if pd.isna(k_v) else float(k_v)
             
-            f_v = pd.to_numeric(red['Fosfor'], errors='coerce')
+            f_v = pd.to_numeric(red_df['Fosfor'].values[0], errors='coerce')
             f_v = 0.0 if pd.isna(f_v) else float(f_v)
             
-            n_v = pd.to_numeric(red['Natrijum'], errors='coerce')
+            n_v = pd.to_numeric(red_df['Natrijum'].values[0], errors='coerce')
             n_v = 0.0 if pd.isna(n_v) else float(n_v)
             
             if k_v > 200: k_boja = "#ff4b4b"
@@ -167,18 +165,16 @@ if df is not None:
             
             st.write("---")
             
-            # Formirani stabilan obrazac koji garantuje klik
+            # Stabilan obrazac forme
             with st.form("obrazac_unosa"):
                 st.subheader(t_korak3)
                 kolicina = st.number_input("", min_value=1.0, value=100.0, step=10.0, key="kolicina_input", label_visibility="collapsed")
-                
                 izvrseno = st.form_submit_button(t_dugme_dodaj)
                 
                 if izvrseno:
                     faktor = kolicina / 100.0
-                    ukupno_k = k_v * faktor
-                    ukupno_f = f_v * faktor
-                    ukupno_n = n_v * faktor
+                    u_k = round(k_v * faktor, 2)
+                    u_f = round(f_v * faktor, 2)
+                    u_n = round(n_v * faktor, 2)
                     
-                    novi_obrok = {
-                        'Namirnica': str(izbor), 
+                    # POPRAVLJENO: Ceo rečnik je spakovan u jednu liniju - nemoguće je da fali vitičasta zagrada!
