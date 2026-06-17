@@ -184,21 +184,19 @@ else:
 st.write("")
 st.write("")
 
-# VRAĆENI SVI TEKSTOVI: Brojač poseta, podaci o autoru, imejl, telefon i potpis
+# --- VRAĆENI SVI TEKSTOVI: Brojač poseta, podaci o autoru, imejl, telefon i potpis ---
 st.markdown(f"""
-<div style='text-align: center; margin-bottom: 15px;'>
-
-    <p style='color: #ffffff; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
-        Ukupno poseta aplikaciji: <span style='color: #279FF5; font-weight: bold;'>{trenutni_broj}</span>
+<div style="text-align: center; margin-bottom: 15px;">
+    <p style="color: #ffffff; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;">
+        Ukupno poseta aplikaciji: <span style="color: #279FF5; font-weight: bold;">{trenutni_broj}</span>
     </p>
-    
-    <p style='color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
+    <p style="color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;">
         Autor: ♣️♦️♥️♠️ MAGICOMP & AI Gemini
     </p>
-    <p style='color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
+    <p style="color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;">
         magy@usa.com &nbsp;&nbsp; Tel.+38163310850
     </p>
-    <p style='color: #505465; font-family: sans-serif; font-size: 12px;'>
+    <p style="color: #505465; font-family: sans-serif; font-size: 12px;">
         Powered by PYTHON
     </p>
 </div>
