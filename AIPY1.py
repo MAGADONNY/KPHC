@@ -9,7 +9,7 @@ st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-bas
 st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>provera nivoa minerala u namirnicama sa zbirom dnevnog unosa</span> </h1>", unsafe_allow_html=True)
 
 # Tekst napomene odmah ispod naslova
-st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
+st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).* Nivoi minerala su odredjeni pomocu AI predrage USDA baze.")
 st.write("ⓘ *Preporuceni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg *")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
