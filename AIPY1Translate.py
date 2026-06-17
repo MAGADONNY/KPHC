@@ -5,8 +5,8 @@ import os
 # Osnovna podešavanja aplikacije
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
-# Bezbedan CSS za plavo dugme i izgled polja (uključujući i dugme forme)
-st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button, div.stFormSubmitButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stFormSubmitButton > button:focus {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;}</style>", unsafe_allow_html=True)
+# Bezbedan CSS stil koji boji i obično dugme u jarkoplavu boju preko celog ekrana
+st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
 # Jednostavan i bezbedan izbor jezika na samom vrhu stranice
 jezik = st.selectbox("🌐 Jezik / Language / Idioma / Sprache", ["Srpski", "English", "Español", "Deutsch"])
@@ -140,7 +140,7 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            # Bezbedno očitavanje prvog elementa iz niza vrednosti
+            # Čvrsto i stabilno očitavanje minerala iz tabele pomoću ugrađenog indeksa [0]
             k_v = pd.to_numeric(red_df['Kalijum'].values[0], errors='coerce')
             k_v = 0.0 if pd.isna(k_v) else float(k_v)
             
@@ -164,17 +164,15 @@ if df is not None:
             )
             
             st.write("---")
+            st.subheader(t_korak3)
             
-            # Stabilan obrazac forme
-            with st.form("obrazac_unosa"):
-                st.subheader(t_korak3)
-                kolicina = st.number_input("", min_value=1.0, value=100.0, step=10.0, key="kolicina_input", label_visibility="collapsed")
-                izvrseno = st.form_submit_button(t_dugme_dodaj)
+            # Vraćena standardna struktura unosa grama i dugmeta (bez forme) koja garantuje klik
+            kolicina = st.number_input("", min_value=1.0, value=100.0, step=10.0, key="kolicina_input", label_visibility="collapsed")
+            
+            if st.button(t_dugme_dodaj):
+                faktor = kolicina / 100.0
+                u_k = round(k_v * faktor, 2)
+                u_f = round(f_v * faktor, 2)
+                u_n = round(n_v * faktor, 2)
                 
-                if izvrseno:
-                    faktor = kolicina / 100.0
-                    u_k = round(k_v * faktor, 2)
-                    u_f = round(f_v * faktor, 2)
-                    u_n = round(n_v * faktor, 2)
-                    
-                    # POPRAVLJENO: Ceo rečnik je spakovan u jednu liniju - nemoguće je da fali vitičasta zagrada!
+                # Dodavanje u tabelu radi bez greške u jednoj liniji
