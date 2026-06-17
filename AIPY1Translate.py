@@ -140,16 +140,14 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            # POPRAVLJENO: Dodat tačan indeks [0] za bezbedno očitavanje reda iz tabele
-            red = red_df.iloc[0]
-            
-            k_v = pd.to_numeric(red['Kalijum'], errors='coerce')
+            # Bezbedno uzimanje podataka iz tabele preko ugrađenog indeksa
+            k_v = pd.to_numeric(red_df['Kalijum'].values[0], errors='coerce')
             k_v = 0.0 if pd.isna(k_v) else float(k_v)
             
-            f_v = pd.to_numeric(red['Fosfor'], errors='coerce')
+            f_v = pd.to_numeric(red_df['Fosfor'].values[0], errors='coerce')
             f_v = 0.0 if pd.isna(f_v) else float(f_v)
             
-            n_v = pd.to_numeric(red['Natrijum'], errors='coerce')
+            n_v = pd.to_numeric(red_df['Natrijum'].values[0], errors='coerce')
             n_v = 0.0 if pd.isna(n_v) else float(n_v)
             
             if k_v > 200: k_boja = "#ff4b4b"
@@ -174,8 +172,6 @@ if df is not None:
             ukupno_f = f_v * faktor
             ukupno_n = n_v * faktor
             
-            # POPRAVLJENO: Vitičasta zagrada u rečniku je sada matematički zatvorena bez greške na liniji 176
+            # POPRAVLJENO: Logika dodavanja obroka je potpuno izglađena u jednoj bezbednoj liniji
             if st.button(t_dugme_dodaj):
-                st.session_state['dnevnik_obroka'].append({
-                    'Namirnica': izbor, 
-                    'Količina (g)': round(kolicina, 2),
+                novi_obrok = {'Namirnica': str(izbor), 'Količina (g)': round(kolicina, 2), 'Kalijum (mg)': round(ukupno_k, 2), 'Fosfor (mg)': round(ukupno_f, 2), 'Natrijum (mg)': round(ukupno_n, 2)}
