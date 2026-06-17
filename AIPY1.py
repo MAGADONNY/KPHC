@@ -43,7 +43,7 @@ if df is not None:
     if lista_namirnica:
         izbor = st.selectbox("🔍Korak 2. Klikni i izaberi namirnicu sa liste:", lista_namirnica)
         
-        # POPRAVLJENO: Dodate zagrade na iloc[0] koje su pravile skriveni problem
+        # TAČNO POPRAVLJENO: Dodat .iloc[0] sa uglastim zagradama
         red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
