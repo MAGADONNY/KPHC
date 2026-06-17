@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 # Podešavanje izgleda web stranice
-st.set_page_config(page_title="Dnevnik Ishrane / Diet Diary", page_icon="🃏", layout="centered")
+st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
@@ -107,6 +107,7 @@ if 'dnevnik_obroka' not in st.session_state:
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
     try:
+        # Čitamo tabelu i poravnavamo nazive kolona prema vašem tačnom rasporedu sa slike
         df = pd.read_excel("KPH-AI.xlsx")
         df.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
         return df
@@ -159,6 +160,3 @@ if df is not None:
                 f"""
                 <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja};'>
                     {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
-                </div>
-                """, 
-                unsafe_allow_html=True
