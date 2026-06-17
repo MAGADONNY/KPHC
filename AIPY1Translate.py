@@ -140,7 +140,7 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            # Bezbedno uzimanje podataka iz tabele preko ugrađenog indeksa
+            # POPRAVLJENO: Uzimanje čistog prvog elementa [0] umesto niza vrednosti
             k_v = pd.to_numeric(red_df['Kalijum'].values[0], errors='coerce')
             k_v = 0.0 if pd.isna(k_v) else float(k_v)
             
@@ -164,14 +164,17 @@ if df is not None:
             )
             
             st.write("---")
-            st.subheader(t_korak3)
-            kolicina = st.number_input("", min_value=1.0, value=100.0, step=10.0, key="kolicina_input", label_visibility="collapsed")
             
-            faktor = kolicina / 100.0
-            ukupno_k = k_v * faktor
-            ukupno_f = f_v * faktor
-            ukupno_n = n_v * faktor
-            
-            # POPRAVLJENO: Logika dodavanja obroka je potpuno izglađena u jednoj bezbednoj liniji
-            if st.button(t_dugme_dodaj):
-                novi_obrok = {'Namirnica': str(izbor), 'Količina (g)': round(kolicina, 2), 'Kalijum (mg)': round(ukupno_k, 2), 'Fosfor (mg)': round(ukupno_f, 2), 'Natrijum (mg)': round(ukupno_n, 2)}
+            # POPRAVLJENO: Ceo Korak 3 je spakovan u st.form koji sprečava gubljenje podataka na klik!
+            with st.form("moj_obrazac", clear_on_submit=True):
+                st.subheader(t_korak3)
+                kolicina = st.number_input("", min_value=1.0, value=100.0, step=10.0, key="kolicina_input", label_visibility="collapsed")
+                
+                # Dugme forme
+                izvrseno = st.form_submit_button(t_dugme_dodaj)
+                
+                if izvrseno:
+                    faktor = kolicina / 100.0
+                    ukupno_k = k_v * faktor
+                    ukupno_f = f_v * faktor
+                    ukupno_n = n_v * faktor
