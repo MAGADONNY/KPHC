@@ -42,7 +42,7 @@ if df is not None:
     if lista_namirnica:
         izbor = st.selectbox("🔍Korak 2. Klikni i izaberi namirnicu sa liste:", lista_namirnica)
         
-        # Filtriranje reda za izabranu namirnicu (Ispravan .iloc[0] iz vašeg bekapa)
+        # Filtriranje reda za izabranu namirnicu
         red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -184,11 +184,20 @@ else:
 st.write("")
 st.write("")
 
-# POPRAVLJENO: Zatvoren HTML kod brojača poseta na samom kraju
+# VRAĆENI SVI TEKSTOVI: Brojač poseta, podaci o autoru, imejl, telefon i potpis
 st.markdown(f"""
 <div style='text-align: center; margin-bottom: 15px;'>
-    <p style='color: #808495; font-family: sans-serif; font-size: 14px;'>
-        📊 Broj poseta: {trenutni_broj}
+    <p style='color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
+        Ukupno poseta aplikaciji: {trenutni_broj}
+    </p>
+    <p style='color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
+        Autor: ♣️♦️♥️♠️ MAGICOMP & AI Gemini
+    </p>
+    <p style='color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
+        magy@usa.com &nbsp;&nbsp; Tel.+38163310850
+    </p>
+    <p style='color: #505465; font-family: sans-serif; font-size: 12px;'>
+        Powered by PYTHON
     </p>
 </div>
 """, unsafe_allow_html=True)
