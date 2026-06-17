@@ -199,14 +199,7 @@ st.markdown("""
 <p style='font-size: 18px; text-align: center; color: #808495;'>
 Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>
 magy@usa.com &nbsp;&nbsp; Tel.+38163310850<br>
-st.markdown(
-    """
-    Powered by Python
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
+Powered by PYTHON
 </p>
 """, unsafe_allow_html=True)
 
