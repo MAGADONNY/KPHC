@@ -84,7 +84,7 @@ if df is not None:
         ukupno_f = f_v * faktor
         ukupno_n = n_v * faktor
         
-        # Klikni na Dugme za dodavanje namirnice u dnevni zbir
+        # Dugme za dodavanje namirnice u dnevni zbir
         st.markdown("<div class='veliko-dugme'>", unsafe_allow_html=True)
         izvrseno = st.button("➕ Dodaj obrok u moj dnevnik")
         st.markdown("</div>", unsafe_allow_html=True)
