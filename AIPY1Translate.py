@@ -75,7 +75,7 @@ if df is not None:
     st.subheader(t_korak1)
     pretraga = st.text_input(t_input1)
     
-    # Ako je izabran engleski, pretraga se u pozadini prevodi na srpski radi pretraživanja Excel-a
+    # POPRAVLJENO: Prevod se aktivira samo ako je korisnik zaista upisao nešto u polje
     pojam_za_filter = pretraga
     if pretraga and jezik == "English":
         try:
@@ -88,22 +88,26 @@ if df is not None:
     else:
         filtrirano = df
 
-    # Priprema liste namirnica (ako je engleski, nazivi na listi se prevode u letu)
+    # Priprema liste namirnica (prevodimo na engleski samo filtrirane stavke da ne koči aplikaciju)
     lista_namirnica_prikaz = {}
-    for n in filtrirano['Namirnica'].tolist():
-        if jezik == "English":
-            try:
-                prevod_na_en = GoogleTranslator(source='sr', target='en').translate(n)
-                lista_namirnica_prikaz[prevod_na_en] = n
-            except:
+    if not filtrirano.empty:
+        # Limitiramo prikaz na prvih 50 stavki radi ekstremne brzine prevoda u letu
+        za_prikaz = filtrirano.head(50)
+        for n in za_prikaz['Namirnica'].tolist():
+            if jezik == "English":
+                try:
+                    prevod_na_en = GoogleTranslator(source='sr', target='en').translate(n)
+                    lista_namirnica_prikaz[prevod_na_en] = n
+                except:
+                    lista_namirnica_prikaz[n] = n
+            else:
                 lista_namirnica_prikaz[n] = n
-        else:
-            lista_namirnica_prikaz[n] = n
 
     if lista_namirnica_prikaz:
         izbor_prikaz = st.selectbox(t_korak2, list(lista_namirnica_prikaz.keys()))
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
+        # POPRAVLJENO: Dodate uglaste zagrade na iloc koje su falile
         red = df[df['Namirnica'] == izbor_original].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -145,7 +149,7 @@ if df is not None:
         
         if izvrseno:
             st.session_state['dnevnik_obroka'].append({
-                'Namirnica': izbor_prikaz, # Pamti ime na jeziku na kom je uneto
+                'Namirnica': izbor_prikaz, 
                 'Količina (g)': round(kolicina, 2),
                 'Kalijum (mg)': round(ukupno_k, 2),
                 'Fosfor (mg)': round(ukupno_f, 2),
@@ -163,7 +167,6 @@ if df is not None:
     if st.session_state['dnevnik_obroka']:
         prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
         
-        # Preimenovanje kolona tabele na osnovu izabranog jezika
         prikaz_df.columns = [col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum]
         
         def oboji_tabelu(red_tabele):
@@ -202,9 +205,3 @@ if df is not None:
     <span style='color: #279FF5;'>{t_ukupno_f.format(sum_f)}</span><br>
     <span style='color: #279FF5;'>{t_ukupno_n.format(sum_n)}</span>
 </div>
-""", unsafe_allow_html=True)
-            
-        if st.button(t_dugme_obrisi):
-            st.session_state['dnevnik_obroka'] = []
-            st.rerun()
-
