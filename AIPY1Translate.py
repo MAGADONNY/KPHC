@@ -73,13 +73,19 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# Funkcija koja privremeno popravlja reči bez naših slova samo da bi ih Google lakše preveo
+# POPRAVLJENA FUNKCIJA: Sada pametno menja kulinarske izraze pre slanja na prevod
 def popravi_za_prevod(tekst):
     t = str(tekst).lower()
+    
+    # Prvo sređujemo kvačice
     if "curetina" in t: t = t.replace("curetina", "ćuretina")
     if "skembici" in t: t = t.replace("skembici", "škembići")
     if "juneci" in t: t = t.replace("juneci", "juneći")
-    if "svinjski" in t: t = t.replace("svinjski", "svinjski")
+    
+    # Sada prevodimo specifične delove mesa koji zbunjuju Google
+    if "karabatak" in t: t = t.replace("karabatak", "thigh")
+    if "batak" in t: t = t.replace("batak", "drumstick")
+    
     return t.capitalize()
 
 if df is not None:
@@ -88,13 +94,13 @@ if df is not None:
     pretraga = st.text_input(t_input1, key="polje_pretrage")
     pojam_za_filter = pretraga.strip()
     
-    # Prevodimo reč za pretragu na srpski ako je izabran engleski
     if pojam_za_filter and jezik == "English":
         try:
-            # Ako stranac ukuca tripe ili turkey, prevodimo na srpske bazične reči bez kvačica
+            # Ako stranac traži drumstick ili thigh, prevodimo na bazične pojmove iz vašeg Excela
             prevod = GoogleTranslator(source='en', target='sr').translate(pojam_za_filter).lower()
+            if "batak" in prevod: prevod = prevod.replace("batak", "batak")
+            if "karabatak" in prevod: prevod = prevod.replace("karabatak", "karabatak")
             if "ćuretina" in prevod: prevod = prevod.replace("ćuretina", "curetina")
-            if "škembići" in prevod: prevod = prevod.replace("škembići", "skembici")
             pojam_za_filter = prevod
         except:
             pass
@@ -113,9 +119,11 @@ if df is not None:
     for n in za_prikaz['Namirnica'].tolist():
         if jezik == "English":
             try:
-                # Pre slanja Google-u popravljamo lažna slova da bi prevod uspeo
                 popravljen_naziv = popravi_za_prevod(n)
                 prevod_na_en = GoogleTranslator(source='sr', target='en').translate(popravljen_naziv)
+                
+                # Dodatno čišćenje ako Google vrati čudne zareze
+                prevod_na_en = prevod_na_en.replace("Drumstick, drumstick", "Drumstick").replace("Thigh, thigh", "Thigh")
                 lista_namirnica_prikaz[prevod_na_en] = n
             except:
                 lista_namirnica_prikaz[n] = n
@@ -129,7 +137,7 @@ if df is not None:
         izbor_prikaz = st.selectbox("👇", list(lista_namirnica_prikaz.keys()), label_visibility="collapsed")
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
-        red = df[df['Namirnica'] == izbor_original].iloc[0]
+        red = df[df['Namirnica'] == izbor_original].iloc
         
         def ocisti_broj(vrednost):
             broj = pd.to_numeric(vrednost, errors='coerce')
@@ -199,14 +207,3 @@ if st.session_state['dnevnik_obroka']:
     st.dataframe(
         prikaz_df.style.apply(oboji_tabelu, axis=1).format({
             col_kolicina: '{:.2f}',
-            col_kalijum: '{:.2f}',
-            col_fosfor: '{:.2f}',
-            col_natrijum: '{:.2f}'
-        }), 
-        use_container_width=True
-    )
-    
-    sum_k = prikaz_df[col_kalijum].sum()
-    sum_f = prikaz_df[col_fosfor].sum()
-    sum_n = prikaz_df[col_natrijum].sum()
-    
