@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 
 # Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
 st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", layout="centered")
@@ -17,7 +18,6 @@ if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
 # Učitavanje baze uz preskakanje prvog praznog reda (header=1)
-
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
     df = pd.read_excel("KPH-AI.xlsx", header=1)
@@ -42,7 +42,7 @@ if df is not None:
     if lista_namirnica:
         izbor = st.selectbox("🔍Korak 2. Klikni i izaberi namirnicu sa liste:", lista_namirnica)
         
-        # Filtriranje reda za izabranu namirnicu
+        # Filtriranje reda za izabranu namirnicu (Ispravan .iloc[0] iz vašeg bekapa)
         red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -152,9 +152,8 @@ if df is not None:
         if st.button("🗑️ Isprazni kompletan dnevnik"):
             st.session_state['dnevnik_obroka'] = []
             st.rerun()
-# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
-import os
 
+# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
 ime_fajla = "brojac.txt"
 pocetni_broj = 3002
 
@@ -185,22 +184,11 @@ else:
 st.write("")
 st.write("")
 
-# Prikaz brojača kao čist HTML tekst
+# POPRAVLJENO: Zatvoren HTML kod brojača poseta na samom kraju
 st.markdown(f"""
 <div style='text-align: center; margin-bottom: 15px;'>
-    <p style='color: #808495; font-size: 16px; margin-bottom: 5px;'>
-         Ukupno poseta aplikaciji: <span style='color: #279FF5; font-weight: bold;'>{trenutni_broj}</span>
+    <p style='color: #808495; font-family: sans-serif; font-size: 14px;'>
+        📊 Broj poseta: {trenutni_broj}
     </p>
 </div>
 """, unsafe_allow_html=True)
-
-# Potpis autora na samom dnu
-st.markdown("""
-<p style='font-size: 18px; text-align: center; color: #808495;'>
-Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>
-magy@usa.com &nbsp;&nbsp; Tel.+38163310850<br>
-Powered by PYTHON
-</p>
-""", unsafe_allow_html=True)
-
-            
