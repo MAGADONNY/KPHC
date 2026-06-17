@@ -10,7 +10,7 @@ st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevni
 
 # Tekst napomene odmah ispod naslova
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
-st.write("ⓘ *Preporuceni dnevni unos: Kalijum max 1200-1500mg | Fosfor max 800-1000mg *")
+st.write("ⓘ *Preporuceni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg *")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
 if 'dnevnik_obroka' not in st.session_state:
@@ -30,7 +30,7 @@ df = ucitaj_bazu()
 if df is not None:
     st.write("") # Prazan prostor radi estetike
     st.subheader("🔍 Korak 1: Izaberite namirnicu iz baze podataka")
-    pretraga = st.text_input("Unesite naziv namirnice za pretragu:")
+    pretraga = st.text_input("Unesite naziv namirnice za pretragu:(npr. meso, piletina, sarma, burek, pivo, spagete...)")
     
     if pretraga:
         filtrirano = df[df['Namirnica'].astype(str).str.contains(pretraga, case=False, na=False)]
