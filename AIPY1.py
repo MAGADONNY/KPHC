@@ -77,7 +77,7 @@ if df is not None:
         st.write("---")
         st.subheader("⚖️ Korak 2: Upisite kolicinu konzumirane namirnice")
         
-        kolicina = st.number_input("Unesite ovde tačnu težinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
+        kolicina = st.number_input("Unesite kolicinu namirnice u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
         faktor = kolicina / 100.0
         ukupno_k = k_v * faktor
