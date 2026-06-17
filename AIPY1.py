@@ -187,7 +187,7 @@ st.write("")
 # VRAĆENI SVI TEKSTOVI: Brojač poseta, podaci o autoru, imejl, telefon i potpis
 st.markdown(f"""
 <div style='text-align: center; margin-bottom: 15px;'>
-    <p style='color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
+    <p style='color: #279FF5; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
         Ukupno poseta aplikaciji: {trenutni_broj}
     </p>
     <p style='color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;'>
