@@ -40,7 +40,7 @@ if df is not None:
     lista_namirnica = filtrirano['Namirnica'].tolist()
     
     if lista_namirnica:
-        izbor = st.selectbox("Klikni i izaberi namirnicu sa liste:", lista_namirnica)
+        izbor = st.selectbox("🔍Korak 2. Klikni i izaberi namirnicu sa liste:", lista_namirnica)
         
         # Filtriranje reda za izabranu namirnicu
         red = df[df['Namirnica'] == izbor].iloc[0]
@@ -75,7 +75,7 @@ if df is not None:
         )
         
         st.write("---")
-        st.subheader("⚖️ Korak 2: Upisite kolicinu konzumirane namirnice")
+        st.subheader("⚖️ Korak 3: Upisite kolicinu konzumirane namirnice")
         
         kolicina = st.number_input("Unesite kolicinu namirnice u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
@@ -84,7 +84,7 @@ if df is not None:
         ukupno_f = f_v * faktor
         ukupno_n = n_v * faktor
         
-        # Dugme za dodavanje namirnice u dnevni zbir
+        # Klikni na Dugme za dodavanje namirnice u dnevni zbir
         st.markdown("<div class='veliko-dugme'>", unsafe_allow_html=True)
         izvrseno = st.button("➕ Dodaj obrok u moj dnevnik")
         st.markdown("</div>", unsafe_allow_html=True)
