@@ -108,7 +108,6 @@ if 'dnevnik_obroka' not in st.session_state:
 def ucitaj_bazu():
     try:
         df = pd.read_excel("KPH-AI.xlsx")
-        # Prisilan šablon kolona za novu Svetsku tabelu
         df.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
         return df
     except:
@@ -122,7 +121,6 @@ if df is not None:
     pretraga = st.text_input(t_input1, key="polje_pretrage")
     pojam_za_filter = pretraga.strip()
     
-    # Pretraga radi direktno i munjevito na koloni izabranog jezika
     if pojam_za_filter:
         filtrirano = df[df[ime_kolone_baza].astype(str).str.contains(pojam_za_filter, case=False, na=False)]
         if filtrirano.empty:
@@ -139,7 +137,6 @@ if df is not None:
     if lista_za_selectbox:
         izbor = st.selectbox("👇", lista_za_selectbox, label_visibility="collapsed")
         
-        # Očitavanje reda direktno preko izabrane stavke iz baze
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
@@ -161,3 +158,7 @@ if df is not None:
             st.markdown(
                 f"""
                 <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja};'>
+                    {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
+                </div>
+                """, 
+                unsafe_allow_html=True
