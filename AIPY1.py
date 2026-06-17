@@ -160,7 +160,6 @@ if df is not None:
             pdf = FPDF()
             pdf.add_page()
             
-            # Korišćenje standardnog fonta Helvetica (podržava osnovni tekst)
             pdf.set_font("Helvetica", "B", 16)
             pdf.cell(190, 10, "IZVESTAJ O DNEVNOM UNOSU MINERALA", ln=True, align="C")
             pdf.set_font("Helvetica", "", 10)
@@ -184,11 +183,10 @@ if df is not None:
             # Redovi tabele
             pdf.set_font("Helvetica", "", 10)
             for o in obroci:
-                # Zamena naših slova sa latinicom zbog standardnog Helvetica fonta da ne bude čudnih karaktera
                 naziv = o['Namirnica'].replace('č','c').replace('ć','c').replace('š','s').replace('ž','z').replace('đ','dj')
                 naziv = naziv.replace('Č','C').replace('Ć','C').replace('Š','S').replace('Ž','Z').replace('Đ','Dj')
                 
-                pdf.cell(70, 8, naziv[:35], border=1) # Limitirano na 35 karaktera da ne prelazi red
+                pdf.cell(70, 8, naziv[:35], border=1)
                 pdf.cell(30, 8, f"{o['Količina (g)']:.2f}", border=1, align="R")
                 pdf.cell(30, 8, f"{o['Kalijum (mg)']:.2f}", border=1, align="R")
                 pdf.cell(30, 8, f"{o['Fosfor (mg)']:.2f}", border=1, align="R")
@@ -206,3 +204,7 @@ if df is not None:
             return pdf.output()
 
         if ime_pacijenta:
+            pdf_izlaz = napravi_pdf(ime_pacijenta, st.session_state['dnevnik_obroka'], sum_k, sum_f, sum_n)
+            
+            st.download_button(
+                label="📥 PREUZMI PDF DOKUMENT ZA DOKTORA",
