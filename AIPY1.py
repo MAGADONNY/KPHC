@@ -199,7 +199,16 @@ st.markdown("""
 <p style='font-size: 18px; text-align: center; color: #808495;'>
 Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>
 magy@usa.com &nbsp;&nbsp; Tel.+38163310850<br>
-Powered by PYTHON
+st.markdown(
+    """
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;">
+        <img src="https://wikimedia.org" width="18" height="18">
+        <span style="color: #808080; font-family: sans-serif; font-size: 14px;">Powered by PYTHON</span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 </p>
 """, unsafe_allow_html=True)
 
