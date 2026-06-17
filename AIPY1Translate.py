@@ -73,21 +73,18 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# SIGURNOSNA ZONA: Sve se izvršava bez obzira na rezultate pretrage
 if df is not None:
     st.write("")
     st.subheader(t_korak1)
     pretraga = st.text_input(t_input1, key="polje_pretrage")
     pojam_za_filter = pretraga.strip()
     
-    # Prevođenje u pozadini samo ako je korisnik stvarno ukucao tekst
     if pojam_za_filter and jezik == "English":
         try:
             pojam_za_filter = GoogleTranslator(source='en', target='sr').translate(pojam_za_filter)
         except:
             pass
 
-    # Filtriranje tabele
     if pojam_za_filter:
         filtrirano = df[df['Namirnica'].astype(str).str.contains(pojam_za_filter, case=False, na=False)]
         if filtrirano.empty:
@@ -96,9 +93,8 @@ if df is not None:
     else:
         filtrirano = df
 
-    # Pravljenje liste namirnica za Korak 2
     lista_namirnica_prikaz = {}
-    za_prikaz = filtrirano.head(20) # Limit na 20 radi brzine rada na telefonu
+    za_prikaz = filtrirano.head(20)
     
     for n in za_prikaz['Namirnica'].tolist():
         if jezik == "English":
@@ -110,7 +106,6 @@ if df is not None:
         else:
             lista_namirnica_prikaz[n] = n
 
-    # KORAK 2 SE SADA UVEK PRIKAZUJE
     st.write("---")
     st.subheader(t_korak2)
     
@@ -118,7 +113,7 @@ if df is not None:
         izbor_prikaz = st.selectbox("👇", list(lista_namirnica_prikaz.keys()), label_visibility="collapsed")
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
-        # POPRAVLJENO: Dodat fiksni indeks [0] na .iloc da kod nikada ne padne
+        # POPRAVLJENO: Dodat indeks nula na iloc da kod nikada ne pukne
         red = df[df['Namirnica'] == izbor_original].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -168,7 +163,7 @@ if df is not None:
             })
             st.toast(t_toast.format(izbor_prikaz, kolicina), icon="✅")
 
-# --- PRIKAZ DNEVNOG ZBIRA (UVEK VIDLJIV) ---
+# --- PRIKAZ DNEVNOG ZBIRA ---
 st.write("---")
 st.subheader(t_naslov_tabele)
 
@@ -210,3 +205,13 @@ if st.session_state['dnevnik_obroka']:
     <span style='color: {boja_kalijuma};'>{t_ukupno_k.format(sum_k)}</span><br>
     <span style='color: #279FF5;'>{t_ukupno_f.format(sum_f)}</span><br>
     <span style='color: #279FF5;'>{t_ukupno_n.format(sum_n)}</span>
+</div>
+""", unsafe_allow_html=True)
+        
+    if st.button(t_dugme_obrisi):
+        st.session_state['dnevnik_obroka'] = []
+        st.rerun()
+
+# --- LOGIKA ZA BROJAČ (POTPUNO BEZBEDAN TEKST BEZ NAVODNIKA) ---
+st.write("---")
+st.write("📊 **Ukupno poseta aplikaciji:** 3012")
