@@ -191,7 +191,7 @@ st.markdown(f"""
         Ukupno poseta aplikaciji: <span style="color: #279FF5; font-weight: normal;">{trenutni_broj}</span>
     </p>
     <p style="color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;">
-        Autor: ♣️♦️♥️♠️ MAGICOMP & AI Gemini
+         ♣️♦️♥️♠️ MAGICOMP & AI Gemini
     </p>
     <p style="color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;">
         magy@usa.com &nbsp;&nbsp; Tel.+38163310850
