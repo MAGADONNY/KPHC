@@ -75,7 +75,7 @@ if df is not None:
     st.subheader(t_korak1)
     pretraga = st.text_input(t_input1)
     
-    # POPRAVLJENO: Prevod se aktivira samo ako je korisnik zaista upisao nešto u polje
+    # Prevod se aktivira samo ako je korisnik zaista upisao nešto u polje
     pojam_za_filter = pretraga
     if pretraga and jezik == "English":
         try:
@@ -88,10 +88,9 @@ if df is not None:
     else:
         filtrirano = df
 
-    # Priprema liste namirnica (prevodimo na engleski samo filtrirane stavke da ne koči aplikaciju)
+    # Priprema liste namirnica (prevodimo na engleski samo filtrirane stavke radi brzine)
     lista_namirnica_prikaz = {}
     if not filtrirano.empty:
-        # Limitiramo prikaz na prvih 50 stavki radi ekstremne brzine prevoda u letu
         za_prikaz = filtrirano.head(50)
         for n in za_prikaz['Namirnica'].tolist():
             if jezik == "English":
@@ -107,7 +106,6 @@ if df is not None:
         izbor_prikaz = st.selectbox(t_korak2, list(lista_namirnica_prikaz.keys()))
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
-        # POPRAVLJENO: Dodate uglaste zagrade na iloc koje su falile
         red = df[df['Namirnica'] == izbor_original].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -166,14 +164,12 @@ if df is not None:
 
     if st.session_state['dnevnik_obroka']:
         prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
-        
         prikaz_df.columns = [col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum]
         
         def oboji_tabelu(red_tabele):
             boje = [''] * len(red_tabele)
             val = red_tabele[col_kalijum]
             k_na_100g = (val / red_tabele[col_kolicina]) * 100
-            
             if k_na_100g > 200:
                 boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #ff4b4b; font-weight: bold;'
             elif k_na_100g < 100:
@@ -205,3 +201,10 @@ if df is not None:
     <span style='color: #279FF5;'>{t_ukupno_f.format(sum_f)}</span><br>
     <span style='color: #279FF5;'>{t_ukupno_n.format(sum_n)}</span>
 </div>
+""", unsafe_allow_html=True)
+            
+        if st.button(t_dugme_obrisi):
+            st.session_state['dnevnik_obroka'] = []
+            st.rerun()
+
+# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
