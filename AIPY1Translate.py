@@ -1,23 +1,66 @@
 import streamlit as st
 import pandas as pd
 import os
+from deep_translator import GoogleTranslator
 
-# Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
-st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", layout="centered")
+# Podešavanje izgleda web stranice
+st.set_page_config(page_title="Dnevnik Ishrane / Diet Diary", page_icon="🃏", layout="centered")
 
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
-st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>provera nivoa minerala u namirnicama sa zbirom dnevnog unosa</span> </h1>", unsafe_allow_html=True)
+# --- 🌐 LOGIKA ZA IZBOR JEZIKA ---
+jezik = st.selectbox("🌐 Izaberite jezik / Select Language", ["Srpski", "English"])
 
-# Tekst napomene odmah ispod naslova
-st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).* Nivo minerala se odredjuje AI pretragom USDA baze.")
-st.write("ⓘ *Preporuceni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg *")
+# --- 📋 REČNIK FIKSNIH TEKSTOVA ---
+if jezik == "English":
+    t_naslov = "♠️♥️Diet Diary♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>mineral levels tracking with daily intake sum</span>"
+    t_napomena1 = "⚠️ *Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food. Levels are determined by AI search of the USDA database.*"
+    t_napomena2 = "ⓘ *Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg*"
+    t_korak1 = "🔍 Step 1: Search for a food item from the database"
+    t_input1 = "Enter food name to search (e.g., meat, chicken, beer...):"
+    t_korak2 = "🔍 Step 2: Click and select food from the list:"
+    t_okvir = "Values per 100g -> Potassium: {} mg | Phosphorus: {} mg | Sodium: {} mg"
+    t_korak3 = "⚖️ Step 3: Enter the amount of food consumed"
+    t_input2 = "Enter amount in grams (g):"
+    t_dugme_dodaj = "➕ Add meal to my diary"
+    t_toast = "Added to diary: {} ({}g)"
+    t_upozorenje = "No food items match your search. Please try again."
+    t_naslov_tabele = "📋 Your daily diet log and entered meals"
+    t_zbir_okvir = "📊 TOTAL DAILY SUM OF ALL ENTERED MEALS:"
+    t_ukupno_k = "Total Potassium: {:.2f} mg"
+    t_ukupno_f = "Total Phosphorus: {:.2f} mg"
+    t_ukupno_n = "Total Sodium: {:.2f} mg"
+    t_dugme_obrisi = "🗑️ Clear complete diary"
+    col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Food Item', 'Amount (g)', 'Potassium (mg)', 'Phosphorus (mg)', 'Sodium (mg)'
+else: # Srpski
+    t_naslov = "♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>provera nivoa minerala u namirnicama sa zbirom dnevnog unosa</span>"
+    t_napomena1 = "⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).* Nivo minerala odredjuje se AI pretragom USDA baze."
+    t_napomena2 = "ⓘ *Preporuceni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg *"
+    t_korak1 = "🔍 Korak 1: Izaberite namirnicu iz baze podataka"
+    t_input1 = "Unesite naziv namirnice za pretragu:(npr. meso, piletina, sarma, burek, pivo, spagete...)"
+    t_korak2 = "🔍 Korak 2. Klikni i izaberi namirnicu sa liste:"
+    t_okvir = "Vrednosti na 100g -> Kalijum: {} mg | Fosfor: {} mg | Natrijum: {} mg"
+    t_korak3 = "⚖️ Korak 3: Upisite kolicinu konzumirane namirnice"
+    t_input2 = "Unesite kolicinu namirnice u gramima (g):"
+    t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
+    t_toast = "Dodato u dnevnik: {} ({}g)"
+    t_upozorenje = "Nijedna namirnica ne odgovara pretrazi. Pokušajte ponovo."
+    t_naslov_tabele = "📋 Vaš današnji dnevnik ishrane i uneti obroci"
+    t_zbir_okvir = "📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:"
+    t_ukupno_k = "Ukupno Kalijum: {:.2f} mg"
+    t_ukupno_f = "Ukupno Fosfor: {:.2f} mg"
+    t_ukupno_n = "Ukupno Natrijum: {:.2f} mg"
+    t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
+    col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
 
-# Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
+# Prikaz zaglavlja na izabranom jeziku
+st.markdown(f"<h1 style='text-align: center; font-size: 38px;'>{t_naslov}</h1>", unsafe_allow_html=True)
+st.write(t_napomena1)
+st.write(t_napomena2)
+
 if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
-# Učitavanje baze uz preskakanje prvog praznog reda (header=1)
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
     df = pd.read_excel("KPH-AI.xlsx", header=1)
@@ -28,22 +71,40 @@ def ucitaj_bazu():
 df = ucitaj_bazu()
 
 if df is not None:
-    st.write("") # Prazan prostor radi estetike
-    st.subheader("🔍 Korak 1: Izaberite namirnicu iz baze podataka")
-    pretraga = st.text_input("Unesite naziv namirnice za pretragu:(npr. meso, piletina, sarma, burek, pivo, spagete...)")
+    st.write("")
+    st.subheader(t_korak1)
+    pretraga = st.text_input(t_input1)
     
-    if pretraga:
-        filtrirano = df[df['Namirnica'].astype(str).str.contains(pretraga, case=False, na=False)]
+    # Ako je izabran engleski, pretraga se u pozadini prevodi na srpski radi pretraživanja Excel-a
+    pojam_za_filter = pretraga
+    if pretraga and jezik == "English":
+        try:
+            pojam_za_filter = GoogleTranslator(source='en', target='sr').translate(pretraga)
+        except:
+            pojam_za_filter = pretraga
+
+    if pojam_za_filter:
+        filtrirano = df[df['Namirnica'].astype(str).str.contains(pojam_za_filter, case=False, na=False)]
     else:
         filtrirano = df
 
-    lista_namirnica = filtrirano['Namirnica'].tolist()
-    
-    if lista_namirnica:
-        izbor = st.selectbox("🔍Korak 2. Klikni i izaberi namirnicu sa liste:", lista_namirnica)
+    # Priprema liste namirnica (ako je engleski, nazivi na listi se prevode u letu)
+    lista_namirnica_prikaz = {}
+    for n in filtrirano['Namirnica'].tolist():
+        if jezik == "English":
+            try:
+                prevod_na_en = GoogleTranslator(source='sr', target='en').translate(n)
+                lista_namirnica_prikaz[prevod_na_en] = n
+            except:
+                lista_namirnica_prikaz[n] = n
+        else:
+            lista_namirnica_prikaz[n] = n
+
+    if lista_namirnica_prikaz:
+        izbor_prikaz = st.selectbox(t_korak2, list(lista_namirnica_prikaz.keys()))
+        izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
-        # Filtriranje reda za izabranu namirnicu
-        red = df[df['Namirnica'] == izbor].iloc[0]
+        red = df[df['Namirnica'] == izbor_original].iloc[0]
         
         def ocisti_broj(vrednost):
             broj = pd.to_numeric(vrednost, errors='coerce')
@@ -53,151 +114,97 @@ if df is not None:
         f_v = ocisti_broj(red['Fosfor'])
         n_v = ocisti_broj(red['Natrijum'])
         
-        # LOGIKA ZA BOJU KALIJUMA (Na 100g)
         if k_v > 200:
-            k_boja = "#ff4b4b" # Crvena
+            k_boja = "#ff4b4b"
         elif k_v < 100:
-            k_boja = "#00ffcc" # Jarko zelena
+            k_boja = "#00ffcc"
         else:
-            k_boja = "#ffffff" # Bela
+            k_boja = "#ffffff"
             
-        # Prikaz sa obojenim Kalijumom u lepom okviru
         st.markdown(
             f"""
             <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja};'>
-                Vrednosti na 100g -> 
-                <span style='color: {k_boja}; font-weight: bold; font-size: 17px;'>Kalijum: {k_v} mg</span> | 
-                Fosfor: {f_v} mg | 
-                Natrijum: {n_v} mg
+                {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
             </div>
             """, 
             unsafe_allow_html=True
         )
         
         st.write("---")
-        st.subheader("⚖️ Korak 3: Upisite kolicinu konzumirane namirnice")
-        
-        kolicina = st.number_input("Unesite kolicinu namirnice u gramima (g):", min_value=1.0, value=100.0, step=10.0)
+        st.subheader(t_korak3)
+        kolicina = st.number_input(t_input2, min_value=1.0, value=100.0, step=10.0)
         
         faktor = kolicina / 100.0
         ukupno_k = k_v * faktor
         ukupno_f = f_v * faktor
         ukupno_n = n_v * faktor
         
-        # Dugme za dodavanje namirnice u dnevni zbir
         st.markdown("<div class='veliko-dugme'>", unsafe_allow_html=True)
-        izvrseno = st.button("➕ Dodaj obrok u moj dnevnik")
+        izvrseno = st.button(t_dugme_dodaj)
         st.markdown("</div>", unsafe_allow_html=True)
         
         if izvrseno:
             st.session_state['dnevnik_obroka'].append({
-                'Namirnica': izbor,
+                'Namirnica': izbor_prikaz, # Pamti ime na jeziku na kom je uneto
                 'Količina (g)': round(kolicina, 2),
                 'Kalijum (mg)': round(ukupno_k, 2),
                 'Fosfor (mg)': round(ukupno_f, 2),
                 'Natrijum (mg)': round(ukupno_n, 2)
             })
-            st.toast(f"Dodato u dnevnik: {izbor} ({kolicina}g)", icon="✅")
+            st.toast(t_toast.format(izbor_prikaz, kolicina), icon="✅")
 
     else:
-        st.warning("Nijedna namirnica ne odgovara pretrazi. Pokušajte ponovo.")
+        st.warning(t_upozorenje)
 
     # --- PRIKAZ DNEVNOG ZBIRA ---
     st.write("---")
-    st.subheader("📋 Vaš današnji dnevnik ishrane i uneti obroci")
+    st.subheader(t_naslov_tabele)
 
     if st.session_state['dnevnik_obroka']:
         prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
         
-        # Funkcija koja boji samo cifru Kalijuma u tabeli
+        # Preimenovanje kolona tabele na osnovu izabranog jezika
+        prikaz_df.columns = [col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum]
+        
         def oboji_tabelu(red_tabele):
             boje = [''] * len(red_tabele)
-            val = red_tabele['Kalijum (mg)']
-            k_na_100g = (val / red_tabele['Količina (g)']) * 100
+            val = red_tabele[col_kalijum]
+            k_na_100g = (val / red_tabele[col_kolicina]) * 100
             
             if k_na_100g > 200:
-                boje[prikaz_df.columns.get_loc('Kalijum (mg)')] = 'color: #ff4b4b; font-weight: bold;'
+                boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #ff4b4b; font-weight: bold;'
             elif k_na_100g < 100:
-                boje[prikaz_df.columns.get_loc('Kalijum (mg)')] = 'color: #00ffcc; font-weight: bold;'
+                boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #00ffcc; font-weight: bold;'
             return boje
 
-        # Formatiramo prikaz tabele na dve decimale (.format("{:.2f}"))
         st.dataframe(
             prikaz_df.style.apply(oboji_tabelu, axis=1).format({
-                'Količina (g)': '{:.2f}',
-                'Kalijum (mg)': '{:.2f}',
-                'Fosfor (mg)': '{:.2f}',
-                'Natrijum (mg)': '{:.2f}'
+                col_kolicina: '{:.2f}',
+                col_kalijum: '{:.2f}',
+                col_fosfor: '{:.2f}',
+                col_natrijum: '{:.2f}'
             }), 
             use_container_width=True
         )
         
-        sum_k = prikaz_df['Kalijum (mg)'].sum()
-        sum_f = prikaz_df['Fosfor (mg)'].sum()
-        sum_n = prikaz_df['Natrijum (mg)'].sum()
+        sum_k = prikaz_df[col_kalijum].sum()
+        sum_f = prikaz_df[col_fosfor].sum()
+        sum_n = prikaz_df[col_natrijum].sum()
         
         boja_kalijuma = "#ff4b4b" if sum_k > 1199 else "#279FF5"
         
         st.markdown(f"""
 <div style='font-size: 20px; font-weight: bold; line-height: 1.6; width: 100%;'>
     <div style='border: 2px solid #ffffff; padding: 10px; border-radius: 5px; color: #279FF5; margin-bottom: 20px; width: 100%; box-sizing: border-box;'>
-        📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:
+        {t_zbir_okvir}
     </div>
-    <span style='color: {boja_kalijuma};'>Ukupno Kalijum: {sum_k:.2f} mg</span><br>
-    <span style='color: #279FF5;'>Ukupno Fosfor: {sum_f:.2f} mg</span><br>
-    <span style='color: #279FF5;'>Ukupno Natrijum: {sum_n:.2f} mg</span>
+    <span style='color: {boja_kalijuma};'>{t_ukupno_k.format(sum_k)}</span><br>
+    <span style='color: #279FF5;'>{t_ukupno_f.format(sum_f)}</span><br>
+    <span style='color: #279FF5;'>{t_ukupno_n.format(sum_n)}</span>
 </div>
 """, unsafe_allow_html=True)
             
-        if st.button("🗑️ Isprazni kompletan dnevnik"):
+        if st.button(t_dugme_obrisi):
             st.session_state['dnevnik_obroka'] = []
             st.rerun()
 
-# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
-ime_fajla = "brojac.txt"
-pocetni_broj = 3002
-
-if 'poseta_uracunata' not in st.session_state:
-    if not os.path.exists(ime_fajla):
-        with open(ime_fajla, "w") as f:
-            f.write(str(pocetni_broj))
-        trenutni_broj = pocetni_broj
-    else:
-        with open(ime_fajla, "r") as f:
-            try:
-                trenutni_broj = int(f.read().strip()) + 1
-            except:
-                trenutni_broj = pocetni_broj
-        with open(ime_fajla, "w") as f:
-            f.write(str(trenutni_broj))
-    st.session_state['poseta_uracunata'] = trenutni_broj
-else:
-    if os.path.exists(ime_fajla):
-        with open(ime_fajla, "r") as f:
-            try:
-                trenutni_broj = int(f.read().strip())
-            except:
-                trenutni_broj = pocetni_broj
-    else:
-        trenutni_broj = pocetni_broj
-
-st.write("")
-st.write("")
-
-# --- VRAĆENI SVI TEKSTOVI: Brojač poseta, podaci o autoru, imejl, telefon i potpis ---
-st.markdown(f"""
-<div style="text-align: center; margin-bottom: 15px;">
-    <p style="color: #ffffff; font-family: sans-serif; font-size: 12px; margin-bottom: 5px;">
-        Ukupno poseta aplikaciji: <span style="color: #279FF5; font-weight: normal;">{trenutni_broj}</span>
-    </p>
-    <p style="color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;">
-        Autor: ♣️♦️♥️♠️ MAGICOMP & AI Gemini
-    </p>
-    <p style="color: #808495; font-family: sans-serif; font-size: 14px; margin-bottom: 5px;">
-        magy@usa.com &nbsp;&nbsp; Tel.+38163310850
-    </p>
-    <p style="color: #505465; font-family: sans-serif; font-size: 12px;">
-        Powered by PYTHON
-    </p>
-</div>
-""", unsafe_allow_html=True)
