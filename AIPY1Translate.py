@@ -24,7 +24,7 @@ if jezik == "English":
     t_input2 = "Enter amount in grams (g):"
     t_dugme_dodaj = "➕ Add meal to my diary"
     t_toast = "Added to diary: {} ({}g)"
-    t_upozorenje = "No food items match your search. Please try another word."
+    t_upozorenje = "No food items match your search. Showing full list."
     t_naslov_tabele = "📋 Your daily diet log and entered meals"
     t_zbir_okvir = "📊 TOTAL DAILY SUM OF ALL ENTERED MEALS:"
     t_ukupno_k = "Total Potassium: {:.2f} mg"
@@ -44,7 +44,7 @@ else: # Srpski
     t_input2 = "Unesite kolicinu namirnice u gramima (g):"
     t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
     t_toast = "Dodato u dnevnik: {} ({}g)"
-    t_upozorenje = "Nijedna namirnica ne odgovara pretrazi. Pokušajte ponovo."
+    t_upozorenje = "Nijedna namirnica ne odgovara pretrazi. Prikazujemo celu listu."
     t_naslov_tabele = "📋 Vaš današnji dnevnik ishrane i uneti obroci"
     t_zbir_okvir = "📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:"
     t_ukupno_k = "Ukupno Kalijum: {:.2f} mg"
@@ -63,50 +63,62 @@ if 'dnevnik_obroka' not in st.session_state:
 
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
-    df = pd.read_excel("KPH-AI.xlsx", header=1)
-    df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
-    df = df.dropna(subset=['Namirnica'])
-    return df
+    try:
+        df = pd.read_excel("KPH-AI.xlsx", header=1)
+        df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
+        df = df.dropna(subset=['Namirnica'])
+        return df
+    except:
+        return None
 
 df = ucitaj_bazu()
 
+# SIGURNOSNA ZONA: Sve se izvršava bez obzira na rezultate pretrage
 if df is not None:
     st.write("")
     st.subheader(t_korak1)
     pretraga = st.text_input(t_input1, key="polje_pretrage")
     pojam_za_filter = pretraga.strip()
     
-    # Prevodimo reč za pretragu na srpski ako je izabran engleski
+    # Prevođenje u pozadini samo ako je korisnik stvarno ukucao tekst
     if pojam_za_filter and jezik == "English":
         try:
             pojam_za_filter = GoogleTranslator(source='en', target='sr').translate(pojam_za_filter)
         except:
             pass
 
+    # Filtriranje tabele
     if pojam_za_filter:
         filtrirano = df[df['Namirnica'].astype(str).str.contains(pojam_za_filter, case=False, na=False)]
+        if filtrirano.empty:
+            st.warning(t_upozorenje)
+            filtrirano = df
     else:
         filtrirano = df
 
-    # Priprema liste namirnica sa limitom radi brzine
+    # Pravljenje liste namirnica za Korak 2
     lista_namirnica_prikaz = {}
-    if not filtrirano.empty:
-        za_prikaz = filtrirano.head(25) # Limitirano na top 25 radi brzine
-        for n in za_prikaz['Namirnica'].tolist():
-            if jezik == "English":
-                try:
-                    prevod_na_en = GoogleTranslator(source='sr', target='en').translate(n)
-                    lista_namirnica_prikaz[prevod_na_en] = n
-                except:
-                    lista_namirnica_prikaz[n] = n
-            else:
+    za_prikaz = filtrirano.head(20) # Limit na 20 radi brzine rada na telefonu
+    
+    for n in za_prikaz['Namirnica'].tolist():
+        if jezik == "English":
+            try:
+                prevod_na_en = GoogleTranslator(source='sr', target='en').translate(n)
+                lista_namirnica_prikaz[prevod_na_en] = n
+            except:
                 lista_namirnica_prikaz[n] = n
+        else:
+            lista_namirnica_prikaz[n] = n
 
+    # KORAK 2 SE SADA UVEK PRIKAZUJE
+    st.write("---")
+    st.subheader(t_korak2)
+    
     if lista_namirnica_prikaz:
-        izbor_prikaz = st.selectbox(t_korak2, list(lista_namirnica_prikaz.keys()))
+        izbor_prikaz = st.selectbox("👇", list(lista_namirnica_prikaz.keys()), label_visibility="collapsed")
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
-        # POPRAVLJENO: Dodat indeks [0] na iloc
+        # POPRAVLJENO: Dodat fiksni indeks [0] na .iloc da kod nikada ne padne
         red = df[df['Namirnica'] == izbor_original].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -156,44 +168,41 @@ if df is not None:
             })
             st.toast(t_toast.format(izbor_prikaz, kolicina), icon="✅")
 
-    else:
-        st.warning(t_upozorenje)
+# --- PRIKAZ DNEVNOG ZBIRA (UVEK VIDLJIV) ---
+st.write("---")
+st.subheader(t_naslov_tabele)
 
-    # --- PRIKAZ DNEVNOG ZBIRA ---
-    st.write("---")
-    st.subheader(t_naslov_tabele)
+if st.session_state['dnevnik_obroka']:
+    prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
+    prikaz_df.columns = [col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum]
+    
+    def oboji_tabelu(red_tabele):
+        boje = [''] * len(red_tabele)
+        val = red_tabele[col_kalijum]
+        k_na_100g = (val / red_tabele[col_kolicina]) * 100
+        if k_na_100g > 200:
+            boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #ff4b4b; font-weight: bold;'
+        elif k_na_100g < 100:
+            boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #00ffcc; font-weight: bold;'
+        return boje
 
-    if st.session_state['dnevnik_obroka']:
-        prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
-        prikaz_df.columns = [col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum]
-        
-        def oboji_tabelu(red_tabele):
-            boje = [''] * len(red_tabele)
-            val = red_tabele[col_kalijum]
-            k_na_100g = (val / red_tabele[col_kolicina]) * 100
-            if k_na_100g > 200:
-                boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #ff4b4b; font-weight: bold;'
-            elif k_na_100g < 100:
-                boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #00ffcc; font-weight: bold;'
-            return boje
-
-        st.dataframe(
-            prikaz_df.style.apply(oboji_tabelu, axis=1).format({
-                col_kolicina: '{:.2f}',
-                col_kalijum: '{:.2f}',
-                col_fosfor: '{:.2f}',
-                col_natrijum: '{:.2f}'
-            }), 
-            use_container_width=True
-        )
-        
-        sum_k = prikaz_df[col_kalijum].sum()
-        sum_f = prikaz_df[col_fosfor].sum()
-        sum_n = prikaz_df[col_natrijum].sum()
-        
-        boja_kalijuma = "#ff4b4b" if sum_k > 1199 else "#279FF5"
-        
-        st.markdown(f"""
+    st.dataframe(
+        prikaz_df.style.apply(oboji_tabelu, axis=1).format({
+            col_kolicina: '{:.2f}',
+            col_kalijum: '{:.2f}',
+            col_fosfor: '{:.2f}',
+            col_natrijum: '{:.2f}'
+        }), 
+        use_container_width=True
+    )
+    
+    sum_k = prikaz_df[col_kalijum].sum()
+    sum_f = prikaz_df[col_fosfor].sum()
+    sum_n = prikaz_df[col_natrijum].sum()
+    
+    boja_kalijuma = "#ff4b4b" if sum_k > 1199 else "#279FF5"
+    
+    st.markdown(f"""
 <div style='font-size: 20px; font-weight: bold; line-height: 1.6; width: 100%;'>
     <div style='border: 2px solid #ffffff; padding: 10px; border-radius: 5px; color: #279FF5; margin-bottom: 20px; width: 100%; box-sizing: border-box;'>
         {t_zbir_okvir}
@@ -201,10 +210,3 @@ if df is not None:
     <span style='color: {boja_kalijuma};'>{t_ukupno_k.format(sum_k)}</span><br>
     <span style='color: #279FF5;'>{t_ukupno_f.format(sum_f)}</span><br>
     <span style='color: #279FF5;'>{t_ukupno_n.format(sum_n)}</span>
-</div>
-""", unsafe_allow_html=True)
-            
-        if st.button(t_dugme_obrisi):
-            st.session_state['dnevnik_obroka'] = []
-            st.rerun()
-
