@@ -105,7 +105,7 @@ if df is not None:
         izbor_prikaz = st.selectbox(t_korak2, list(lista_namirnica_prikaz.keys()))
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
-        # POPRAVLJENO: Dodat tačan indeks [0] na .iloc
+        # POPRAVLJENO: Dodat indeks [0] na .iloc
         red = df[df['Namirnica'] == izbor_original].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -207,8 +207,7 @@ if df is not None:
             st.session_state['dnevnik_obroka'] = []
             st.rerun()
 
-# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
+# --- LOGIKA ZA INTERNI BROJAČ POSETA (Izbačeno van IF bloka na nultu indentaciju) ---
 ime_fajla = "brojac.txt"
 pocetni_broj = 3002
 
-if 'poseta_uracunata' not in st.session_state:
