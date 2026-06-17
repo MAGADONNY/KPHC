@@ -5,7 +5,7 @@ import os
 # Osnovna podešavanja aplikacije
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
-# VRAĆENI STILOVI: Bezbedan CSS za plavo dugme i izgled polja (bez HTML navodnika u dnu)
+# Bezbedan CSS za plavo dugme i izgled polja
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
 # Jednostavan i bezbedan izbor jezika na samom vrhu stranice
@@ -18,8 +18,9 @@ if jezik == "English":
     t_napomena1 = "⚠️ *Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food.*"
     t_napomena2 = "ⓘ *Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg*"
     t_korak1 = "🔍 Step 1: Search for a food item from the database"
-    t_input1 = "Enter food name to search:"
+    t_input1 = "Enter food name to search (e.g., meat, chicken, beer...):"
     t_korak2 = "🔍 Step 2: Select food from the list:"
+    t_okvir = "Values per 100g -> Potassium: {} mg | Phosphorus: {} mg | Sodium: {} mg"
     t_korak3 = "⚖️ Step 3: Enter the amount of food consumed (in grams):"
     t_dugme_dodaj = "➕ Add meal to my diary"
     t_toast = "Added to diary: {} ({}g)"
@@ -40,6 +41,7 @@ elif jezik == "Español":
     t_korak1 = "🔍 Paso 1: Buscar un alimento en la base de datos"
     t_input1 = "Ingrese el nombre del alimento:"
     t_korak2 = "🔍 Paso 2: Seleccione un alimento de la lista:"
+    t_okvir = "Valores por 100g -> Potasio: {} mg | Fósforo: {} mg | Sodio: {} mg"
     t_korak3 = "⚖️ Paso 3: Ingrese la cantidad de alimento (en gramos):"
     t_dugme_dodaj = "➕ Añadir comida a mi diario"
     t_toast = "Añadido al diario: {} ({}g)"
@@ -60,6 +62,7 @@ elif jezik == "Deutsch":
     t_korak1 = "🔍 Schritt 1: Suchen Sie nach einem Lebensmittel"
     t_input1 = "Name des Lebensmittels eingeben:"
     t_korak2 = "🔍 Schritt 2: Lebensmittel aus der Liste auswählen:"
+    t_okvir = "Werte pro 100g -> Kalium: {} mg | Phosphor: {} mg | Natrium: {} mg"
     t_korak3 = "⚖️ Schritt 3: Verzehrte Menge in Gramm eingeben:"
     t_dugme_dodaj = "➕ Mahlzeit hinzufügen"
     t_toast = "Zum Tagebuch hinzugefügt: {} ({}g)"
@@ -80,6 +83,7 @@ else:
     t_korak1 = "🔍 Korak 1: Izaberite namirnicu iz baze podataka"
     t_input1 = "Unesite naziv namirnice za pretragu:"
     t_korak2 = "🔍 Korak 2: Izaberite namirnicu sa liste:"
+    t_okvir = "Vrednosti na 100g -> Kalijum: {} mg | Fosfor: {} mg | Natrijum: {} mg"
     t_korak3 = "⚖️ Korak 3: Upišite količinu namirnice u gramima (g):"
     t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
     t_toast = "Dodato u dnevnik: {} ({}g)"
@@ -93,7 +97,7 @@ else:
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
     ime_kolone_baza = 'Namirnica'
 
-# Prikaz naslova sa dvojezičnim formatom na vrhu
+# Prikaz naslova
 st.markdown(f"<h1 style='text-align: center; font-size: 38px;'>{t_naslov}<br><span style='font-size: 22px; font-weight: normal;'>{t_podnaslov}</span></h1>", unsafe_allow_html=True)
 st.write(t_napomena1)
 st.write(t_napomena2)
@@ -134,6 +138,7 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
+            # FIX: Dodat indeks nula na iloc da program zapravo povuče podatke iz tabele
             red = red_df.iloc[0]
             
             k_v = pd.to_numeric(red['Kalijum'], errors='coerce')
@@ -152,7 +157,7 @@ if df is not None:
             st.markdown(
                 f"""
                 <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja}; font-size: 16px;'>
-                    📊 Vrednosti na 100g -> <span style='color: {k_boja}; font-weight: bold;'>Kalijum: {k_v} mg</span> | Fosfor: {f_v} mg | Natrijum: {n_v} mg
+                    {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
                 </div>
                 """, 
                 unsafe_allow_html=True
@@ -167,7 +172,6 @@ if df is not None:
             ukupno_f = f_v * faktor
             ukupno_n = n_v * faktor
             
-            # Dugme se stilizuje kroz CSS postavljen na vrhu koda
             if st.button(t_dugme_dodaj):
                 st.session_state['dnevnik_obroka'].append({
                     'Namirnica': izbor, 
@@ -175,11 +179,3 @@ if df is not None:
                     'Kalijum (mg)': round(ukupno_k, 2),
                     'Fosfor (mg)': round(ukupno_f, 2),
                     'Natrijum (mg)': round(ukupno_n, 2)
-                })
-                st.toast(t_toast.format(izbor, kolicina), icon="✅")
-
-st.write("---")
-st.subheader(t_naslov_tabele)
-
-if st.session_state['dnevnik_obroka']:
-    prikaz_df = pd.DataFrame(st.session_state['dnevnik_obroka'])
