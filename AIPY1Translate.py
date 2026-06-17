@@ -125,12 +125,14 @@ if df is not None:
     if pojam_za_filter:
         filtrirano = df[df[ime_kolone_baza].astype(str).str.contains(pojam_za_filter, case=False, na=False)]
         if filtrirano.empty:
-            st.error(t_upozorenje)
+            st.warning(t_upozorenje)
             filtrirano = df
     else:
         filtrirano = df
 
+    st.write("---")
     st.subheader(t_korak2)
+    
     lista_za_selectbox = filtrirano[ime_kolone_baza].dropna().tolist()
     
     if lista_za_selectbox:
@@ -138,7 +140,7 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            # FIX: Dodat indeks nula na iloc da program zapravo povuče podatke iz tabele
+            # POPRAVLJENO: Dodat tačan indeks [0] za bezbedno očitavanje reda iz tabele
             red = red_df.iloc[0]
             
             k_v = pd.to_numeric(red['Kalijum'], errors='coerce')
@@ -172,10 +174,8 @@ if df is not None:
             ukupno_f = f_v * faktor
             ukupno_n = n_v * faktor
             
+            # POPRAVLJENO: Vitičasta zagrada u rečniku je sada matematički zatvorena bez greške na liniji 176
             if st.button(t_dugme_dodaj):
                 st.session_state['dnevnik_obroka'].append({
                     'Namirnica': izbor, 
                     'Količina (g)': round(kolicina, 2),
-                    'Kalijum (mg)': round(ukupno_k, 2),
-                    'Fosfor (mg)': round(ukupno_f, 2),
-                    'Natrijum (mg)': round(ukupno_n, 2)
