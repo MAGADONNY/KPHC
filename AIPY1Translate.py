@@ -73,15 +73,29 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
+# Funkcija koja privremeno popravlja reči bez naših slova samo da bi ih Google lakše preveo
+def popravi_za_prevod(tekst):
+    t = str(tekst).lower()
+    if "curetina" in t: t = t.replace("curetina", "ćuretina")
+    if "skembici" in t: t = t.replace("skembici", "škembići")
+    if "juneci" in t: t = t.replace("juneci", "juneći")
+    if "svinjski" in t: t = t.replace("svinjski", "svinjski")
+    return t.capitalize()
+
 if df is not None:
     st.write("")
     st.subheader(t_korak1)
     pretraga = st.text_input(t_input1, key="polje_pretrage")
     pojam_za_filter = pretraga.strip()
     
+    # Prevodimo reč za pretragu na srpski ako je izabran engleski
     if pojam_za_filter and jezik == "English":
         try:
-            pojam_za_filter = GoogleTranslator(source='en', target='sr').translate(pojam_za_filter)
+            # Ako stranac ukuca tripe ili turkey, prevodimo na srpske bazične reči bez kvačica
+            prevod = GoogleTranslator(source='en', target='sr').translate(pojam_za_filter).lower()
+            if "ćuretina" in prevod: prevod = prevod.replace("ćuretina", "curetina")
+            if "škembići" in prevod: prevod = prevod.replace("škembići", "skembici")
+            pojam_za_filter = prevod
         except:
             pass
 
@@ -99,7 +113,9 @@ if df is not None:
     for n in za_prikaz['Namirnica'].tolist():
         if jezik == "English":
             try:
-                prevod_na_en = GoogleTranslator(source='sr', target='en').translate(n)
+                # Pre slanja Google-u popravljamo lažna slova da bi prevod uspeo
+                popravljen_naziv = popravi_za_prevod(n)
+                prevod_na_en = GoogleTranslator(source='sr', target='en').translate(popravljen_naziv)
                 lista_namirnica_prikaz[prevod_na_en] = n
             except:
                 lista_namirnica_prikaz[n] = n
@@ -113,7 +129,6 @@ if df is not None:
         izbor_prikaz = st.selectbox("👇", list(lista_namirnica_prikaz.keys()), label_visibility="collapsed")
         izbor_original = lista_namirnica_prikaz[izbor_prikaz]
         
-        # POPRAVLJENO: Dodat indeks nula na iloc da kod nikada ne pukne
         red = df[df['Namirnica'] == izbor_original].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -195,23 +210,3 @@ if st.session_state['dnevnik_obroka']:
     sum_f = prikaz_df[col_fosfor].sum()
     sum_n = prikaz_df[col_natrijum].sum()
     
-    boja_kalijuma = "#ff4b4b" if sum_k > 1199 else "#279FF5"
-    
-    st.markdown(f"""
-<div style='font-size: 20px; font-weight: bold; line-height: 1.6; width: 100%;'>
-    <div style='border: 2px solid #ffffff; padding: 10px; border-radius: 5px; color: #279FF5; margin-bottom: 20px; width: 100%; box-sizing: border-box;'>
-        {t_zbir_okvir}
-    </div>
-    <span style='color: {boja_kalijuma};'>{t_ukupno_k.format(sum_k)}</span><br>
-    <span style='color: #279FF5;'>{t_ukupno_f.format(sum_f)}</span><br>
-    <span style='color: #279FF5;'>{t_ukupno_n.format(sum_n)}</span>
-</div>
-""", unsafe_allow_html=True)
-        
-    if st.button(t_dugme_obrisi):
-        st.session_state['dnevnik_obroka'] = []
-        st.rerun()
-
-# --- LOGIKA ZA BROJAČ (POTPUNO BEZBEDAN TEKST BEZ NAVODNIKA) ---
-st.write("---")
-st.write("📊 **Ukupno poseta aplikaciji:** 3012")
