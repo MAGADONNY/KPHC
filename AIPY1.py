@@ -1,37 +1,39 @@
 import streamlit as st
 import pandas as pd
-import os
-from fpdf import FPDF
 
 # Podešavanje izgleda web stranice (ikonica karte u tabu pretraživača)
 st.set_page_config(page_title="Dnevnik Ishrane by Magicom", page_icon="🃏", layout="centered")
 
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
-st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>provera nivoa minerala u namirnicama sa zbirom dnevnog unosa</span> </h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevnik Ishrane♦️♣️<br><span style='font-size: 22px; font-weight: normal;'>sa zbirom dnevnog unosa minerala</span> </h1>", unsafe_allow_html=True)
 
 # Tekst napomene odmah ispod naslova
-st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).* Nivo minerala odredjuje AI pretragom USDA baze.")
-st.write("ⓘ *Preporuceni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg *")
+st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).*")
+st.write("ⓘ *Preporuceni dnevni unos: Kalijum max 1200-1500mg | Fosfor max 800-1000mg *")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
 if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
 # Učitavanje baze uz preskakanje prvog praznog reda (header=1)
-@st.cache_data(ttl=86400)
+@st.cache_data
 def ucitaj_bazu():
-    df = pd.read_excel("KPH-AI.xlsx", header=1)
-    df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
-    df = df.dropna(subset=['Namirnica'])
-    return df
+    try:
+        df = pd.read_excel("KPH-AI.xlsx", header=1)
+        df.columns = ['Namirnica', 'Kalijum', 'Fosfor', 'Natrijum']
+        df = df.dropna(subset=['Namirnica'])
+        return df
+    except Exception as e:
+        st.error(f"Greška pri čitavanju Excel tabele: {e}")
+        return None
 
 df = ucitaj_bazu()
 
 if df is not None:
     st.write("") # Prazan prostor radi estetike
     st.subheader("🔍 Korak 1: Izaberite namirnicu iz baze podataka")
-    pretraga = st.text_input("Unesite naziv namirnice za pretragu:(npr. meso, piletina, sarma, burek, pivo, spagete...)")
+    pretraga = st.text_input("Unesite naziv namirnice za pretragu:")
     
     if pretraga:
         filtrirano = df[df['Namirnica'].astype(str).str.contains(pretraga, case=False, na=False)]
@@ -41,9 +43,9 @@ if df is not None:
     lista_namirnica = filtrirano['Namirnica'].tolist()
     
     if lista_namirnica:
-        izbor = st.selectbox("🔍Korak 2. Klikni i izaberi namirnicu sa liste:", lista_namirnica)
+        izbor = st.selectbox("Klikni i izaberi namirnicu sa liste:", lista_namirnica)
         
-        # TAČNO POPRAVLJENO: Dodat .iloc[0] sa uglastim zagradama
+        # Filtriranje reda za izabranu namirnicu
         red = df[df['Namirnica'] == izbor].iloc[0]
         
         def ocisti_broj(vrednost):
@@ -76,9 +78,9 @@ if df is not None:
         )
         
         st.write("---")
-        st.subheader("⚖️ Korak 3: Upisite kolicinu konzumirane namirnice")
+        st.subheader("⚖️ Korak 2: Upisite kolicinu konzumirane namirnice")
         
-        kolicina = st.number_input("Unesite kolicinu namirnice u gramima (g):", min_value=1.0, value=100.0, step=10.0)
+        kolicina = st.number_input("Unesite ovde tačnu težinu u gramima (g):", min_value=1.0, value=100.0, step=10.0)
         
         faktor = kolicina / 100.0
         ukupno_k = k_v * faktor
@@ -149,62 +151,59 @@ if df is not None:
     <span style='color: #279FF5;'>Ukupno Natrijum: {sum_n:.2f} mg</span>
 </div>
 """, unsafe_allow_html=True)
-        
-        # --- GENERISANJE PDF-A SPREMNOG ZA DOKTORA ---
-        st.write("---")
-        st.subheader("📄 Generisanje PDF izveštaja za lekara")
-        
-        ime_pacijenta = st.text_input("Unesite ime i prezime pacijenta za PDF:", placeholder="npr. Marko Marković")
-        
-        def napravi_pdf(ime, obroci, s_k, s_f, s_n):
-            pdf = FPDF()
-            pdf.add_page()
             
-            pdf.set_font("Helvetica", "B", 16)
-            pdf.cell(190, 10, "IZVESTAJ O DNEVNOM UNOSU MINERALA", ln=True, align="C")
-            pdf.set_font("Helvetica", "", 10)
-            pdf.cell(190, 5, "Generisano putem aplikacije: Dnevnik Ishrane", ln=True, align="C")
-            pdf.ln(10)
-            
-            pdf.set_font("Helvetica", "B", 12)
-            pdf.cell(190, 8, f"Pacijent: {ime if ime else 'Nepoznato'}", ln=True)
-            pdf.ln(5)
-            
-            # Zaglavlje tabele
-            pdf.set_fill_color(240, 240, 240)
-            pdf.set_font("Helvetica", "B", 10)
-            pdf.cell(70, 8, "Namirnica", border=1, fill=True)
-            pdf.cell(30, 8, "Kolicina (g)", border=1, fill=True, align="R")
-            pdf.cell(30, 8, "Kalijum (mg)", border=1, fill=True, align="R")
-            pdf.cell(30, 8, "Fosfor (mg)", border=1, fill=True, align="R")
-            pdf.cell(30, 8, "Natrijum (mg)", border=1, fill=True, align="R")
-            pdf.ln()
-            
-            # Redovi tabele
-            pdf.set_font("Helvetica", "", 10)
-            for o in obroci:
-                naziv = o['Namirnica'].replace('č','c').replace('ć','c').replace('š','s').replace('ž','z').replace('đ','dj')
-                naziv = naziv.replace('Č','C').replace('Ć','C').replace('Š','S').replace('Ž','Z').replace('Đ','Dj')
-                
-                pdf.cell(70, 8, naziv[:35], border=1)
-                pdf.cell(30, 8, f"{o['Količina (g)']:.2f}", border=1, align="R")
-                pdf.cell(30, 8, f"{o['Kalijum (mg)']:.2f}", border=1, align="R")
-                pdf.cell(30, 8, f"{o['Fosfor (mg)']:.2f}", border=1, align="R")
-                pdf.cell(30, 8, f"{o['Natrijum (mg)']:.2f}", border=1, align="R")
-                pdf.ln()
-                
-            pdf.ln(10)
-            pdf.set_font("Helvetica", "B", 11)
-            pdf.cell(190, 8, "UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:", ln=True)
-            pdf.set_font("Helvetica", "", 11)
-            pdf.cell(190, 6, f"- Ukupno Kalijum: {s_k:.2f} mg (Preporuceno: 1200-1500mg)", ln=True)
-            pdf.cell(190, 6, f"- Ukupno Fosfor: {s_f:.2f} mg (Preporuceno: 800-1000mg)", ln=True)
-            pdf.cell(190, 6, f"- Ukupno Natrijum: {s_n:.2f} mg", ln=True)
-            
-            return pdf.output()
+        if st.button("🗑️ Isprazni kompletan dnevnik"):
+            st.session_state['dnevnik_obroka'] = []
+            st.rerun()
+# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
+import os
 
-        if ime_pacijenta:
-            pdf_izlaz = napravi_pdf(ime_pacijenta, st.session_state['dnevnik_obroka'], sum_k, sum_f, sum_n)
+ime_fajla = "brojac.txt"
+pocetni_broj = 3002
+
+if 'poseta_uracunata' not in st.session_state:
+    if not os.path.exists(ime_fajla):
+        with open(ime_fajla, "w") as f:
+            f.write(str(pocetni_broj))
+        trenutni_broj = pocetni_broj
+    else:
+        with open(ime_fajla, "r") as f:
+            try:
+                trenutni_broj = int(f.read().strip()) + 1
+            except:
+                trenutni_broj = pocetni_broj
+        with open(ime_fajla, "w") as f:
+            f.write(str(trenutni_broj))
+    st.session_state['poseta_uracunata'] = trenutni_broj
+else:
+    if os.path.exists(ime_fajla):
+        with open(ime_fajla, "r") as f:
+            try:
+                trenutni_broj = int(f.read().strip())
+            except:
+                trenutni_broj = pocetni_broj
+    else:
+        trenutni_broj = pocetni_broj
+
+st.write("")
+st.write("")
+
+# Prikaz brojača kao čist HTML tekst
+st.markdown(f"""
+<div style='text-align: center; margin-bottom: 15px;'>
+    <p style='color: #808495; font-size: 16px; margin-bottom: 5px;'>
+         Ukupno poseta aplikaciji: <span style='color: #279FF5; font-weight: bold;'>{trenutni_broj}</span>
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+# Potpis autora na samom dnu
+st.markdown("""
+<p style='font-size: 18px; text-align: center; color: #808495;'>
+Autor: ♦️♣️♠️♥️ MAGICOMP & AI Gemini<br>
+magy@usa.com &nbsp;&nbsp; Tel.+38163310850<br>
+Powered by PYTHON
+</p>
+""", unsafe_allow_html=True)
+
             
-            st.download_button(
-                label="📥 PREUZMI PDF DOKUMENT ZA DOKTORA",
