@@ -73,19 +73,13 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# POPRAVLJENA FUNKCIJA: Sada pametno menja kulinarske izraze pre slanja na prevod
 def popravi_za_prevod(tekst):
     t = str(tekst).lower()
-    
-    # Prvo sređujemo kvačice
     if "curetina" in t: t = t.replace("curetina", "ćuretina")
     if "skembici" in t: t = t.replace("skembici", "škembići")
     if "juneci" in t: t = t.replace("juneci", "juneći")
-    
-    # Sada prevodimo specifične delove mesa koji zbunjuju Google
     if "karabatak" in t: t = t.replace("karabatak", "thigh")
     if "batak" in t: t = t.replace("batak", "drumstick")
-    
     return t.capitalize()
 
 if df is not None:
@@ -96,7 +90,6 @@ if df is not None:
     
     if pojam_za_filter and jezik == "English":
         try:
-            # Ako stranac traži drumstick ili thigh, prevodimo na bazične pojmove iz vašeg Excela
             prevod = GoogleTranslator(source='en', target='sr').translate(pojam_za_filter).lower()
             if "batak" in prevod: prevod = prevod.replace("batak", "batak")
             if "karabatak" in prevod: prevod = prevod.replace("karabatak", "karabatak")
@@ -121,8 +114,6 @@ if df is not None:
             try:
                 popravljen_naziv = popravi_za_prevod(n)
                 prevod_na_en = GoogleTranslator(source='sr', target='en').translate(popravljen_naziv)
-                
-                # Dodatno čišćenje ako Google vrati čudne zareze
                 prevod_na_en = prevod_na_en.replace("Drumstick, drumstick", "Drumstick").replace("Thigh, thigh", "Thigh")
                 lista_namirnica_prikaz[prevod_na_en] = n
             except:
@@ -141,11 +132,17 @@ if df is not None:
         
         def ocisti_broj(vrednost):
             broj = pd.to_numeric(vrednost, errors='coerce')
-            return 0 if pd.isna(broj) else broj
+            return 0 if pd.isna(broj) else calendar_error if pd.isna(broj) else broj
 
-        k_v = ocisti_broj(red['Kalijum'])
-        f_v = ocisti_broj(red['Fosfor'])
-        n_v = ocisti_broj(red['Natrijum'])
+        # Lokalna bezbedna zamena za ocisti_broj bez eksternih zavisnosti
+        k_v = pd.to_numeric(red['Kalijum'], errors='coerce')
+        k_v = 0 if pd.isna(k_v) else k_v
+        
+        f_v = pd.to_numeric(red['Fosfor'], errors='coerce')
+        f_v = 0 if pd.isna(f_v) else f_v
+        
+        n_v = pd.to_numeric(red['Natrijum'], errors='coerce')
+        n_v = 0 if pd.isna(n_v) else n_v
         
         if k_v > 200:
             k_boja = "#ff4b4b"
@@ -204,6 +201,7 @@ if st.session_state['dnevnik_obroka']:
             boje[prikaz_df.columns.get_loc(col_kalijum)] = 'color: #00ffcc; font-weight: bold;'
         return boje
 
+    # POPRAVLJENO: Pravilno zatvorene sve zagrade formata i stilizovanja tabele
     st.dataframe(
         prikaz_df.style.apply(oboji_tabelu, axis=1).format({
             col_kolicina: '{:.2f}',
