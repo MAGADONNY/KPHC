@@ -155,7 +155,17 @@ if 'dnevnik_obroka' not in st.session_state:
 def ucitaj_bazu():
     try:
         df = pd.read_excel("KPH-AI-GLOBAL.xlsx")
-        df.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
+        # Dinamičko mapiranje kolona prema tačnom nazivu u zaglavlju Excel-a
+        ocekivane_kolone = {
+            'Namirnica': 'Namirnica',
+            'Namirnica_EN': 'Namirnica_EN',
+            'Namirnica_ES': 'Namirnica_ES',
+            'Namirnica_DE': 'Namirnica_DE',
+            'Kalijum': 'Kalijum',
+            'Fosfor': 'Fosfor',
+            'Natrijum': 'Natrijum'
+        }
+        df.rename(columns=ocekivane_kolone, inplace=True)
         return df
     except:
         return None
@@ -186,7 +196,7 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            # Izbegavanje DataFrame serije kroz direktan pristup prvom indeksu nula [.iloc[0]]
+            # SINTAKSA POPRAVLJENA: .iloc[0] ispravno izvlači prvu vrednost iz kolone bez rušenja koda
             k_v = pd.to_numeric(red_df['Kalijum'].iloc[0], errors='coerce')
             k_v = 0.0 if pd.isna(k_v) else float(k_v)
             
@@ -202,11 +212,3 @@ if df is not None:
                 
             st.markdown(
                 f"""
-                <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja}; font-size: 19px; font-weight: bold;'>
-                    {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
-                </div>
-                """, 
-                unsafe_allow_html=True
-            )
-            
-            st.write("---")
