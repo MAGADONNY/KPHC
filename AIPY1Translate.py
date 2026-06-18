@@ -162,7 +162,8 @@ if df is not None:
             st.markdown(
                 f"""
                 <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja}; font-size: 19px; font-weight: bold; color: #ffffff;'>
-                    {t_okvir.format(k_v, f_v, n_v)}
+                                        {t_okvir.format(k_boja, k_v, f_v, n_v)}
+
                 </div>
                 """, 
                 unsafe_allow_html=True
