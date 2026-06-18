@@ -90,7 +90,7 @@ st.write(t_napomena2)
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
     try:
-        df_baza = pd.read_excel("KPH-AI.xlsx")
+        df_baza = pd.read_excel("KPH-AI-GLOBAL.xlsx")
         df_baza.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
         return df_baza
     except:
