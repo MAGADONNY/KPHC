@@ -154,7 +154,7 @@ if 'dnevnik_obroka' not in st.session_state:
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
     try:
-        # PODEŠENO: Čita tačan naziv tvog novog GLOBAL fajla sa velikim slovima
+        # Čita bezbedno odvojeni KPH-AI-GLOBAL.xlsx fajl
         df = pd.read_excel("KPH-AI-GLOBAL.xlsx")
         df.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
         return df
@@ -187,13 +187,14 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            k_v = pd.to_numeric(red_df['Kalijum'].values, errors='coerce')
+            # POPRAVLJENO: Koristimo bezbedni indeks .iloc[0] za čisto izvlačenje pojedinačnog broja iz tabele
+            k_v = pd.to_numeric(red_df['Kalijum'].iloc[0], errors='coerce')
             k_v = 0.0 if pd.isna(k_v) else float(k_v)
             
-            f_v = pd.to_numeric(red_df['Fosfor'].values, errors='coerce')
+            f_v = pd.to_numeric(red_df['Fosfor'].iloc[0], errors='coerce')
             f_v = 0.0 if pd.isna(f_v) else float(f_v)
             
-            n_v = pd.to_numeric(red_df['Natrijum'].values, errors='coerce')
+            n_v = pd.to_numeric(red_df['Natrijum'].iloc[0], errors='coerce')
             n_v = 0.0 if pd.isna(n_v) else float(n_v)
             
             if k_v > 200: k_boja = "#ff4b4b"
@@ -206,7 +207,3 @@ if df is not None:
                     {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
                 </div>
                 """, 
-                unsafe_allow_html=True
-            )
-            
-            st.write("---")
