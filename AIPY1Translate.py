@@ -117,18 +117,18 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# --- ISPRAVLJENE CALLBACK FUNKCIJE ZA DUGMRE ---
+# --- POTPUNO BEZBEDNE I POPRAVLJENE CALLBACK FUNKCIJE ---
 def dodaj_obrok_callback():
     if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
         odabrana_hrana = st.session_state['trenutni_izbor']
         kolicina = float(st.session_state['trenutna_kolicina'])
         
-        # Bezbedno filtriranje reda preko .loc
-        red = df.loc[df[ime_kolone_baza] == odabrana_hrana]
+        # Filtriranje reda i pravilan izvlačenje vrednosti preko .iloc[0] na selektovanoj koloni
+        red = df[df[ime_kolone_baza] == odabrana_hrana]
         if not red.empty:
-            k = float(red.iloc[0]['Kalijum'])
-            f = float(red.iloc[0]['Fosfor'])
-            n = float(red.iloc[0]['Natrijum'])
+            k = float(red['Kalijum'].iloc[0])
+            f = float(red['Fosfor'].iloc[0])
+            n = float(red['Natrijum'].iloc[0])
             
             # Proračun minerala za unetu gramažu i upis u listu
             st.session_state['dnevnik_obroka'].append({
@@ -166,15 +166,14 @@ if df is not None:
         # Selectbox sa stabilnim key parametrom
         izbor = st.selectbox("👇", lista_za_selectbox, label_visibility="collapsed", key="trenutni_izbor")
         
-        # Prikaz minerala za selektovanu hranu (baza za 100g)
-        trenutni_red = df.loc[df[ime_kolone_baza] == izbor]
+        # ISPRAVLJENO: Pravilno i bezbedno uzimanje vrednosti za plavi info okvir preko .iloc[0]
+        trenutni_red = df[df[ime_kolone_baza] == izbor]
         if not trenutni_red.empty:
-            k_100 = trenutni_red.iloc[0]['Kalijum']
-            f_100 = trenutni_red.iloc[0]['Fosfor']
-            n_100 = trenutni_red.iloc[0]['Natrijum']
+            k_100 = trenutni_red['Kalijum'].iloc[0]
+            f_100 = trenutni_red['Fosfor'].iloc[0]
+            n_100 = trenutni_red['Natrijum'].iloc[0]
             st.info(t_okvir.format(k_100, f_100, n_100))
         
         st.write("---")
         st.subheader(t_korak3)
         
-        # Čisto polje za brojčani unos količine u gramima
