@@ -8,7 +8,7 @@ st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", 
 # Bezbedan CSS stil koji boji i obično dugme u jarkoplavu boju preko celog ekrana
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
-# Inicijalizacija session_state promenljivih na samom početku
+# Inicijalizacija session_state liste za tabelu na samom početku
 if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
@@ -101,7 +101,7 @@ else:
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
     ime_kolone_baza = 'Namirnica'
 
-# Prikaz naslova
+# Prikaz naslova aplikacije
 st.markdown(f"<h1 style='text-align: center; font-size: 38px;'>{t_naslov}<br><span style='font-size: 22px; font-weight: normal;'>{t_podnaslov}</span></h1>", unsafe_allow_html=True)
 st.write(t_napomena1)
 st.write(t_napomena2)
@@ -109,40 +109,40 @@ st.write(t_napomena2)
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
     try:
-        df = pd.read_excel("KPH-AI.xlsx")
-        df.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
-        return df
+        df_baza = pd.read_excel("KPH-AI.xlsx")
+        df_baza.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
+        return df_baza
     except:
         return None
 
 df = ucitaj_bazu()
 
-# --- CALLBACK FUNKCIJA ZA BEZBEDNO DODAVANJE OBROKA ---
+# --- ISPRAVLJENE CALLBACK FUNKCIJE ZA DUGMRE ---
 def dodaj_obrok_callback():
     if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
         odabrana_hrana = st.session_state['trenutni_izbor']
-        kolicina = st.session_state['trenutna_kolicina']
+        kolicina = float(st.session_state['trenutna_kolicina'])
         
-        # Pronalaženje tačnog reda u bazi
-        red = df[df[ime_kolone_baza] == odabrana_hrana]
+        # Bezbedno filtriranje reda preko .loc
+        red = df.loc[df[ime_kolone_baza] == odabrana_hrana]
         if not red.empty:
             k = float(red.iloc[0]['Kalijum'])
             f = float(red.iloc[0]['Fosfor'])
             n = float(red.iloc[0]['Natrijum'])
             
-            # Proračun minerala za unetu gramažu
+            # Proračun minerala za unetu gramažu i upis u listu
             st.session_state['dnevnik_obroka'].append({
                 col_namirnica: odabrana_hrana,
                 col_kolicina: kolicina,
-                col_kalijum: (k * kolicina) / 100.0,
-                col_fosfor: (f * kolicina) / 100.0,
-                col_natrijum: (n * kolicina) / 100.0
+                col_kalijum: round((k * kolicina) / 100.0, 2),
+                col_fosfor: round((f * kolicina) / 100.0, 2),
+                col_natrijum: round((n * kolicina) / 100.0, 2)
             })
-            st.success(t_toast.format(odabrana_hrana, kolicina))
 
 def isprazni_dnevnik_callback():
     st.session_state['dnevnik_obroka'] = []
 
+# --- GLAVNA LOGIKA STRANICE ---
 if df is not None:
     st.write("---")
     st.subheader(t_korak1)
@@ -163,11 +163,11 @@ if df is not None:
     lista_za_selectbox = filtrirano[ime_kolone_baza].dropna().tolist()
     
     if lista_za_selectbox:
-        # Dodat fiksni key="trenutni_izbor"
+        # Selectbox sa stabilnim key parametrom
         izbor = st.selectbox("👇", lista_za_selectbox, label_visibility="collapsed", key="trenutni_izbor")
         
-        # Prikaz trenutnih vrednosti za 100g iz baze
-        trenutni_red = df[df[ime_kolone_baza] == izbor]
+        # Prikaz minerala za selektovanu hranu (baza za 100g)
+        trenutni_red = df.loc[df[ime_kolone_baza] == izbor]
         if not trenutni_red.empty:
             k_100 = trenutni_red.iloc[0]['Kalijum']
             f_100 = trenutni_red.iloc[0]['Fosfor']
@@ -177,4 +177,4 @@ if df is not None:
         st.write("---")
         st.subheader(t_korak3)
         
-        # Unos količine sa fiksiranim key="trenutna_kolicina"
+        # Čisto polje za brojčani unos količine u gramima
