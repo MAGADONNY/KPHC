@@ -4,14 +4,12 @@ import pandas as pd
 # Osnovna podešavanja aplikacije
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
-# Bezbedan CSS stil za tamnu temu i široko plavo dugme
+# Bezbedan CSS stil za tamnu temu i široko plavo dugme preko celog ekrana
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
-# Inicijalizacija session_state promenljivih na samom početku
+# Inicijalizacija session_state liste za čuvanje unetih obroka
 if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
-if 'izabrano_slovo' not in st.session_state:
-    st.session_state['izabrano_slovo'] = None
 
 # Izbor jezika na samom vrhu stranice
 jezik = st.selectbox("🌐 Jezik / Language / Idioma / Sprache", ["Srpski", "English", "Español", "Deutsch"])
@@ -21,7 +19,7 @@ if jezik == "English":
     t_naslov, t_podnaslov = "♠️♥️Diet Diary♦️♣️", "mineral levels tracking with daily intake sum"
     t_napomena1 = "⚠️ *Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food.*"
     t_napomena2 = "ⓘ *Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg*"
-    t_korak1 = "🔍 Step 1: Choose a food item from the alphabetical list"
+    t_korak1 = "🔍 Step 1: Click and type a letter to find food (A-Z sorted):"
     t_okvir = "Values per 100g -> Potassium: {} mg | Phosphorus: {} mg | Sodium: {} mg"
     t_korak2 = "⚖️ Step 2: Enter the amount of food consumed (in grams):"
     t_dugme_dodaj = "➕ Add meal to my diary"
@@ -35,7 +33,7 @@ elif jezik == "Español":
     t_naslov, t_podnaslov = "♠️♥️Diario de Alimentación♦️♣️", "seguimiento de minerales con suma de ingesta diaria"
     t_napomena1 = "⚠️ *Los valores de minerales se expresan en miligramos (mg) por cada 100 gramos de alimento limpio y crudo.*"
     t_napomena2 = "ⓘ *Ingesta diaria recomendada: Potasio 1200-1500mg | Fósforo 800-1000mg*"
-    t_korak1 = "🔍 Paso 1: Elija un alimento de la lista alfabética"
+    t_korak1 = "🔍 Paso 1: Busque un alimento en la lista (Ordenado A-Z):"
     t_okvir = "Valores por 100g -> Potasio: {} mg | Fósforo: {} mg | Sodio: {} mg"
     t_korak2 = "⚖️ Paso 2: Ingrese la cantidad de alimento (en gramos):"
     t_dugme_dodaj = "➕ Añadir comida a mi diario"
@@ -49,7 +47,7 @@ elif jezik == "Deutsch":
     t_naslov, t_podnaslov = "♠️♥️Ernährungstagebuch♦️♣️", "Überwachung des Mineralstoffgehalts mit täglicher Gesamtaufnahme"
     t_napomena1 = "⚠️ *Die Mineralstoffwerte sind in Milligramm (mg) pro 100 Gramm gereinigter, roher Lebensmittel angegeben.*"
     t_napomena2 = "ⓘ *Empfohlene tägliche Aufnahme: Kalium 1200-1500mg | Phosphor 800-1000mg*"
-    t_korak1 = "🔍 Schritt 1: Lebensmittel aus der alphabetischen Liste auswählen"
+    t_korak1 = "🔍 Schritt 1: Lebensmittel aus der Liste auswählen (A-Z sortiert):"
     t_okvir = "Werte pro 100g -> Kalium: {} mg | Phosphor: {} mg | Natrium: {} mg"
     t_korak2 = "⚖️ Schritt 2: Verzehrte Menge in Gramm eingeben:"
     t_dugme_dodaj = "➕ Mahlzeit hinzufügen"
@@ -63,7 +61,7 @@ else:
     t_naslov, t_podnaslov = "♠️♥️Dnevnik Ishrane♦️♣️", "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa"
     t_napomena1 = "⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice.*"
     t_napomena2 = "ⓘ *Preporučeni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg*"
-    t_korak1 = "🔍 Korak 1: Izaberite namirnicu sa abecedne liste"
+    t_korak1 = "🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)"
     t_okvir = "Vrednosti na 100g -> Kalijum: {} mg | Fosfor: {} mg | Natrijum: {} mg"
     t_korak2 = "⚖️ Korak 2: Upišite količinu namirnice u gramima"
     t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
@@ -90,7 +88,7 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# --- CALLBACK FUNKCIJE ZA BEZBEDAN UPIS ---
+# --- BEZBEDNE LOGIČKE CALLBACK FUNKCIJE ---
 def dodaj_obrok_callback():
     if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
         odabrana_hrana = st.session_state['trenutni_izbor']
@@ -113,48 +111,19 @@ def dodaj_obrok_callback():
 def isprazni_dnevnik_callback():
     st.session_state['dnevnik_obroka'] = []
 
+# --- GLAVNI RENDER STRANICE ---
 if df is not None:
-    # 1. Priprema i sortiranje kompletne liste po abecedi
+    # Čišćenje baze i striktno sortiranje cele liste po abecedi (A-Z)
     df_sortirano = df.dropna(subset=[ime_kolone_baza]).sort_values(by=ime_kolone_baza)
     kompletna_lista = df_sortirano[ime_kolone_baza].tolist()
     
     st.write("---")
     st.subheader(t_korak1)
     
-    # 2. Kreiranje abecednog indeksa (Dugmići od A do Z) preko kolona
-    slova = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "V", "Z"]
-    st.write("🔤 Skoči na slovo / Jump to letter:")
+    # JEDINSTVENO POLJE: Padajući meni sa kompletnom A-Z listom
+    izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
     
-    # Delimo slova u dva reda radi lepšeg prikaza na ekranu
-    polovina = len(slova) // 2
-    red1 = slova[:polovina]
-    red2 = slova[polovina:]
-    
-    cols1 = st.columns(len(red1))
-    for i, slovo in enumerate(red1):
-        if cols1[i].button(slovo, key=f"btn_{slovo}"):
-            st.session_state['izabrano_slovo'] = slovo
-            
-    cols2 = st.columns(len(red2))
-    for i, slovo in enumerate(red2):
-        if cols2[i].button(slovo, key=f"btn_{slovo}"):
-            st.session_state['izabrano_slovo'] = slovo
-
-    # 3. Određivanje podrazumevanog indeksa u selectboxu na osnovu kliknutog slova
-    default_index = 0
-    if st.session_state['izabrano_slovo']:
-        trazeno_slovo = st.session_state['izabrano_slovo'].lower()
-        for idx, stavka in enumerate(kompletna_lista):
-            if str(stavka).lower().startswith(trazeno_slovo):
-                default_index = idx
-                break
-        # Resetujemo slovo nakon što smo našli indeks
-        st.session_state['izabrano_slovo'] = None
-
-    # 4. Prikaz jedinstvenog Selectbox-a koji sadrži sve namirnice
-    izbor = st.selectbox("👇", kompletna_lista, index=default_index, key="trenutni_izbor")
-    
-    # Prikaz info okvira sa mineralima izabranog artikla
+    # Izvlačenje i bezbedan prikaz minerala pomoću indeksa [0]
     trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
         k_100 = trenutni_red['Kalijum'].values[0]
@@ -165,10 +134,11 @@ if df is not None:
     st.write("---")
     st.subheader(t_korak2)
     
-    # Unos količine i glavno dugme
+    # Polje za unos količine u gramima
     kolicina_g = st.number_input(t_labela_unos, min_value=1.0, max_value=5000.0, value=100.0, step=10.0, label_visibility="collapsed", key="trenutna_kolicina")
     
     st.write("")
+    # Glavno plavo dugme za upis
     st.button(t_dugme_dodaj, on_click=dodaj_obrok_callback)
         
     # --- PRIKAZ DNEVNIKA ISHRANE ---
@@ -180,3 +150,21 @@ if df is not None:
         st.dataframe(df_prikaz, use_container_width=True, hide_index=True)
         
         uk_k = df_prikaz[col_kalijum].sum()
+        uk_f = df_prikaz[col_fosfor].sum()
+        uk_n = df_prikaz[col_natrijum].sum()
+        
+        st.write("")
+        st.markdown(f"### {t_zbir_okvir}")
+        
+        col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.metric(label=col_kalijum, value=f"{uk_k:.2f} mg")
+        with col_m2:
+            st.metric(label=col_fosfor, value=f"{uk_f:.2f} mg")
+        with col_m3:
+            st.metric(label=col_natrijum, value=f"{uk_n:.2f} mg")
+        
+        st.write("")
+        st.button(t_dugme_obrisi, on_click=isprazni_dnevnik_callback)
+else:
+    st.error("Baza podataka 'KPH-AI.xlsx' nije pronađena ili je oštećena.")
