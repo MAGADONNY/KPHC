@@ -22,7 +22,7 @@ if jezik == "English":
     t_napomena1 = "⚠️ *Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food.*"
     t_napomena2 = "ⓘ *Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg*"
     t_korak1 = "🔍 Step 1: Click and type a letter to find food (A-Z sorted):"
-   t_okvir = "Values per 100g -> <span style='color: {}; font-weight: bold;'>Potassium: {} mg</span> | <span style='color: #e0e4ec;'>Phosphorus: {} mg</span> | <span style='color: #e0e4ec;'>Sodium: {} mg</span>"
+    t_okvir = "Values per 100g -> <span style='color: {}; font-weight: bold;'>Potassium: {} mg</span> | <span style='color: #e0e4ec;'>Phosphorus: {} mg</span> | <span style='color: #e0e4ec;'>Sodium: {} mg</span>"
     t_korak2 = "⚖️ Step 2: Enter the amount of food consumed (in grams):"
     t_dugme_dodaj = "➕ Add meal to my diary"
     t_naslov_tabele = "📋 Your daily diet log and entered meals"
