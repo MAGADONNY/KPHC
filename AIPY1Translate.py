@@ -33,7 +33,7 @@ if jezik == "English":
     t_labela_unos = "Amount in grams"
 elif jezik == "Español":
     t_naslov, t_podnaslov = "♠️♥️Diario de Alimentación♦️♣️", "seguimiento de minerales con suma de ingesta diaria"
-    t_napomena1 = "⚠️ *Los valores de minerales se expresan en miligramos (mg) por cada 100 gramos de alimento limpio y crudo.*"
+    t_napomena1 = "⚠️ *Los valores de minerales se expresan in miligramos (mg) por cada 100 gramos de alimento limpio y crudo.*"
     t_napomena2 = "ⓘ *Ingesta diaria recomendada: Potasio 1200-1500mg | Fósforo 800-1000mg*"
     t_korak1 = "🔍 Paso 1: Busque un alimento en la lista (Ordenado A-Z):"
     t_okvir = "Valores por 100g -> Potasio: {} mg | Fósforo: {} mg | Sodio: {} mg"
@@ -96,7 +96,7 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# --- CALLBACK FUNKCIJE SA STABILNIM KLJUČEVIMA ---
+# --- CALLBACK FUNKCIJE SA FIKSNIM ENGLESKIM KLJUČEVIMA ---
 def dodaj_obrok_callback():
     if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
         odabrana_hrana = st.session_state['trenutni_izbor']
@@ -108,13 +108,13 @@ def dodaj_obrok_callback():
             f = float(red['Fosfor'].values[0])
             n = float(red['Natrijum'].values[0])
             
-            # ISPRAVLJENO: Koristimo statičke ključeve ('namirnica', 'kolicina'...) da izbegnemo KeyError pri promeni jezika
+            # ISPRAVLJENO: Interni ključevi su sada 100% na engleskom i fiksni u memoriji
             st.session_state['dnevnik_obroka'].append({
-                'namirnica': odabrana_hrana,
-                'kolicina': kolicina,
-                'kalijum': round((k * kolicina) / 100.0, 2),
-                'fosfor': round((f * kolicina) / 100.0, 2),
-                'natrijum': round((n * kolicina) / 100.0, 2)
+                'food': odabrana_hrana,
+                'amount': kolicina,
+                'potassium': round((k * kolicina) / 100.0, 2),
+                'phosphorus': round((f * kolicina) / 100.0, 2),
+                'sodium': round((n * kolicina) / 100.0, 2)
             })
 
 def isprazni_dnevnik_callback():
@@ -150,17 +150,24 @@ if df is not None:
         st.write("---")
         st.subheader(t_naslov_tabele)
         
-        # Pravljenje tabele sa stabilnim ključevima
+        # Pravljenje tabele iz pozadinske liste
         df_prikaz = pd.DataFrame(st.session_state['dnevnik_obroka'])
         
-        # Računanje suma pre preimenovanja kolona (potpuno bezbedno)
-        uk_k = df_prikaz['kalijum'].sum()
-        uk_f = df_prikaz['fosfor'].sum()
-        uk_n = df_prikaz['natrijum'].sum()
+        # Računanje suma preko sigurnih engleskih ključeva
+        uk_k = df_prikaz['potassium'].sum()
+        uk_f = df_prikaz['phosphorus'].sum()
+        uk_n = df_prikaz['sodium'].sum()
         
-        # Preimenovanje kolona u jezik koji je trenutno izabran na vrhu
-        df_prikaz.columns = [l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum]
-        st.dataframe(df_prikaz, use_container_width=True, hide_index=True)
+        # ISPRAVLJENO: Koristimo bezbedno .rename() remapiranje kolona umesto direktnog prepisivanja niza .columns
+        df_prikaz_prevedeno = df_prikaz.rename(columns={
+            'food': l_namirnica,
+            'amount': l_kolicina,
+            'potassium': l_kalijum,
+            'phosphorus': l_fosfor,
+            'sodium': l_natrijum
+        })
+        
+        st.dataframe(df_prikaz_prevedeno, use_container_width=True, hide_index=True)
         
         st.write("")
         st.markdown(f"### {t_zbir_okvir}")
