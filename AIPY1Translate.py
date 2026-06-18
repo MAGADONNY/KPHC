@@ -37,6 +37,7 @@ if jezik == "English":
     t_dugme_obrisi = "🗑️ Clear complete diary"
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Food Item', 'Amount (g)', 'Potassium (mg)', 'Phosphorus (mg)', 'Sodium (mg)'
     ime_kolone_baza = 'Namirnica_EN'
+    t_labela_unos = "Amount in grams"
 elif jezik == "Español":
     t_naslov = "♠️♥️Diario de Alimentación♦️♣️"
     t_podnaslov = "seguimiento de minerales con suma de ingesta diaria"
@@ -58,6 +59,7 @@ elif jezik == "Español":
     t_dugme_obrisi = "🗑️ Vaciar diario completo"
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Alimento', 'Cantidad (g)', 'Potasio (mg)', 'Fósforo (mg)', 'Sodio (mg)'
     ime_kolone_baza = 'Namirnica_ES'
+    t_labela_unos = "Cantidad en gramos"
 elif jezik == "Deutsch":
     t_naslov = "♠️♥️Ernährungstagebuch♦️♣️"
     t_podnaslov = "Überwachung des Mineralstoffgehalts mit täglicher Gesamtaufnahme"
@@ -79,6 +81,7 @@ elif jezik == "Deutsch":
     t_dugme_obrisi = "🗑️ Tagebuch leeren"
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Lebensmittel', 'Menge (g)', 'Kalium (mg)', 'Phosphor (mg)', 'Natrium (mg)'
     ime_kolone_baza = 'Namirnica_DE'
+    t_labela_unos = "Menge in Gramm"
 else:
     t_naslov = "♠️♥️Dnevnik Ishrane♦️♣️"
     t_podnaslov = "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa"
@@ -100,6 +103,7 @@ else:
     t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
     ime_kolone_baza = 'Namirnica'
+    t_labela_unos = "Količina u gramima"
 
 # Prikaz zaglavlja aplikacije
 st.markdown(f"<h1 style='text-align: center; font-size: 38px;'>{t_naslov}<br><span style='font-size: 22px; font-weight: normal;'>{t_podnaslov}</span></h1>", unsafe_allow_html=True)
@@ -117,13 +121,12 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# --- BEZBEDNE LOGIČKE FUNKCIJE ZA DUGMAD ---
+# --- ISPRAVLJENE LOGIČKE FUNKCIJE ZA DUGMAD (Pretvaranje u nativne Python float vrednosti) ---
 def dodaj_obrok_callback():
     if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
         odabrana_hrana = st.session_state['trenutni_izbor']
         kolicina = float(st.session_state['trenutna_kolicina'])
         
-        # Ekstrakcija podataka potpuno imunim pristupom na tipove indeksa
         red = df[df[ime_kolone_baza] == odabrana_hrana]
         if not red.empty:
             k = float(red['Kalijum'].values[0])
@@ -162,7 +165,7 @@ if df is not None:
     lista_za_selectbox = filtrirano[ime_kolone_baza].dropna().tolist()
     
     if lista_za_selectbox:
-        izbor = st.selectbox("👇", lista_za_selectbox, label_visibility="collapsed", key="trenutni_izbor")
+        izbor = st.selectbox("Izaberi stavku:", lista_za_selectbox, label_visibility="collapsed", key="trenutni_izbor")
         
         # Prikaz info okvira sa mineralima izabranog artikla
         trenutni_red = df[df[ime_kolone_baza] == izbor]
@@ -173,7 +176,6 @@ if df is not None:
             st.info(t_okvir.format(k_100, f_100, n_100))
         
         st.write("---")
-        # Ispisujemo podnaslov čisto, bez ikakvih unutrašnjih elemenata widgeta koji bi pravili link
         st.subheader(t_korak3)
         
-        # Čisto polje za brojčani unos (povezano sa 'trenutna_kolicina' u sesiji)
+        # ISPRAVLJENO: Prosleđen je obavezan tekstualni parametar t_labela_unos umesto praznog "" da se izbegne krah
