@@ -22,7 +22,7 @@ if jezik == "English":
     t_napomena1 = "⚠️ *Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food.*"
     t_napomena2 = "ⓘ *Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg*"
     t_korak1 = "🔍 Step 1: Search for a food item from the database"
-    t_input1 = "Enter food name to search (e.g., meat, chicken, beer...):"
+    t_input1 = "Enter food name to search:"
     t_korak2 = "🔍 Step 2: Select food from the list:"
     t_okvir = "Values per 100g -> Potassium: {} mg | Phosphorus: {} mg | Sodium: {} mg"
     t_korak3 = "⚖️ Step 3: Enter the amount of food consumed (in grams):"
@@ -38,6 +38,7 @@ if jezik == "English":
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Food Item', 'Amount (g)', 'Potassium (mg)', 'Phosphorus (mg)', 'Sodium (mg)'
     ime_kolone_baza = 'Namirnica_EN'
     t_labela_unos = "Amount in grams"
+    t_default_pretraga = "coffee" # Podrazumevana reč za engleski
 elif jezik == "Español":
     t_naslov = "♠️♥️Diario de Alimentación♦️♣️"
     t_podnaslov = "seguimiento de minerales con suma de ingesta diaria"
@@ -60,6 +61,7 @@ elif jezik == "Español":
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Alimento', 'Cantidad (g)', 'Potasio (mg)', 'Fósforo (mg)', 'Sodio (mg)'
     ime_kolone_baza = 'Namirnica_ES'
     t_labela_unos = "Cantidad en gramos"
+    t_default_pretraga = "café" # Podrazumevana reč za španski
 elif jezik == "Deutsch":
     t_naslov = "♠️♥️Ernährungstagebuch♦️♣️"
     t_podnaslov = "Überwachung des Mineralstoffgehalts mit täglicher Gesamtaufnahme"
@@ -82,6 +84,7 @@ elif jezik == "Deutsch":
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Lebensmittel', 'Menge (g)', 'Kalium (mg)', 'Phosphor (mg)', 'Natrium (mg)'
     ime_kolone_baza = 'Namirnica_DE'
     t_labela_unos = "Menge in Gramm"
+    t_default_pretraga = "kaffee" # Podrazumevana reč za nemački
 else:
     t_naslov = "♠️♥️Dnevnik Ishrane♦️♣️"
     t_podnaslov = "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa"
@@ -104,6 +107,7 @@ else:
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
     ime_kolone_baza = 'Namirnica'
     t_labela_unos = "Količina u gramima"
+    t_default_pretraga = "kafa" # Podrazumevana reč za srpski
 
 # Prikaz zaglavlja aplikacije
 st.markdown(f"<h1 style='text-align: center; font-size: 38px;'>{t_naslov}<br><span style='font-size: 22px; font-weight: normal;'>{t_podnaslov}</span></h1>", unsafe_allow_html=True)
@@ -121,7 +125,7 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# --- ISPRAVLJENE LOGIČKE FUNKCIJE ZA DUGMAD (Pretvaranje u nativne Python float vrednosti) ---
+# --- LOGIČKE FUNKCIJE ZA DUGMAD ---
 def dodaj_obrok_callback():
     if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
         odabrana_hrana = st.session_state['trenutni_izbor']
@@ -148,7 +152,9 @@ def isprazni_dnevnik_callback():
 if df is not None:
     st.write("---")
     st.subheader(t_korak1)
-    pretraga = st.text_input(t_input1, key="polje_pretrage")
+    
+    # DODATO: polje sada ima 'value=t_default_pretraga' što postavlja 'kafa' kao podrazumevanu pretragu na startu
+    pretraga = st.text_input(t_input1, value=t_default_pretraga, key="polje_pretrage")
     pojam_za_filter = pretraga.strip()
     
     if pojam_za_filter:
@@ -167,15 +173,8 @@ if df is not None:
     if lista_za_selectbox:
         izbor = st.selectbox("Izaberi stavku:", lista_za_selectbox, label_visibility="collapsed", key="trenutni_izbor")
         
-        # Prikaz info okvira sa mineralima izabranog artikla
         trenutni_red = df[df[ime_kolone_baza] == izbor]
         if not trenutni_red.empty:
             k_100 = trenutni_red['Kalijum'].values[0]
             f_100 = trenutni_red['Fosfor'].values[0]
             n_100 = trenutni_red['Natrijum'].values[0]
-            st.info(t_okvir.format(k_100, f_100, n_100))
-        
-        st.write("---")
-        st.subheader(t_korak3)
-        
-        # ISPRAVLJENO: Prosleđen je obavezan tekstualni parametar t_labela_unos umesto praznog "" da se izbegne krah
