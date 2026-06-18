@@ -154,7 +154,7 @@ if 'dnevnik_obroka' not in st.session_state:
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
     try:
-        # Čita bezbedno odvojeni KPH-AI-GLOBAL.xlsx fajl
+        # Čita KPH-AI-GLOBAL.xlsx fajl
         df = pd.read_excel("KPH-AI-GLOBAL.xlsx")
         df.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
         return df
@@ -187,7 +187,7 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            # POPRAVLJENO: Koristimo bezbedni indeks .iloc[0] za čisto izvlačenje pojedinačnog broja iz tabele
+            # POPRAVLJENO: Dodat indeks [0] na .iloc za čisto izvlačenje pojedinačne brojevne vrednosti
             k_v = pd.to_numeric(red_df['Kalijum'].iloc[0], errors='coerce')
             k_v = 0.0 if pd.isna(k_v) else float(k_v)
             
@@ -207,3 +207,4 @@ if df is not None:
                     {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
                 </div>
                 """, 
+                unsafe_allow_html=True
