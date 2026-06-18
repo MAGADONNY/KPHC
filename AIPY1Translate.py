@@ -26,7 +26,9 @@ if jezik == "English":
     t_naslov_tabele = "📋 Your daily diet log and entered meals"
     t_zbir_okvir = "📊 TOTAL DAILY SUM OF ALL ENTERED MEALS:"
     t_dugme_obrisi = "🗑️ Clear complete diary"
-    col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Food Item', 'Amount (g)', 'Potassium (mg)', 'Phosphorus (mg)', 'Sodium (mg)'
+    
+    # Nazivi kolona za prikaz korisniku
+    l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Food Item', 'Amount (g)', 'Potassium (mg)', 'Phosphorus (mg)', 'Sodium (mg)'
     ime_kolone_baza = 'Namirnica_EN'
     t_labela_unos = "Amount in grams"
 elif jezik == "Español":
@@ -40,7 +42,9 @@ elif jezik == "Español":
     t_naslov_tabele = "📋 Su registro diario de dieta y comidas ingresadas"
     t_zbir_okvir = "📊 SUMA TOTAL DIARIA DE TODAS LAS COMIDAS INGRESADAS:"
     t_dugme_obrisi = "🗑️ Vaciar diario completo"
-    col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Alimento', 'Cantidad (g)', 'Potasio (mg)', 'Fósforo (mg)', 'Sodio (mg)'
+    
+    # Nazivi kolona za prikaz korisniku
+    l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Alimento', 'Cantidad (g)', 'Potasio (mg)', 'Fósforo (mg)', 'Sodio (mg)'
     ime_kolone_baza = 'Namirnica_ES'
     t_labela_unos = "Cantidad en gramos"
 elif jezik == "Deutsch":
@@ -54,7 +58,9 @@ elif jezik == "Deutsch":
     t_naslov_tabele = "📋 Ihr tägliches Ernährungsprotokoll und eingegebene Mahlzeiten"
     t_zbir_okvir = "📊 TÄGLICHE GESAMTSUMME ALLER EINGEGEBENEN MAHLZEITEN:"
     t_dugme_obrisi = "🗑️ Tagebuch leeren"
-    col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Lebensmittel', 'Menge (g)', 'Kalium (mg)', 'Phosphor (mg)', 'Natrium (mg)'
+    
+    # Nazivi kolona za prikaz korisniku
+    l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Lebensmittel', 'Menge (g)', 'Kalium (mg)', 'Phosphor (mg)', 'Natrium (mg)'
     ime_kolone_baza = 'Namirnica_DE'
     t_labela_unos = "Menge in Gramm"
 else:
@@ -68,7 +74,9 @@ else:
     t_naslov_tabele = "📋 Vaš današnji dnevnik ishrane i uneti obroci"
     t_zbir_okvir = "📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:"
     t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
-    col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
+    
+    # Nazivi kolona za prikaz korisniku
+    l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
     ime_kolone_baza = 'Namirnica'
     t_labela_unos = "Količina u gramima"
 
@@ -88,7 +96,7 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# --- BEZBEDNE LOGIČKE CALLBACK FUNKCIJE ---
+# --- CALLBACK FUNKCIJE SA STABILNIM KLJUČEVIMA ---
 def dodaj_obrok_callback():
     if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
         odabrana_hrana = st.session_state['trenutni_izbor']
@@ -100,12 +108,13 @@ def dodaj_obrok_callback():
             f = float(red['Fosfor'].values[0])
             n = float(red['Natrijum'].values[0])
             
+            # ISPRAVLJENO: Koristimo statičke ključeve ('namirnica', 'kolicina'...) da izbegnemo KeyError pri promeni jezika
             st.session_state['dnevnik_obroka'].append({
-                col_namirnica: odabrana_hrana,
-                col_kolicina: kolicina,
-                col_kalijum: round((k * kolicina) / 100.0, 2),
-                col_fosfor: round((f * kolicina) / 100.0, 2),
-                col_natrijum: round((n * kolicina) / 100.0, 2)
+                'namirnica': odabrana_hrana,
+                'kolicina': kolicina,
+                'kalijum': round((k * kolicina) / 100.0, 2),
+                'fosfor': round((f * kolicina) / 100.0, 2),
+                'natrijum': round((n * kolicina) / 100.0, 2)
             })
 
 def isprazni_dnevnik_callback():
@@ -113,17 +122,14 @@ def isprazni_dnevnik_callback():
 
 # --- GLAVNI RENDER STRANICE ---
 if df is not None:
-    # Čišćenje baze i striktno sortiranje cele liste po abecedi (A-Z)
     df_sortirano = df.dropna(subset=[ime_kolone_baza]).sort_values(by=ime_kolone_baza)
     kompletna_lista = df_sortirano[ime_kolone_baza].tolist()
     
     st.write("---")
     st.subheader(t_korak1)
     
-    # JEDINSTVENO POLJE: Padajući meni sa kompletnom A-Z listom
     izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
     
-    # Izvlačenje i bezbedan prikaz minerala pomoću indeksa [0]
     trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
         k_100 = trenutni_red['Kalijum'].values[0]
@@ -134,11 +140,9 @@ if df is not None:
     st.write("---")
     st.subheader(t_korak2)
     
-    # Polje za unos količine u gramima
     kolicina_g = st.number_input(t_labela_unos, min_value=1.0, max_value=5000.0, value=100.0, step=10.0, label_visibility="collapsed", key="trenutna_kolicina")
     
     st.write("")
-    # Glavno plavo dugme za upis
     st.button(t_dugme_dodaj, on_click=dodaj_obrok_callback)
         
     # --- PRIKAZ DNEVNIKA ISHRANE ---
@@ -146,23 +150,28 @@ if df is not None:
         st.write("---")
         st.subheader(t_naslov_tabele)
         
+        # Pravljenje tabele sa stabilnim ključevima
         df_prikaz = pd.DataFrame(st.session_state['dnevnik_obroka'])
-        st.dataframe(df_prikaz, use_container_width=True, hide_index=True)
         
-        uk_k = df_prikaz[col_kalijum].sum()
-        uk_f = df_prikaz[col_fosfor].sum()
-        uk_n = df_prikaz[col_natrijum].sum()
+        # Računanje suma pre preimenovanja kolona (potpuno bezbedno)
+        uk_k = df_prikaz['kalijum'].sum()
+        uk_f = df_prikaz['fosfor'].sum()
+        uk_n = df_prikaz['natrijum'].sum()
+        
+        # Preimenovanje kolona u jezik koji je trenutno izabran na vrhu
+        df_prikaz.columns = [l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum]
+        st.dataframe(df_prikaz, use_container_width=True, hide_index=True)
         
         st.write("")
         st.markdown(f"### {t_zbir_okvir}")
         
         col_m1, col_m2, col_m3 = st.columns(3)
         with col_m1:
-            st.metric(label=col_kalijum, value=f"{uk_k:.2f} mg")
+            st.metric(label=l_kalijum, value=f"{uk_k:.2f} mg")
         with col_m2:
-            st.metric(label=col_fosfor, value=f"{uk_f:.2f} mg")
+            st.metric(label=l_fosfor, value=f"{uk_f:.2f} mg")
         with col_m3:
-            st.metric(label=col_natrijum, value=f"{uk_n:.2f} mg")
+            st.metric(label=l_natrijum, value=f"{uk_n:.2f} mg")
         
         st.write("")
         st.button(t_dugme_obrisi, on_click=isprazni_dnevnik_callback)
