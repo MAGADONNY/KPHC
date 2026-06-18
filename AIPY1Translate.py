@@ -8,6 +8,10 @@ st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", 
 # Bezbedan CSS stil koji boji i obično dugme u jarkoplavu boju preko celog ekrana
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
+# Inicijalizacija session_state promenljivih na samom početku
+if 'dnevnik_obroka' not in st.session_state:
+    st.session_state['dnevnik_obroka'] = []
+
 # Jednostavan i bezbedan izbor jezika na samom vrhu stranice
 jezik = st.selectbox("🌐 Jezik / Language / Idioma / Sprache", ["Srpski", "English", "Español", "Deutsch"])
 
@@ -102,9 +106,6 @@ st.markdown(f"<h1 style='text-align: center; font-size: 38px;'>{t_naslov}<br><sp
 st.write(t_napomena1)
 st.write(t_napomena2)
 
-if 'dnevnik_obroka' not in st.session_state:
-    st.session_state['dnevnik_obroka'] = []
-
 @st.cache_data(ttl=86400)
 def ucitaj_bazu():
     try:
@@ -115,6 +116,32 @@ def ucitaj_bazu():
         return None
 
 df = ucitaj_bazu()
+
+# --- CALLBACK FUNKCIJA ZA BEZBEDNO DODAVANJE OBROKA ---
+def dodaj_obrok_callback():
+    if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
+        odabrana_hrana = st.session_state['trenutni_izbor']
+        kolicina = st.session_state['trenutna_kolicina']
+        
+        # Pronalaženje tačnog reda u bazi
+        red = df[df[ime_kolone_baza] == odabrana_hrana]
+        if not red.empty:
+            k = float(red.iloc[0]['Kalijum'])
+            f = float(red.iloc[0]['Fosfor'])
+            n = float(red.iloc[0]['Natrijum'])
+            
+            # Proračun minerala za unetu gramažu
+            st.session_state['dnevnik_obroka'].append({
+                col_namirnica: odabrana_hrana,
+                col_kolicina: kolicina,
+                col_kalijum: (k * kolicina) / 100.0,
+                col_fosfor: (f * kolicina) / 100.0,
+                col_natrijum: (n * kolicina) / 100.0
+            })
+            st.success(t_toast.format(odabrana_hrana, kolicina))
+
+def isprazni_dnevnik_callback():
+    st.session_state['dnevnik_obroka'] = []
 
 if df is not None:
     st.write("---")
@@ -136,43 +163,18 @@ if df is not None:
     lista_za_selectbox = filtrirano[ime_kolone_baza].dropna().tolist()
     
     if lista_za_selectbox:
-        izbor = st.selectbox("👇", lista_za_selectbox, label_visibility="collapsed")
-        red_df = df[df[ime_kolone_baza] == izbor]
+        # Dodat fiksni key="trenutni_izbor"
+        izbor = st.selectbox("👇", lista_za_selectbox, label_visibility="collapsed", key="trenutni_izbor")
         
-        if not red_df.empty:
-            # Čvrsto i stabilno očitavanje minerala iz tabele pomoću ugrađenog indeksa [0]
-            k_v = pd.to_numeric(red_df['Kalijum'].values[0], errors='coerce')
-            k_v = 0.0 if pd.isna(k_v) else float(k_v)
-            
-            f_v = pd.to_numeric(red_df['Fosfor'].values[0], errors='coerce')
-            f_v = 0.0 if pd.isna(f_v) else float(f_v)
-            
-            n_v = pd.to_numeric(red_df['Natrijum'].values[0], errors='coerce')
-            n_v = 0.0 if pd.isna(n_v) else float(n_v)
-            
-            if k_v > 200: k_boja = "#ff4b4b"
-            elif k_v < 100: k_boja = "#00ffcc"
-            else: k_boja = "#ffffff"
-                
-            st.markdown(
-                f"""
-                <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja}; font-size: 16px;'>
-                    {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
-                </div>
-                """, 
-                unsafe_allow_html=True
-            )
-            
-            st.write("---")
-            st.subheader(t_korak3)
-            
-            # Vraćena standardna struktura unosa grama i dugmeta (bez forme) koja garantuje klik
-            kolicina = st.number_input("", min_value=1.0, value=100.0, step=10.0, key="kolicina_input", label_visibility="collapsed")
-            
-            if st.button(t_dugme_dodaj):
-                faktor = kolicina / 100.0
-                u_k = round(k_v * faktor, 2)
-                u_f = round(f_v * faktor, 2)
-                u_n = round(n_v * faktor, 2)
-                
-                # Dodavanje u tabelu radi bez greške u jednoj liniji
+        # Prikaz trenutnih vrednosti za 100g iz baze
+        trenutni_red = df[df[ime_kolone_baza] == izbor]
+        if not trenutni_red.empty:
+            k_100 = trenutni_red.iloc[0]['Kalijum']
+            f_100 = trenutni_red.iloc[0]['Fosfor']
+            n_100 = trenutni_red.iloc[0]['Natrijum']
+            st.info(t_okvir.format(k_100, f_100, n_100))
+        
+        st.write("---")
+        st.subheader(t_korak3)
+        
+        # Unos količine sa fiksiranim key="trenutna_kolicina"
