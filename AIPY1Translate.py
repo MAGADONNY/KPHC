@@ -189,7 +189,7 @@ else:
 
 # --- FUTER SA INFORMACIJAMA I BROJAČEM POSETA ---
 st.write("---")
-st.markdown("<p style='text-align: center; color: #888888; font-size: 14px;'>Ukupno poseta aplikaciji: 3184</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #279FF5; font-size: 14px;'>Ukupno poseta aplikaciji: 3184</p>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; font-style: italic; color: #888888; font-size: 12px;'>Powered by PYTHON</p>", unsafe_allow_html=True)
