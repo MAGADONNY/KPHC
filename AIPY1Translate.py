@@ -70,7 +70,7 @@ else:
     t_napomena1 = "⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice.*"
     t_napomena2 = "ⓘ *Preporučeni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg*"
     t_korak1 = "🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)"
-    t_okvir = "Vrednosti na 100g -> Kalijum: {} mg | Fosfor: {} mg | Natrijum: {} mg"
+    t_okvir = "Vrednosti na 100g → <span style='color: #f1f5f9; font-weight: 300;'>Kalijum: {} mg | Fosfor: {} mg | Natrijum: {} mg</span>"
     t_korak2 = "⚖️ Korak 2: Upišite količinu namirnice u gramima"
     t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
     t_naslov_tabele = "📋 Vaš današnji dnevnik ishrane i uneti obroci"
