@@ -155,17 +155,7 @@ if 'dnevnik_obroka' not in st.session_state:
 def ucitaj_bazu():
     try:
         df = pd.read_excel("KPH-AI-GLOBAL.xlsx")
-        # Dinamičko mapiranje kolona prema tačnom nazivu u zaglavlju Excel-a
-        ocekivane_kolone = {
-            'Namirnica': 'Namirnica',
-            'Namirnica_EN': 'Namirnica_EN',
-            'Namirnica_ES': 'Namirnica_ES',
-            'Namirnica_DE': 'Namirnica_DE',
-            'Kalijum': 'Kalijum',
-            'Fosfor': 'Fosfor',
-            'Natrijum': 'Natrijum'
-        }
-        df.rename(columns=ocekivane_kolone, inplace=True)
+        df.columns = ['Namirnica', 'Namirnica_EN', 'Namirnica_ES', 'Namirnica_DE', 'Kalijum', 'Fosfor', 'Natrijum']
         return df
     except:
         return None
@@ -196,14 +186,13 @@ if df is not None:
         red_df = df[df[ime_kolone_baza] == izbor]
         
         if not red_df.empty:
-            # SINTAKSA POPRAVLJENA: .iloc[0] ispravno izvlači prvu vrednost iz kolone bez rušenja koda
-            k_v = pd.to_numeric(red_df['Kalijum'].iloc[0], errors='coerce')
+            k_v = pd.to_numeric(red_df['Kalijum'].values[0], errors='coerce')
             k_v = 0.0 if pd.isna(k_v) else float(k_v)
             
-            f_v = pd.to_numeric(red_df['Fosfor'].iloc[0], errors='coerce')
+            f_v = pd.to_numeric(red_df['Fosfor'].values[0], errors='coerce')
             f_v = 0.0 if pd.isna(f_v) else float(f_v)
             
-            n_v = pd.to_numeric(red_df['Natrijum'].iloc[0], errors='coerce')
+            n_v = pd.to_numeric(red_df['Natrijum'].values[0], errors='coerce')
             n_v = 0.0 if pd.isna(n_v) else float(n_v)
             
             if k_v > 200: k_boja = "#ff4b4b"
@@ -212,3 +201,12 @@ if df is not None:
                 
             st.markdown(
                 f"""
+                <div style='background-color: #1e2430; padding: 15px; border-radius: 5px; border-left: 5px solid {k_boja}; font-size: 19px; font-weight: bold;'>
+                    {t_okvir.format(f"<span style='color: {k_boja}; font-weight: bold;'>{k_v}</span>", f_v, n_v)}
+                </div>
+                """, 
+                unsafe_allow_html=True
+            )
+            
+            st.write("---")
+            st.subheader(t_korak3)
