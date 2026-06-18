@@ -5,17 +5,17 @@ import os
 # Osnovna podešavanja aplikacije
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
-# Bezbedan CSS stil koji boji i obično dugme u jarkoplavu boju preko celog ekrana
+# Bezbedan CSS stil za tamnu temu i široko plavo dugme
 st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
-# Inicijalizacija session_state liste za tabelu na samom početku
+# Inicijalizacija session_state liste za tabelu
 if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
-# Jednostavan i bezbedan izbor jezika na samom vrhu stranice
+# Izbor jezika na vrhu aplikacije
 jezik = st.selectbox("🌐 Jezik / Language / Idioma / Sprache", ["Srpski", "English", "Español", "Deutsch"])
 
-# --- REČNIK FIKSNIH TEKSTOVA ZA SVE JEZIKE ---
+# --- REČNIK TEKSTOVA ZA VIŠEJEZIČNOST ---
 if jezik == "English":
     t_naslov = "♠️♥️Diet Diary♦️♣️"
     t_podnaslov = "mineral levels tracking with daily intake sum"
@@ -88,7 +88,7 @@ else:
     t_input1 = "Unesite naziv namirnice za pretragu:"
     t_korak2 = "🔍 Korak 2: Izaberite namirnicu sa liste:"
     t_okvir = "Vrednosti na 100g -> Kalijum: {} mg | Fosfor: {} mg | Natrijum: {} mg"
-    t_korak3 = "⚖️ Korak 3: Upišite količinu namirnice u gramima (g):"
+    t_korak3 = "⚖️ Korak 3: Upišite količinu namirnice u gramima"
     t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
     t_toast = "Dodato u dnevnik: {} ({}g)"
     t_upozorenje = "Nijedna namirnica ne odgovara pretrazi. Prikazujemo celu listu."
@@ -101,7 +101,7 @@ else:
     col_namirnica, col_kolicina, col_kalijum, col_fosfor, col_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
     ime_kolone_baza = 'Namirnica'
 
-# Prikaz naslova aplikacije
+# Prikaz zaglavlja aplikacije
 st.markdown(f"<h1 style='text-align: center; font-size: 38px;'>{t_naslov}<br><span style='font-size: 22px; font-weight: normal;'>{t_podnaslov}</span></h1>", unsafe_allow_html=True)
 st.write(t_napomena1)
 st.write(t_napomena2)
@@ -117,20 +117,19 @@ def ucitaj_bazu():
 
 df = ucitaj_bazu()
 
-# --- POTPUNO BEZBEDNE I POPRAVLJENE CALLBACK FUNKCIJE ---
+# --- BEZBEDNE LOGIČKE FUNKCIJE ZA DUGMAD ---
 def dodaj_obrok_callback():
     if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
         odabrana_hrana = st.session_state['trenutni_izbor']
         kolicina = float(st.session_state['trenutna_kolicina'])
         
-        # Filtriranje reda i pravilan izvlačenje vrednosti preko .iloc[0] na selektovanoj koloni
+        # Ekstrakcija podataka potpuno imunim pristupom na tipove indeksa
         red = df[df[ime_kolone_baza] == odabrana_hrana]
         if not red.empty:
-            k = float(red['Kalijum'].iloc[0])
-            f = float(red['Fosfor'].iloc[0])
-            n = float(red['Natrijum'].iloc[0])
+            k = float(red['Kalijum'].values[0])
+            f = float(red['Fosfor'].values[0])
+            n = float(red['Natrijum'].values[0])
             
-            # Proračun minerala za unetu gramažu i upis u listu
             st.session_state['dnevnik_obroka'].append({
                 col_namirnica: odabrana_hrana,
                 col_kolicina: kolicina,
@@ -142,7 +141,7 @@ def dodaj_obrok_callback():
 def isprazni_dnevnik_callback():
     st.session_state['dnevnik_obroka'] = []
 
-# --- GLAVNA LOGIKA STRANICE ---
+# --- GLAVNI RENDER STRANICE ---
 if df is not None:
     st.write("---")
     st.subheader(t_korak1)
@@ -163,17 +162,18 @@ if df is not None:
     lista_za_selectbox = filtrirano[ime_kolone_baza].dropna().tolist()
     
     if lista_za_selectbox:
-        # Selectbox sa stabilnim key parametrom
         izbor = st.selectbox("👇", lista_za_selectbox, label_visibility="collapsed", key="trenutni_izbor")
         
-        # ISPRAVLJENO: Pravilno i bezbedno uzimanje vrednosti za plavi info okvir preko .iloc[0]
+        # Prikaz info okvira sa mineralima izabranog artikla
         trenutni_red = df[df[ime_kolone_baza] == izbor]
         if not trenutni_red.empty:
-            k_100 = trenutni_red['Kalijum'].iloc[0]
-            f_100 = trenutni_red['Fosfor'].iloc[0]
-            n_100 = trenutni_red['Natrijum'].iloc[0]
+            k_100 = trenutni_red['Kalijum'].values[0]
+            f_100 = trenutni_red['Fosfor'].values[0]
+            n_100 = trenutni_red['Natrijum'].values[0]
             st.info(t_okvir.format(k_100, f_100, n_100))
         
         st.write("---")
+        # Ispisujemo podnaslov čisto, bez ikakvih unutrašnjih elemenata widgeta koji bi pravili link
         st.subheader(t_korak3)
         
+        # Čisto polje za brojčani unos (povezano sa 'trenutna_kolicina' u sesiji)
