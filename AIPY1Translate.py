@@ -12,7 +12,7 @@ if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
 # Izbor jezika na samom vrhu stranice
-jezik = st.selectbox("🌐 🇷🇸 Srpski🇬🇧 English (ili 🇺🇸)🇪🇸 Español🇩🇪 Deutsch Jezik / Language / Idioma / Sprache", ["Srpski", "English", "Español", "Deutsch"])
+jezik = st.selectbox("🌐Jezik / Language / Idioma / Sprache<br>🇷🇸 Srpski🇬🇧 English (ili 🇺🇸)🇪🇸 Español🇩🇪 Deutsch", ["Srpski", "English", "Español", "Deutsch"])
 
 # --- REČNIK FIKSNIH TEKSTOVA ZA SVE JEZIKE ---
 if jezik == "English":
