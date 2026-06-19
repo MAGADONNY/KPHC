@@ -68,7 +68,7 @@ else:
     t_naslov, t_podnaslov = "♠️♥️Dnevnik Ishrane♦️♣️", "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa"
     t_napomena1 = "⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice.*"
     t_napomena2 = "ⓘ *Preporučeni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg | Natrijum max 1500-2000mg*"
-    t_korak1 = "🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)"
+    t_korak1 = "🔍 Korak 1: Izaberite namirnicu (sortirano po abecedi A-Z)"
     t_okvir_baza = "Vrednosti na 100g -> "
     t_korak2 = "⚖️ Korak 2: Upišite količinu namirnice u gramima"
     t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
