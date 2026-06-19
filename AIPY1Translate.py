@@ -245,14 +245,20 @@ if df is not None:
             """, unsafe_allow_html=True)
         
         st.write("---")
-        st.markdown(f"**{t_labela_ime}**")
-        ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
+        # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU
+        col_inp1, col_inp2 = st.columns(2)
+        with col_inp1:
+            st.markdown(f"**{t_labela_ime}**")
+            ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
+        with col_inp2:
+            st.markdown("**Godina rođenja:**")
+            godina_rodjenja = st.text_input("Godina", placeholder="npr. 1965", label_visibility="collapsed")
         
         col_btn1, col_btn2 = st.columns(2)
         with col_btn1:
-            if ime_pacijenta:
+            if ime_pacijenta and godina_rodjenja:
                 try:
-                    pdf_bytes = generisi_pdf_file(ime_pacijenta, df_prikaz, uk_k, uk_f, uk_n)
+                    pdf_bytes = generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_prikaz, uk_k, uk_f, uk_n)
                     st.download_button(
                         label=t_dugme_pdf,
                         data=bytes(pdf_bytes),
@@ -268,6 +274,8 @@ if df is not None:
             if st.button(t_dugme_obrisi, use_container_width=True):
                 st.session_state['dnevnik_obroka'] = []
                 st.rerun()
+
+
 else:
     st.error("Baza podataka 'KPH-AI-GLOBAL.xlsx' nije pronađena ili je oštećena.")
 
