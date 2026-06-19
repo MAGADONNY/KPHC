@@ -29,7 +29,9 @@ if jezik == "English":
     t_naslov_tabele = "📋 Your daily diet log and entered meals"
     t_zbir_okvir = "📊 TOTAL DAILY SUM OF ALL ENTERED MEALS:"
     t_dugme_obrisi = "🗑️ Clear complete diary"
-    t_dugme_pdf = "📄 Create PDF report for doctor"
+    t_dugme_pdf = "📄 Download PDF report"
+    t_placeholder_ime = "e.g. John Doe"
+    t_labela_ime = "Patient name and surname:"
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Food Item', 'Amount (g)', 'Potassium (mg)', 'Phosphorus (mg)', 'Sodium (mg)'
@@ -46,7 +48,9 @@ elif jezik == "Español":
     t_naslov_tabele = "📋 Su registro diario de dieta y comidas ingresadas"
     t_zbir_okvir = "📊 SUMA TOTAL DIARIA DE TODAS LAS COMIDAS INGRESADAS:"
     t_dugme_obrisi = "🗑️ Vaciar diario completo"
-    t_dugme_pdf = "📄 Crear informe PDF para el médico"
+    t_dugme_pdf = "📄 Descargar informe PDF"
+    t_placeholder_ime = "por ejemplo, Juan Pérez"
+    t_labela_ime = "Nombre y apellido del paciente:"
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Alimento', 'Cantidad (g)', 'Potasio (mg)', 'Fósforo (mg)', 'Sodio (mg)'
@@ -63,7 +67,9 @@ elif jezik == "Deutsch":
     t_naslov_tabele = "📋 Ihr tägliches Ernährungsprotokoll und eingegebene Mahlzeiten"
     t_zbir_okvir = "📊 TÄGLICHE GESAMTSUMME ALLER EINGEGEBENEN MAHLZEITEN:"
     t_dugme_obrisi = "🗑️ Tagebuch leeren"
-    t_dugme_pdf = "📄 PDF-Bericht für den Arzt erstellen"
+    t_dugme_pdf = "📄 PDF-Bericht herunterladen"
+    t_placeholder_ime = "z.B. Max Mustermann"
+    t_labela_ime = "Name und Vorname des Patienten:"
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Lebensmittel', 'Menge (g)', 'Kalium (mg)', 'Phosphor (mg)', 'Natrium (mg)'
@@ -80,7 +86,9 @@ else:
     t_naslov_tabele = "📋 Vaš današnji dnevnik ishrane i uneti obroci"
     t_zbir_okvir = "📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:"
     t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
-    t_dugme_pdf = "📄 Napravi PDF izveštaj za lekara"
+    t_dugme_pdf = "📄 Preuzmi PDF izveštaj"
+    t_placeholder_ime = "npr. Petar Petrović"
+    t_labela_ime = "Ime i prezime pacijenta:"
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
@@ -107,7 +115,6 @@ df = ucitaj_bazu()
 def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf = FPDF()
     pdf.add_page()
-    # Koristimo Helvetica i latin-1 da bi bezbedno podržao naša slova
     pdf.set_font("Helvetica", size=12)
     
     # Zaglavlje izveštaja
@@ -145,24 +152,8 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf.cell(200, 7, txt=f"-> FOSFOR: {uk_f:.2f} mg  (Limit: 1000 mg) " + (" [PREKORACENJE]" if uk_f > 1000 else ""), ln=True)
     pdf.cell(200, 7, txt=f"-> NATRIJUM: {uk_n:.2f} mg  (Limit: 2000 mg) " + (" [PREKORACENJE]" if uk_n > 2000 else ""), ln=True)
     
-    return pdf.output()
-
-# --- POP-UP MODAL PREKO ST.DIALOG-a ---
-@st.dialog("Unos podataka za izveštaj")
-def pop_up_izvestaj(df_prikaz, uk_k, uk_f, uk_n):
-    st.write("Molimo unesite ime pacijenta kako bi lekar znao čiji je dnevnik ishrane:")
-    ime_korisnika = st.text_input("Ime i prezime pacijenta", placeholder="npr. Petar Petrović")
-    
-    if ime_korisnika:
-        pdf_data = generisi_pdf_file(ime_korisnika, df_prikaz, uk_k, uk_f, uk_n)
-        st.write("")
-        st.download_button(
-            label="⬇️ Preuzmi PDF fajl",
-            data=bytes(pdf_data),
-            file_name=f"Dnevnik_Ishrane_{ime_korisnika.replace(' ', '_')}.pdf",
-            mime="application/pdf",
-            use_container_width=True
-        )
+    # ISPRAVLJENO: Koristimo output(dest='S') u kombinaciji sa bytes() za siguran prenos kroz Streamlit
+    return pdf.output(dest='S')
 
 # --- GLAVNI RENDER STRANICE ---
 if df is not None:
@@ -175,3 +166,10 @@ if df is not None:
     izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
     
     trenutni_red = df[df[ime_kolone_baza] == izbor]
+    if not trenutni_red.empty:
+        k_100 = float(trenutni_red['Kalijum'].values[0])
+        f_100 = float(trenutni_red['Fosfor'].values[0])
+        n_100 = float(trenutni_red['Natrijum'].values[0])
+        
+        k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
+        f_boja = "#FF4B4B" if f_100 > 150.0 else "#2ECC71"
