@@ -119,11 +119,11 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_margins(15, 15, 15)
     
     # 1. Užo zeleno polje na vrhu
-    pdf.set_fill_color(46, 240, 113)
+    pdf.set_fill_color(46, 204, 113)
     pdf.rect(0, 0, 210, 17, "F")
     
     # Naslov unutar zelene trake
-    pdf.set_text_color(255, 255, 255)
+    pdf.set_text_color(100, 100, 100)
     pdf.set_font("Helvetica", "B", 12)
     pdf.cell(180, 7, text="DNEVNIK ISHRANE & UNOSA MINERALA", border=0, ln=1, align="C")
     
