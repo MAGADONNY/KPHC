@@ -232,6 +232,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
+    pdf.set_text_color(100, 100, 100)
     pdf.cell(180, 6, "LEGENDA I MEDICINSKE GRANICE ALARMA (24h):", 0, 1)
     pdf.set_font("Helvetica", size=9)
     pdf.set_text_color(100, 100, 100)
