@@ -112,8 +112,8 @@ def ucitaj_bazu():
 df = ucitaj_bazu()
 
 # --- FUNKCIJA ZA KREIRANJE PDF-a ---
-# --- RESTRUKTURIRANA FUNKCIJA ZA PDF SA UŽOM TRAKOM I REZIMEOM U TABELI ---
-def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
+# --- RESTRUKTURIRANA FUNKCIJA ZA PDF SA GODINOM ROĐENJA ---
+def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_n):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
@@ -122,128 +122,25 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf.set_fill_color(46, 204, 113)
     pdf.rect(0, 0, 210, 17, "F")
     
-    # Naslov unutar uže zelene trake - postavljen odmah na vrh bez velikih razmaka
+    # Naslov unutar uže zelene trake
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("Helvetica", "B", size=12)
     pdf.cell(180, 7, txt="DNEVNIK ISHRANE & UNOSA MINERALA", border=0, ln=True, align="C")
     
-    # Vraćamo tekst na tamno sivu za nastavak dokumenta
-    pdf.set_text_color(44, 62, 80)
-    pdf.ln(5) # Razmak pre sive kartice
-    
-    # 2. Blok sa podacima - Siva pozadina pojačana na oko 20%
-    pdf.set_fill_color(205, 212, 218) # ~20% siva boja (klasičan sivi karton)
-    pdf.rect(15, 24, 180, 16, "F")
-    
     # Vraćamo tekst na tamno sivu
     pdf.set_text_color(44, 62, 80)
+    pdf.ln(5) 
     
     # 2. Blok sa podacima - Siva pozadina pojačana na oko 20%
-    pdf.set_fill_color(205, 212, 218) # ~20% siva boja (klasičan sivi karton)
+    pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 24, 180, 16, "F")
     
     pdf.set_font("Helvetica", "B", size=10)
-    pdf.cell(110, 6, txt=f" IME I PREZIME: {ime_pacijenta.upper()}", ln=False)
+    pdf.cell(120, 6, txt=f" IME I PREZIME / GODINA RODJENJA: {ime_pacijenta.upper()} ({godina_rodjenja})", ln=False)
     pdf.set_font("Helvetica", size=10)
-    pdf.cell(70, 6, txt=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", ln=True, align="R")
+    pdf.cell(60, 6, txt=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", ln=True, align="R")
     pdf.ln(6)
-    
-    # 3. Tabela obroka (Zeleno-sivo zaglavlje)
-    pdf.set_font("Helvetica", "B", size=10)
-    pdf.set_fill_color(52, 73, 94) # Tamno sivo zaglavlje
-    pdf.set_text_color(255, 255, 255) # Beli tekst
-    
-    pdf.cell(65, 9, " Namirnica", border=0, fill=True)
-    pdf.cell(25, 9, "Kolicina (g)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, "Kalijum (mg)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, "Fosfor (mg)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, "Natrijum (mg)", border=0, fill=True, align="C")
-    pdf.ln()
-    
-    # Ispis redova tabele obroka
-    pdf.set_text_color(44, 62, 80)
-    pdf.set_font("Helvetica", size=10)
-    
-    brojac_reda = 0
-    for _, red in df_podaci.iterrows():
-        if brojac_reda % 2 == 0:
-            pdf.set_fill_color(248, 250, 252) # Jako blaga siva za zebru
-            is_fill = True
-        else:
-            is_fill = False
-            
-        pdf.cell(65, 8, f" {str(red['food'])[:28]}", border="B", fill=is_fill)
-        pdf.cell(25, 8, f"{red['amount']:.1f} g", border="B", fill=is_fill, align="C")
-        pdf.cell(30, 8, f"{red['potassium']:.1f}", border="B", fill=is_fill, align="C")
-        pdf.cell(30, 8, f"{red['phosphorus']:.1f}", border="B", fill=is_fill, align="C")
-        pdf.cell(30, 8, f"{red['sodium']:.1f}", border="B", fill=is_fill, align="C")
-        pdf.ln()
-        brojac_reda += 1
-        
-    pdf.ln(10)
-    
-    # 4. Donji rezime kompletno spakovan u elegantnu tabelu sa tankim linijama
-    pdf.set_font("Helvetica", "B", size=12)
-    pdf.set_text_color(44, 62, 80)
-    pdf.cell(180, 8, txt="REZIME UKUPNOG DNEVNOG UNOSA:", ln=True)
-    pdf.ln(2)
-    
-    # Zaglavlje tabele rezimea
-    pdf.set_font("Helvetica", "B", size=10)
-    pdf.set_fill_color(230, 235, 240)
-    pdf.cell(40, 8, " Mineral", border=1, fill=True, align="C")
-    pdf.cell(45, 8, "Ukupno uneto", border=1, fill=True, align="C")
-    pdf.cell(45, 8, "Dozvoljeni limit", border=1, fill=True, align="C")
-    pdf.cell(50, 8, "Status / Upozorenje", border=1, fill=True, align="C")
-    pdf.ln()
-    
-    pdf.set_font("Helvetica", size=10)
-    
-    # RED ZA KALIJUM
-    pdf.cell(40, 8, " Kalijum", border=1)
-    pdf.cell(45, 8, f"{uk_k:.2f} mg", border=1, align="C")
-    pdf.cell(45, 8, "1500.00 mg", border=1, align="C")
-    if uk_k > 1500.0:
-        pdf.set_text_color(231, 76, 60) # Crvena
-        pdf.set_font("Helvetica", "B", size=10)
-        pdf.cell(50, 8, " [ALARM] Prekoraceno", border=1, align="C")
-    else:
-        pdf.set_text_color(39, 174, 96) # Zelena
-        pdf.cell(50, 8, " [OK] U granicama", border=1, align="C")
-    pdf.set_text_color(44, 62, 80)
-    pdf.set_font("Helvetica", size=10)
-    pdf.ln()
-    
-    # RED ZA FOSFOR
-    pdf.cell(40, 8, " Fosfor", border=1)
-    pdf.cell(45, 8, f"{uk_f:.2f} mg", border=1, align="C")
-    pdf.cell(45, 8, "1000.00 mg", border=1, align="C")
-    if uk_f > 1000.0:
-        pdf.set_text_color(231, 76, 60)
-        pdf.set_font("Helvetica", "B", size=10)
-        pdf.cell(50, 8, " [ALARM] Prekoraceno", border=1, align="C")
-    else:
-        pdf.set_text_color(39, 174, 96)
-        pdf.cell(50, 8, " [OK] U granicama", border=1, align="C")
-    pdf.set_text_color(44, 62, 80)
-    pdf.set_font("Helvetica", size=10)
-    pdf.ln()
-    
-    # RED ZA NATRIJUM
-    pdf.cell(40, 8, " Natrijum", border=1)
-    pdf.cell(45, 8, f"{uk_n:.2f} mg", border=1, align="C")
-    pdf.cell(45, 8, "2000.00 mg", border=1, align="C")
-    if uk_n > 2000.0:
-        pdf.set_text_color(231, 76, 60)
-        pdf.set_font("Helvetica", "B", size=10)
-        pdf.cell(50, 8, " [ALARM] Prekoraceno", border=1, align="C")
-    else:
-        pdf.set_text_color(39, 174, 96)
-        pdf.cell(50, 8, " [OK] U granicama", border=1, align="C")
-        
-    pdf.set_text_color(44, 62, 80)
-    pdf.set_font("Helvetica", size=10)
-    return pdf.output(dest='S')
+
 
 # --- GLAVNI RENDER STRANICE ---
 if df is not None:
