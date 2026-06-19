@@ -152,7 +152,6 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf.cell(200, 7, txt=f"-> FOSFOR: {uk_f:.2f} mg  (Limit: 1000 mg) " + (" [PREKORACENJE]" if uk_f > 1000 else ""), ln=True)
     pdf.cell(200, 7, txt=f"-> NATRIJUM: {uk_n:.2f} mg  (Limit: 2000 mg) " + (" [PREKORACENJE]" if uk_n > 2000 else ""), ln=True)
     
-    # ISPRAVLJENO: Koristimo output(dest='S') u kombinaciji sa bytes() za siguran prenos kroz Streamlit
     return pdf.output(dest='S')
 
 # --- GLAVNI RENDER STRANICE ---
@@ -167,9 +166,10 @@ if df is not None:
     
     trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
-        k_100 = float(trenutni_red['Kalijum'].values[0])
-        f_100 = float(trenutni_red['Fosfor'].values[0])
-        n_100 = float(trenutni_red['Natrijum'].values[0])
+        # Sigurno i direktno čitanje vrednosti iz tabela bez prisilnog float-a
+        k_100 = trenutni_red['Kalijum'].values[0]
+        f_100 = trenutni_red['Fosfor'].values[0]
+        n_100 = trenutni_red['Natrijum'].values[0]
         
         k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
         f_boja = "#FF4B4B" if f_100 > 150.0 else "#2ECC71"
