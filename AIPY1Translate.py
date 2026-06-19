@@ -125,7 +125,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     # Naslov unutar zelene trake
     pdf.set_text_color(100, 100, 100)
     pdf.set_font("Helvetica", "B", 14)
-    pdf.cell(180, 11, text="DNEVNIK ISHRANE & UNOSA MINERALA", border=0, ln=1, align="C")
+    pdf.cell(180, 15, text="DNEVNIK ISHRANE & UNOSA MINERALA", border=0, ln=1, align="C")
     
     # Vraćamo tekst na tamno sivu
     pdf.set_text_color(44, 62, 80)
