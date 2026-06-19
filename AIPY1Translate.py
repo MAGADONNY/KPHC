@@ -14,7 +14,7 @@ if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
 # Izbor jezika na samom vrhu stranice
-st.markdown("🌐 **Jezik / Language / Idioma / Sprache**<br>🇷🇸 | 🇬🇧 | 🇪🇸 | 🇩🇪", unsafe_allow_html=True)
+st.markdown("🌐 **Jezik / Language / Idioma / Sprache**")
 jezik = st.selectbox("Izbor jezika", ["Srpski", "English", "Español", "Deutsch"], label_visibility="collapsed")
 
 # --- REČNIK FIKSNIH TEKSTOVA ZA SVE JEZIKE ---
@@ -23,7 +23,7 @@ if jezik == "English":
     t_napomena1 = "⚠️ *Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food.*"
     t_napomena2 = "ⓘ *Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg | Sodium max 1500-2000mg*"
     t_korak1 = "🔍 Step 1: Click and type a letter to find food (A-Z sorted):"
-    t_okvir_baza = "Values per 100g -> "
+    t_okvir_baza = "Values per 100g -> Potassium: {} mg | Phosphorus: {} mg | Sodium: {} mg"
     t_korak2 = "⚖️ Step 2: Enter the amount of food consumed (in grams):"
     t_dugme_dodaj = "➕ Add meal to my diary"
     t_naslov_tabele = "📋 Your daily diet log and entered meals"
@@ -42,7 +42,7 @@ elif jezik == "Español":
     t_napomena1 = "⚠️ *Los valores de minerales se expresan in miligramos (mg) por cada 100 gramos de alimento limpio y crudo.*"
     t_napomena2 = "ⓘ *Ingesta diaria recomendada: Potasio 1200-1500mg | Fósforo 800-1000mg | Sodio máx 1500-2000mg*"
     t_korak1 = "🔍 Paso 1: Busque un alimento en la lista (Ordenado A-Z):"
-    t_okvir_baza = "Valores por 100g -> "
+    t_okvir_baza = "Valores por 100g -> Potasio: {} mg | Fósforo: {} mg | Sodio: {} mg"
     t_korak2 = "⚖️ Paso 2: Ingrese la cantidad de alimento (en gramos):"
     t_dugme_dodaj = "➕ Añadir comida a mi diario"
     t_naslov_tabele = "📋 Su registro diario de dieta y comidas ingresadas"
@@ -61,7 +61,7 @@ elif jezik == "Deutsch":
     t_napomena1 = "⚠️ *Die Mineralstoffwerte sind in Milligramm (mg) pro 100 Gramm gereinigter, roher Lebensmittel angegeben.*"
     t_napomena2 = "ⓘ *Empfohlene tägliche Aufnahme: Kalium 1200-1500mg | Phosphor 800-1000mg | Natrium max 1500-2000mg*"
     t_korak1 = "🔍 Schritt 1: Lebensmittel aus der Liste auswählen (A-Z sortiert):"
-    t_okvir_baza = "Werte pro 100g -> "
+    t_okvir_baza = "Werte pro 100g -> Kalium: {} mg | Phosphor: {} mg | Natrium: {} mg"
     t_korak2 = "⚖️ Schritt 2: Verzehrte Menge in Gramm eingeben:"
     t_dugme_dodaj = "➕ Mahlzeit hinzufügen"
     t_naslov_tabele = "📋 Ihr tägliches Ernährungsprotokoll und eingegebene Mahlzeiten"
@@ -80,7 +80,7 @@ else:
     t_napomena1 = "⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice.*"
     t_napomena2 = "ⓘ *Preporučeni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg | Natrijum max 1500-2000mg*"
     t_korak1 = "🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)"
-    t_okvir_baza = "Vrednosti na 100g -> "
+    t_okvir_baza = "Vrednosti na 100g -> Kalijum: {} mg | Fosfor: {} mg | Natrijum: {} mg"
     t_korak2 = "⚖️ Korak 2: Upišite količinu namirnice u gramima"
     t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
     t_naslov_tabele = "📋 Vaš današnji dnevnik ishrane i uneti obroci"
@@ -121,7 +121,7 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf.cell(200, 10, txt="IZVESTAJ O DNEVNOM UNOSU MINERALA", ln=True, align="C")
     pdf.set_font("Helvetica", size=11)
     pdf.cell(200, 10, txt=f"Pacijent: {ime_pacijenta}", ln=True, align="L")
-    pdf.cell(200, 10, txt=f"Datum generisanja: {datetime.now().strftime('%d.%m.%Y. u %H:%M')}", ln=True, align="L")
+    pdf.cell(200, 10, txt=f"Datum: {datetime.now().strftime('%d.%m.%Y.')}", ln=True, align="L")
     pdf.ln(5)
     
     pdf.set_font("Helvetica", "B", size=10)
@@ -167,8 +167,9 @@ if df is not None:
         f_100 = float(trenutni_red['Fosfor'].values[0])
         n_100 = float(trenutni_red['Natrijum'].values[0])
         
-        k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
-        f_boja = "#FF4B4B" if f_100 > 150.0 else "#2ECC71"
-        n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
-        
-        st.markdown(f"""
+        # Običan Streamlit info bez HTML tagova koji mogu prekinuti f-string
+        st.info(t_okvir_baza.format(k_100, f_100, n_100))
+    
+    st.write("---")
+    st.subheader(t_korak2)
+    
