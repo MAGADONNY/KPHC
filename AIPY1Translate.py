@@ -119,7 +119,6 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf.set_margins(15, 15, 15)
     
     # 1. Užo zeleno polje na vrhu (Smanjeno za 50%)
-    pdf.set_fill_color(46, 204, 11 green_brand) # #2ECC71 Brend zelena
     pdf.set_fill_color(46, 204, 113)
     pdf.rect(0, 0, 210, 17, "F")
     
