@@ -162,22 +162,16 @@ if df is not None:
     izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
     
     trenutni_red = df[df[ime_kolone_baza] == izbor]
+        trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
-        k_100 = (trenutni_red['Kalijum'].values[0])
-        f_100 = (trenutni_red['Fosfor'].values[0])
-        n_100 = (trenutni_red['Natrijum'].values[0])
+        # Vraćamo tvoj originalni format koji je dokazano radio
+        k_100 = trenutni_red['Kalijum'].values[0]
+        f_100 = trenutni_red['Fosfor'].values[0]
+        n_100 = trenutni_red['Natrijum'].values[0]
         
-        k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
-        n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
-        
-        st.markdown(f"""
-        <div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #2ECC71; border-radius: 4px; color: #ffffff; font-weight: bold; font-size: 15px;'>
-            {t_okvir_baza} 
-            <span style='color: {k_boja};'>{l_kalijum}: {k_100:.0f} mg</span> | 
-            <span style='color: {f_boja};'>{l_fosfor}: {f_100:.0f} mg</span> | 
-            <span style='color: {n_boja};'>{l_natrijum}: {n_100:.0f} mg</span>
-        </div>
-        """, unsafe_allow_html=True)
+        # Običan Streamlit info okvir koji ne može da pukne zbog formata brojeva
+        tekst_info = f"Potassium: {k_100:.0f} mg | Phosphorus: {f_100:.0f} mg | Sodium: {n_100:.0f} mg"
+        st.info(tekst_info)
     
     st.write("---")
     st.subheader(t_korak2)
