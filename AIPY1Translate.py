@@ -160,7 +160,7 @@ if df is not None:
     st.subheader(t_korak1)
     
     izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
-        trenutni_red = df[df[ime_kolone_baza] == izbor]
+    trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
         k_100 = float(trenutni_red['Kalijum'].values[0])
         f_100 = float(trenutni_red['Fosfor'].values[0])
