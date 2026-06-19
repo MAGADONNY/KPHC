@@ -237,6 +237,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_font("Helvetica", size=9)
     pdf.set_text_color(100, 100, 100)
     pdf.cell(180, 5, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja [ALARM] = preko 1500.00 mg", 0, 1)
+    pdf.set_text_color(0, 255, 0)
     pdf.cell(180, 5, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja [ALARM] = preko 1000.00 mg", 0, 1)
     pdf.cell(180, 5, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja [ALARM] = preko 2000.00 mg (oko 5g soli)", 0, 1)
     
