@@ -118,16 +118,22 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
     
-    # 1. Užo zeleno polje na vrhu (Smanjeno za 50%)
+    # 1. Uže zeleno polje na vrhu (Visina 17)
     pdf.set_fill_color(46, 204, 113)
     pdf.rect(0, 0, 210, 17, "F")
     
-    # Naslov unutar uže zelene trake
+    # Naslov unutar uže zelene trake - postavljen odmah na vrh bez velikih razmaka
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("Helvetica", "B", size=12)
-    pdf.ln(1) # Malo spuštanje teksta radi simetrije
-    pdf.cell(180, 5, txt="DNEVNIK ISHRANE & UNOSA MINERALA", ln=True, align="C")
-    pdf.ln(7)
+    pdf.cell(180, 7, txt="DNEVNIK ISHRANE & UNOSA MINERALA", border=0, ln=True, align="C")
+    
+    # Vraćamo tekst na tamno sivu za nastavak dokumenta
+    pdf.set_text_color(44, 62, 80)
+    pdf.ln(5) # Razmak pre sive kartice
+    
+    # 2. Blok sa podacima - Siva pozadina pojačana na oko 20%
+    pdf.set_fill_color(205, 212, 218) # ~20% siva boja (klasičan sivi karton)
+    pdf.rect(15, 24, 180, 16, "F")
     
     # Vraćamo tekst na tamno sivu
     pdf.set_text_color(44, 62, 80)
