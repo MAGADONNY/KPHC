@@ -151,13 +151,32 @@ if df is not None:
         </div>
         """, unsafe_allow_html=True)
     
-    st.write("---")
+        st.write("---")
     st.subheader(t_korak2)
     
     kolicina_g = st.number_input(t_labela_unos, min_value=1.0, max_value=5000.0, value=100.0, step=10.0, label_visibility="collapsed", key="trenutna_kolicina")
     
     st.write("")
-    st.button(t_dugme_dodaj, on_click=dodaj_obrok_callback)
+    if st.button(t_dugme_dodaj):
+        if 'trenutni_izbor' in st.session_state and 'trenutna_kolicina' in st.session_state:
+            odabrana_hrana = st.session_state['trenutni_izbor']
+            kolicina = float(st.session_state['trenutna_kolicina'])
+            
+            red = df[df[ime_kolone_baza] == odabrana_hrana]
+            if not red.empty:
+                k = float(red['Kalijum'].values[0])
+                f = float(red['Fosfor'].values[0])
+                n = float(red['Natrijum'].values[0])
+                
+                st.session_state['dnevnik_obroka'].append({
+                    'food': odabrana_hrana,
+                    'amount': kolicina,
+                    'potassium': round((k * kolicina) / 100.0, 2),
+                    'phosphorus': round((f * kolicina) / 100.0, 2),
+                    'sodium': round((n * kolicina) / 100.0, 2)
+                })
+                st.rerun()
+
         
     # --- PRIKAZ DNEVNIKA ISHRANE ---
     if st.session_state['dnevnik_obroka']:
