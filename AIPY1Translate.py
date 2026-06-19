@@ -230,8 +230,8 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_font("Helvetica", size=10)
     pdf.ln(12)
 
-    # POZICIJA LEGENDE
-    pdf.set_y(-80)
+        # Pozicioniramo kursor za legendu visoko (na prvu stranu)
+    pdf.set_y(-60)
     
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
@@ -243,20 +243,15 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(180, 4, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja [ALARM] = preko 1000.00 mg", 0, 1)
     pdf.cell(180, 4, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja [ALARM] = preko 2000.00 mg (oko 5g soli)", 0, 1)
     
-    # Sada fiksiramo poziciju futera ispod legende
-    pdf.set_y(-12)
+    # === REŠENJE ZA FUTER ===
+    # Pravimo fiksni razmak na dole od 15mm nakon legende, tako da ostane na istoj strani
+    pdf.ln(15) 
+    
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(150, 150, 150)
     
-    # Sirina je 0 da tekst bude savrseno centriran bez preloma
+    # Širina 0 i tekst se ispisuje odmah ispod legende na prvoj strani
     pdf.cell(0, 10, "Automatski generisan medicinski izvestaj | Sva prava zadrzana.", 0, 0, "C")
-    
-    pdf.set_text_color(44, 62, 80)
-
-    
-    buffer = io.BytesIO()
-    pdf.output(buffer)
-    return buffer.getvalue()
 
 
 # --- GLAVNI RENDER STRANICE ---
