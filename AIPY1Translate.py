@@ -34,7 +34,7 @@ if jezik == "English":
     t_labela_unos = "Amount in grams"
 elif jezik == "Español":
     t_naslov, t_podnaslov = "♠️♥️Diario de Alimentación♦️♣️", "seguimiento de minerales con suma de ingesta diaria"
-    t_napomena1 = "⚠️ *Los valores de minerales se expresan in miligramos (mg) por cada 100 gramos of alimento limpio y crudo.*"
+    t_napomena1 = "⚠️ *Los valores de minerales se expresan in miligramos (mg) por cada 100 gramos de alimento limpio y crudo.*"
     t_napomena2 = "ⓘ *Ingesta diaria recomendada: Potasio 1200-1500mg | Fósforo 800-1000mg*"
     t_korak1 = "🔍 Paso 1: Busque un alimento en la lista (Ordenado A-Z):"
     t_okvir = "Valores por 100g -> Potasio: {} mg | Fósforo: {} mg | Sodio: {} mg"
@@ -62,7 +62,7 @@ elif jezik == "Deutsch":
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Lebensmittel', 'Menge (g)', 'Kalium (mg)', 'Phosphor (mg)', 'Natrium (mg)'
-    ime_kolone_baza = 'Lebensmittel' # Prilagođeno bazi
+    ime_kolone_baza = 'Namirnica_DE'
     t_labela_unos = "Menge in Gramm"
 else:
     t_naslov, t_podnaslov = "♠️♥️Dnevnik Ishrane♦️♣️", "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa"
@@ -136,10 +136,10 @@ if df is not None:
         f_100 = trenutni_red['Fosfor'].values[0]
         n_100 = trenutni_red['Natrijum'].values[0]
         
-        # HTML zamena za st.info koja garantuje svetlu i uočljivu boju teksta na mobilnim telefonima
+        # HTML kutija koja forsira prelepu svetlo plavu boju i bezbedna je za telefone
         tekst_za_prikaz = t_okvir.format(k_100, f_100, n_100)
-        st.markdown(f"<div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #279FF5; border-radius: 4px; color: #7cd0ff; font-weight: bold; font-size: 15px;'>{tekst_za_prikaz}</div>", unsafe_allow_html=True)
-
+        st.markdown(f"<div style='background-color: #1a2130; padding: 12px; border-left: 4px solid #279FF5; border-radius: 4px; color: #7cd0ff; font-weight: bold; font-size: 15px;'>{tekst_za_prikaz}</div>", unsafe_allow_html=True)
+    
     st.write("---")
     st.subheader(t_korak2)
     
@@ -153,12 +153,15 @@ if df is not None:
         st.write("---")
         st.subheader(t_naslov_tabele)
         
+        # Pravljenje tabele iz pozadinske liste
         df_prikaz = pd.DataFrame(st.session_state['dnevnik_obroka'])
         
+        # Računanje suma preko sigurnih engleskih ključeva
         uk_k = df_prikaz['potassium'].sum()
         uk_f = df_prikaz['phosphorus'].sum()
         uk_n = df_prikaz['sodium'].sum()
         
+        # Remapiranje kolona za krajnjeg korisnika
         df_prikaz_prevedeno = df_prikaz.rename(columns={
             'food': l_namirnica,
             'amount': l_kolicina,
@@ -179,7 +182,3 @@ if df is not None:
             st.metric(label=l_fosfor, value=f"{uk_f:.2f} mg")
         with col_m3:
             st.metric(label=l_natrijum, value=f"{uk_n:.2f} mg")
-        
-        st.write("")
-        st.button(t_dugme_obrisi, on_click=isprazni_dnevnik_callback)
-else:
