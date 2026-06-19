@@ -233,7 +233,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     # Postavlja kursor na 40 mm od dna stranice (visina stranice minus 40)
     pdf.set_y(-50)
     # 3. KORIGOVANO POMERANJE ZA LEGENDU (Malo iznad futera)
-    pdf.set_y(-35)
+    pdf.set_y(-60)
     
        # === REORGANIZOVAN KRAJ FUNKCIJE (ZAMENITI REDOVE 238-254) ===
     
