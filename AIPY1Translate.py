@@ -178,3 +178,13 @@ if df is not None:
             'sodium': l_natrijum
         })
         
+# --- FUTER SA INFORMACIJAMA I BROJAČEM POSETA ---
+st.write("---")
+st.markdown("""
+<div style='text-align: center; line-height: 1.2;'>
+    <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <span style='color: #2ECC71; font-weight: bold;'>3010</span></p>
+    <p style='margin: 5px 0px 0px 0px; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>
+    <p style='margin: 0px; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
+    <p style='margin: 0px;  color: #888888; font-size: 12px;'>Powered by PYTHON</p>
+</div>
+""", unsafe_allow_html=True)
