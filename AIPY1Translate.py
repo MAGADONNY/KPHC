@@ -135,7 +135,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 24, 180, 16, "F")
     
-    pdf.set_font("Helvetica", "B", 8)
+    pdf.set_font("Helvetica", "B", 9)
     pdf.cell(120, 6, text=f" IME I PREZIME / GODINA RODJENJA: {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
     pdf.set_font("Helvetica", size=10)
     pdf.cell(60, 6, text=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
@@ -232,7 +232,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
-    pdf.cell(180, 6, "LEGENDA I MEDICINSKE GRANICE ALARMA (24h):", 0, 1)
+    pdf.cell(180, 10, "LEGENDA I MEDICINSKE GRANICE ALARMA (24h):", 0, 1)
     pdf.set_font("Helvetica", size=9)
     pdf.set_text_color(100, 110, 120)
     pdf.cell(180, 5, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja [ALARM] = preko 1500.00 mg", 0, 1)
