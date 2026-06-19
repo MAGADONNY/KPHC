@@ -5,14 +5,13 @@ import pandas as pd
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
 # Bezbedan CSS stil za tamnu temu i široko plavo dugme preko celog ekrana
-st.info(f"<span style='color: #7cd0ff; font-weight: bold;'>{t_okvir.format(k_100, f_100, n_100)}</span>", unsafe_allow_html=True)
+st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
 # Inicijalizacija session_state liste za čuvanje unetih obroka
 if 'dnevnik_obroka' not in st.session_state:
     st.session_state['dnevnik_obroka'] = []
 
 # Izbor jezika na samom vrhu stranice
-
 st.markdown("🌐 **Jezik / Language / Idioma / Sprache**<br>🇷🇸 | 🇬🇧 | 🇪🇸 | 🇩🇪", unsafe_allow_html=True)
 jezik = st.selectbox("Izbor jezika", ["Srpski", "English", "Español", "Deutsch"], label_visibility="collapsed")
 
@@ -35,7 +34,7 @@ if jezik == "English":
     t_labela_unos = "Amount in grams"
 elif jezik == "Español":
     t_naslov, t_podnaslov = "♠️♥️Diario de Alimentación♦️♣️", "seguimiento de minerales con suma de ingesta diaria"
-    t_napomena1 = "⚠️ *Los valores de minerales se expresan in miligramos (mg) por cada 100 gramos de alimento limpio y crudo.*"
+    t_napomena1 = "⚠️ *Los valores de minerales se expresan in miligramos (mg) por cada 100 gramos of alimento limpio y crudo.*"
     t_napomena2 = "ⓘ *Ingesta diaria recomendada: Potasio 1200-1500mg | Fósforo 800-1000mg*"
     t_korak1 = "🔍 Paso 1: Busque un alimento en la lista (Ordenado A-Z):"
     t_okvir = "Valores por 100g -> Potasio: {} mg | Fósforo: {} mg | Sodio: {} mg"
@@ -63,7 +62,7 @@ elif jezik == "Deutsch":
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Lebensmittel', 'Menge (g)', 'Kalium (mg)', 'Phosphor (mg)', 'Natrium (mg)'
-    ime_kolone_baza = 'Namirnica_DE'
+    ime_kolone_baza = 'Lebensmittel' # Prilagođeno bazi
     t_labela_unos = "Menge in Gramm"
 else:
     t_naslov, t_podnaslov = "♠️♥️Dnevnik Ishrane♦️♣️", "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa"
@@ -110,7 +109,6 @@ def dodaj_obrok_callback():
             f = float(red['Fosfor'].values[0])
             n = float(red['Natrijum'].values[0])
             
-            # ISPRAVLJENO: Interni ključevi su sada 100% na engleskom i fiksni u memoriji
             st.session_state['dnevnik_obroka'].append({
                 'food': odabrana_hrana,
                 'amount': kolicina,
@@ -137,8 +135,11 @@ if df is not None:
         k_100 = trenutni_red['Kalijum'].values[0]
         f_100 = trenutni_red['Fosfor'].values[0]
         n_100 = trenutni_red['Natrijum'].values[0]
-        st.info(t_okvir.format(k_100, f_100, n_100))
-    
+        
+        # HTML zamena za st.info koja garantuje svetlu i uočljivu boju teksta na mobilnim telefonima
+        tekst_za_prikaz = t_okvir.format(k_100, f_100, n_100)
+        st.markdown(f"<div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #279FF5; border-radius: 4px; color: #7cd0ff; font-weight: bold; font-size: 15px;'>{tekst_za_prikaz}</div>", unsafe_allow_html=True)
+
     st.write("---")
     st.subheader(t_korak2)
     
@@ -152,15 +153,12 @@ if df is not None:
         st.write("---")
         st.subheader(t_naslov_tabele)
         
-        # Pravljenje tabele iz pozadinske liste
         df_prikaz = pd.DataFrame(st.session_state['dnevnik_obroka'])
         
-        # Računanje suma preko sigurnih engleskih ključeva
         uk_k = df_prikaz['potassium'].sum()
         uk_f = df_prikaz['phosphorus'].sum()
         uk_n = df_prikaz['sodium'].sum()
         
-        # ISPRAVLJENO: Koristimo bezbedno .rename() remapiranje kolona umesto direktnog prepisivanja niza .columns
         df_prikaz_prevedeno = df_prikaz.rename(columns={
             'food': l_namirnica,
             'amount': l_kolicina,
@@ -185,15 +183,3 @@ if df is not None:
         st.write("")
         st.button(t_dugme_obrisi, on_click=isprazni_dnevnik_callback)
 else:
-    st.error("Baza podataka 'KPH-AI.xlsx' nije pronađena ili je oštećena.")
-
-# --- FUTER SA INFORMACIJAMA I BROJAČEM POSETA BEZ RAZMAKA ---
-st.write("---")
-st.markdown("""
-<div style='text-align: center; line-height: 1.2;'>
-    <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <span style='color: #279FF5; font-weight: bold;'>3010</span></p>
-    <p style='margin: 5px 0px 0px 0px; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>
-    <p style='margin: 0px; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
-    <p style='margin: 0px;  color: #888888; font-size: 12px;'>Powered by PYTHON</p>
-</div>
-""", unsafe_allow_html=True)
