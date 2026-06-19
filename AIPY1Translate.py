@@ -233,7 +233,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     # Postavlja kursor na 40 mm od dna stranice (visina stranice minus 40)
     pdf.set_y(-50)
     # 3. KORIGOVANO POMERANJE ZA LEGENDU (Malo iznad futera)
-    pdf.set_y(-45)
+    pdf.set_y(-35)
     
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
@@ -249,7 +249,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_y(-15) # Skroz na dno (15 mm od ivice)
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(150, 150, 150) # Svetlo siva diskretna boja
-    pdf.cell(180, 10, "AI generisan izvestaj | Sva prava zadrzana.", 0, 0, "C")
+    pdf.cell(0, 10, "AI generisan izvestaj | Sva prava zadrzana.", 0, 0, "C")
     
     pdf.set_text_color(44, 62, 80)
     
