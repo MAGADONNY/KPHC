@@ -168,3 +168,37 @@ if df is not None:
         n_100 = float(trenutni_red['Natrijum'].values[0])
         
         k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
+                n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
+        
+        st.markdown(f"""
+        <div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #2ECC71; border-radius: 4px; color: #ffffff; font-weight: bold; font-size: 15px;'>
+            {t_okvir_baza} 
+            <span style='color: {k_boja};'>{l_kalijum}: {k_100:.0f} mg</span> | 
+            <span style='color: {f_boja};'>{l_fosfor}: {f_100:.0f} mg</span> | 
+            <span style='color: {n_boja};'>{l_natrijum}: {n_100:.0f} mg</span>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.write("---")
+    st.subheader(t_korak2)
+    
+    kolicina_g = st.number_input(t_labela_unos, min_value=1.0, max_value=5000.0, value=100.0, step=10.0, label_visibility="collapsed", key="trenutna_kolicina")
+    
+    st.write("")
+    
+    if st.button(t_dugme_dodaj):
+        red_dodaj = df[df[ime_kolone_baza] == izbor]
+        if not red_dodaj.empty:
+            k_d = float(red_dodaj['Kalijum'].values[0])
+            f_d = float(red_dodaj['Fosfor'].values[0])
+            n_d = float(red_dodaj['Natrijum'].values[0])
+            
+            st.session_state['dnevnik_obroka'].append({
+                'food': izbor,
+                'amount': kolicina_g,
+                'potassium': round((k_d * kolicina_g) / 100.0, 2),
+                'phosphorus': round((f_d * kolicina_g) / 100.0, 2),
+                'sodium': round((n_d * kolicina_g) / 100.0, 2)
+            })
+            st.rerun()
+
