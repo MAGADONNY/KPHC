@@ -4,8 +4,8 @@ import pandas as pd
 # Osnovna podešavanja aplikacije
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
-# Bezbedan CSS stil za tamnu temu, široko plavo dugme i automatsko skrolovanje na telefonima
-st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;overflow:auto!important;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; padding: 10px 0px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
+# Bezbedan CSS stil za tamnu temu, ŠIROKO ZELENO DUGME i prostor za futer na telefonima
+st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;padding-bottom:120px!important;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#2ECC71!important; border:none!important; width:100%!important; text-shadow:none!important; padding: 10px 0px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#2ECC71!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;}</style>", unsafe_allow_html=True)
 
 # Inicijalizacija session_state liste za čuvanje unetih obroka
 if 'dnevnik_obroka' not in st.session_state:
@@ -105,9 +105,9 @@ def dodaj_obrok_callback():
         
         red = df[df[ime_kolone_baza] == odabrana_hrana]
         if not red.empty:
-            k = float(red['Kalijum'].values[0])
-            f = float(red['Fosfor'].values[0])
-            n = float(red['Natrijum'].values[0])
+            k = float(red['Kalijum'].values)
+            f = float(red['Fosfor'].values)
+            n = float(red['Natrijum'].values)
             
             st.session_state['dnevnik_obroka'].append({
                 'food': odabrana_hrana,
@@ -132,18 +132,18 @@ if df is not None:
     
     trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
-        k_100 = float(trenutni_red['Kalijum'].values[0])
-        f_100 = float(trenutni_red['Fosfor'].values[0])
-        n_100 = float(trenutni_red['Natrijum'].values[0])
+        k_100 = float(trenutni_red['Kalijum'].values)
+        f_100 = float(trenutni_red['Fosfor'].values)
+        n_100 = float(trenutni_red['Natrijum'].values)
         
-        # Pojedinačno određivanje boja u zavisnosti od kritičnih vrednosti na 100g
-        k_boja = "#FF4B4B" if k_100 > 200.0 else "#7cd0ff"
-        f_boja = "#FF4B4B" if f_100 > 150.0 else "#7cd0ff"
-        n_boja = "#FF4B4B" if n_100 > 400.0 else "#7cd0ff"
+        # Pojedinačno određivanje boja u zavisnosti od kritičnih vrednosti na 100g (ZELENO VS CRVENO)
+        k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
+        f_boja = "#FF4B4B" if f_100 > 150.0 else "#2ECC71"
+        n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
         
-        # Prikaz dinamičkog okvira gde samo visoke vrednosti svetle crveno
+        # Prikaz dinamičkog okvira sa zelenom levom ivicom
         st.markdown(f"""
-        <div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #279FF5; border-radius: 4px; color: #ffffff; font-weight: bold; font-size: 15px;'>
+        <div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #2ECC71; border-radius: 4px; color: #ffffff; font-weight: bold; font-size: 15px;'>
             {t_okvir_baza} 
             <span style='color: {k_boja};'>{l_kalijum}: {k_100:.0f} mg</span> | 
             <span style='color: {f_boja};'>{l_fosfor}: {f_100:.0f} mg</span> | 
