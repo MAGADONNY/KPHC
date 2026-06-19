@@ -232,6 +232,9 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
 
     # Postavlja kursor na 40 mm od dna stranice (visina stranice minus 40)
     pdf.set_y(-50)
+    # 3. KORIGOVANO POMERANJE ZA LEGENDU (Malo iznad futera)
+    pdf.set_y(-45)
+    
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
     pdf.set_text_color(100, 100, 100)
@@ -242,11 +245,18 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(180, 5, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja [ALARM] = preko 1000.00 mg", 0, 1)
     pdf.cell(180, 5, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja [ALARM] = preko 2000.00 mg (oko 5g soli)", 0, 1)
     
+    # 4. RUČNI FUTER NA SAMOM DNÚ STRANICE
+    pdf.set_y(-15) # Skroz na dno (15 mm od ivice)
+    pdf.set_font("Helvetica", "I", 8)
+    pdf.set_text_color(150, 150, 150) # Svetlo siva diskretna boja
+    pdf.cell(180, 10, "Automatski generisan medicinski izveštaj | Sva prava zadržana.", 0, 0, "C")
+    
     pdf.set_text_color(44, 62, 80)
     
     buffer = io.BytesIO()
     pdf.output(buffer)
     return buffer.getvalue()
+
 
 # --- GLAVNI RENDER STRANICE ---
 if df is not None:
