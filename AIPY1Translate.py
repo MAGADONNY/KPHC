@@ -232,7 +232,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
-    pdf.cell(360, 6, "LEGENDA I MEDICINSKE GRANICE ALARMA (24h):", 0, 1)
+    pdf.cell(180, 6, "LEGENDA I MEDICINSKE GRANICE ALARMA (24h):", 0, 1)
     pdf.set_font("Helvetica", size=9)
     pdf.set_text_color(100, 110, 120)
     pdf.cell(180, 5, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja [ALARM] = preko 1500.00 mg", 0, 1)
