@@ -235,23 +235,31 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     # 3. KORIGOVANO POMERANJE ZA LEGENDU (Malo iznad futera)
     pdf.set_y(-35)
     
+       # === REORGANIZOVAN KRAJ FUNKCIJE (ZAMENITI REDOVE 238-254) ===
+    
+    # Prvo fiksiramo poziciju legende na dno prve stranice
+    pdf.set_y(-38)
+    
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
     pdf.set_text_color(100, 100, 100)
-    pdf.cell(180, 6, "LEGENDA I MEDICINSKE GRANICE ALARMA (24h):", 0, 1)
-    pdf.set_font("Helvetica", size=9)
-    pdf.set_text_color(100, 100, 100)
-    pdf.cell(180, 5, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja [ALARM] = preko 1500.00 mg", 0, 1)
-    pdf.cell(180, 5, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja [ALARM] = preko 1000.00 mg", 0, 1)
-    pdf.cell(180, 5, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja [ALARM] = preko 2000.00 mg (oko 5g soli)", 0, 1)
+    pdf.cell(180, 5, "LEGENDA I MEDICINSKE GRANICE ALARMA (24h):", 0, 1)
     
-    # 4. RUČNI FUTER NA SAMOM DNÚ STRANICE
-    pdf.set_y(-15) # Skroz na dno (15 mm od ivice)
+    pdf.set_font("Helvetica", size=9)
+    pdf.cell(180, 4, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja [ALARM] = preko 1500.00 mg", 0, 1)
+    pdf.cell(180, 4, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja [ALARM] = preko 1000.00 mg", 0, 1)
+    pdf.cell(180, 4, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja [ALARM] = preko 2000.00 mg (oko 5g soli)", 0, 1)
+    
+    # Sada fiksiramo poziciju futera ispod legende
+    pdf.set_y(-12)
     pdf.set_font("Helvetica", "I", 8)
-    pdf.set_text_color(150, 150, 150) # Svetlo siva diskretna boja
-    pdf.cell(0, 10, "AI generisan izvestaj | Sva prava zadrzana.", 0, 0, "C")
+    pdf.set_text_color(150, 150, 150)
+    
+    # Sirina je 0 da tekst bude savrseno centriran bez preloma
+    pdf.cell(0, 10, "Automatski generisan medicinski izvestaj | Sva prava zadrzana.", 0, 0, "C")
     
     pdf.set_text_color(44, 62, 80)
+
     
     buffer = io.BytesIO()
     pdf.output(buffer)
