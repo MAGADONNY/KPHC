@@ -230,15 +230,8 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_font("Helvetica", size=10)
     pdf.ln(12)
 
-    # Postavlja kursor na 40 mm od dna stranice (visina stranice minus 40)
-    pdf.set_y(-50)
-    # 3. KORIGOVANO POMERANJE ZA LEGENDU (Malo iznad futera)
+    # POZICIJA LEGENDE
     pdf.set_y(-60)
-    
-       # === REORGANIZOVAN KRAJ FUNKCIJE (ZAMENITI REDOVE 238-254) ===
-    
-    # Prvo fiksiramo poziciju legende na dno prve stranice
-    pdf.set_y(-38)
     
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
