@@ -229,7 +229,9 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_text_color(44, 62, 80)
     pdf.set_font("Helvetica", size=10)
     pdf.ln(12)
-    
+
+    # Postavlja kursor na 40 mm od dna stranice (visina stranice minus 40)
+    pdf.set_y(-40)
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
     pdf.set_text_color(100, 100, 100)
