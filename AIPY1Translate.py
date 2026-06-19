@@ -231,7 +231,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.ln(12)
 
     # POZICIJA LEGENDE
-    pdf.set_y(-60)
+    pdf.set_y(-80)
     
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
