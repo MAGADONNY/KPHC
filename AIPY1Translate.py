@@ -228,7 +228,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
 
     pdf.set_text_color(44, 62, 80)
     pdf.set_font("Helvetica", size=10)
-    pdf.ln(2)
+    pdf.ln(12)
 
         # Pozicioniramo kursor za legendu visoko (na prvu stranu)
     pdf.set_y(-60)
