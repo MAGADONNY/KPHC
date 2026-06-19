@@ -163,9 +163,9 @@ if df is not None:
     
     trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
-        k_100 = float(trenutni_red['Kalijum'].values[0])
-        f_100 = float(trenutni_red['Fosfor'].values[0])
-        n_100 = float(trenutni_red['Natrijum'].values[0])
+        k_100 = (trenutni_red['Kalijum'].values[0])
+        f_100 = (trenutni_red['Fosfor'].values[0])
+        n_100 = (trenutni_red['Natrijum'].values[0])
         
         k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
                 n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
