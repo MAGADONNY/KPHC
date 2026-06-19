@@ -168,7 +168,7 @@ if df is not None:
         n_100 = (trenutni_red['Natrijum'].values[0])
         
         k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
-                n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
+        n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
         
         st.markdown(f"""
         <div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #2ECC71; border-radius: 4px; color: #ffffff; font-weight: bold; font-size: 15px;'>
