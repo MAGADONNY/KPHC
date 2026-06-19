@@ -249,7 +249,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_y(-15) # Skroz na dno (15 mm od ivice)
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(150, 150, 150) # Svetlo siva diskretna boja
-    pdf.cell(180, 10, "Automatski generisan medicinski izveštaj | Sva prava zadržana.", 0, 0, "C")
+    pdf.cell(180, 10, "AI generisan izvestaj | Sva prava zadrzana.", 0, 0, "C")
     
     pdf.set_text_color(44, 62, 80)
     
