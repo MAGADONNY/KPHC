@@ -162,7 +162,7 @@ if df is not None:
     izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
     
     trenutni_red = df[df[ime_kolone_baza] == izbor]
-        trenutni_red = df[df[ime_kolone_baza] == izbor]
+    trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
         # Vraćamo tvoj originalni format koji je dokazano radio
         k_100 = trenutni_red['Kalijum'].values[0]
