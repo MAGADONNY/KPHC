@@ -112,43 +112,106 @@ def ucitaj_bazu():
 df = ucitaj_bazu()
 
 # --- FUNKCIJA ZA KREIRANJE PDF-a ---
+# --- MODERNIZOVANA FUNKCIJA ZA KREIRANJE PDF IZVEŠTAJA ---
 def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Helvetica", size=12)
+    pdf.set_margins(15, 15, 15)
     
-    pdf.set_font("Helvetica", "B", size=16)
-    pdf.cell(200, 10, txt="IZVESTAJ O DNEVNOM UNOSU MINERALA", ln=True, align="C")
+    # 1. Glavna traka na vrhu (Zeleni brendirani izgled)
+    pdf.set_fill_color(46, 204, 113) # #2ECC71 Brend zelena
+    pdf.rect(0, 0, 210, 35, "F")
+    
+    # Naslov unutar zelene trake
+    pdf.set_text_color(255, 255, 255)
+    pdf.set_font("Helvetica", "B", size=18)
+    pdf.ln(2) # Malo spuštamo tekst unutar trake
+    pdf.cell(180, 8, txt="DNEVNIK ISHRANE & UNOSA MINERALA", ln=True, align="C")
+    pdf.set_font("Helvetica", size=10)
+    pdf.cell(180, 5, txt="Automatski generisan medicinski izvestaj za lekara", ln=True, align="C")
+    pdf.ln(12)
+    
+    # Vraćamo tekst na tamno sivu (modernija od čiste crne)
+    pdf.set_text_color(44, 62, 80)
+    
+    # 2. Blok sa podacima o pacijentu (Svetlo siva kartica)
+    pdf.set_fill_color(245, 247, 250)
+    pdf.rect(15, 42, 180, 22, "F")
+    
+    pdf.set_font("Helvetica", "B", size=11)
+    pdf.cell(100, 6, txt=f" PACIJENT: {ime_pacijenta.upper()}", ln=False)
     pdf.set_font("Helvetica", size=11)
-    pdf.cell(200, 10, txt=f"Pacijent: {ime_pacijenta}", ln=True, align="L")
-    pdf.cell(200, 10, txt=f"Datum: {datetime.now().strftime('%d.%m.%Y.')}", ln=True, align="L")
-    pdf.ln(5)
+    pdf.cell(80, 6, txt=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')}", ln=True, align="R")
+    pdf.set_font("Helvetica", "I", size=10)
+    pdf.cell(180, 6, txt=" Napomena: Izvestaj prikazuje kolicine konzumiranih minerala tokom 24h.", ln=True)
+    pdf.ln(10)
     
+    # 3. Moderna Tabela (Zeleno-sivo zaglavlje bez teških crnih linija)
     pdf.set_font("Helvetica", "B", size=10)
-    pdf.cell(60, 8, "Namirnica", border=1)
-    pdf.cell(30, 8, "Kolicina (g)", border=1)
-    pdf.cell(35, 8, "Kalijum (mg)", border=1)
-    pdf.cell(35, 8, "Fosfor (mg)", border=1)
-    pdf.cell(30, 8, "Natrijum (mg)", border=1)
+    pdf.set_fill_color(52, 73, 94) # Elegantna tamno siva pozadina za naslove kolona
+    pdf.set_text_color(255, 255, 255) # Beli tekst u zaglavlju tabele
+    
+    pdf.cell(65, 9, " Namirnica", border=0, fill=True)
+    pdf.cell(25, 9, "Kolicina (g)", border=0, fill=True, align="C")
+    pdf.cell(30, 9, "Kalijum (mg)", border=0, fill=True, align="C")
+    pdf.cell(30, 9, "Fosfor (mg)", border=0, fill=True, align="C")
+    pdf.cell(30, 9, "Natrijum (mg)", border=0, fill=True, align="C")
     pdf.ln()
     
+    # Ispis redova tabele sa tankim donjim linijama
+    pdf.set_text_color(44, 62, 80)
     pdf.set_font("Helvetica", size=10)
-    for _, red in df_podaci.iterrows():
-        pdf.cell(60, 8, str(red['food'])[:28], border=1)
-        pdf.cell(30, 8, f"{red['amount']:.1f}", border=1)
-        pdf.cell(35, 8, f"{red['potassium']:.1f}", border=1)
-        pdf.cell(35, 8, f"{red['phosphorus']:.1f}", border=1)
-        pdf.cell(30, 8, f"{red['sodium']:.1f}", border=1)
-        pdf.ln()
-        
-    pdf.ln(5)
-    pdf.set_font("Helvetica", "B", size=11)
-    pdf.cell(200, 8, txt="UKUPAN DNEVNI ZBIR:", ln=True, align="L")
-    pdf.set_font("Helvetica", size=11)
-    pdf.cell(200, 7, txt=f"-> KALIJUM: {uk_k:.2f} mg " + (" [PREKORACENJE]" if uk_k > 1500 else ""), ln=True)
-    pdf.cell(200, 7, txt=f"-> FOSFOR: {uk_f:.2f} mg " + (" [PREKORACENJE]" if uk_f > 1000 else ""), ln=True)
-    pdf.cell(200, 7, txt=f"-> NATRIJUM: {uk_n:.2f} mg " + (" [PREKORACENJE]" if uk_n > 2000 else ""), ln=True)
     
+    brojac_reda = 0
+    for _, red in df_podaci.iterrows():
+        # Efekat zebre: svaki drugi red ima blagu sivu pozadinu
+        if brojac_reda % 2 == 0:
+            pdf.set_fill_color(250, 252, 253)
+            is_fill = True
+        else:
+            is_fill = False
+            
+        pdf.cell(65, 8, f" {str(red['food'])[:28]}", border="B", fill=is_fill)
+        pdf.cell(25, 8, f"{red['amount']:.1f} g", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 8, f"{red['potassium']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 8, f"{red['phosphorus']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 8, f"{red['sodium']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.ln()
+        brojac_reda += 1
+        
+    pdf.ln(12)
+    
+    # 4. Sekcija sa zbirovima (Izgleda kao lekarski izveštaj sa jasnim semafor bojama)
+    pdf.set_font("Helvetica", "B", size=13)
+    pdf.cell(180, 8, txt="REZIME UKUPNOG DNEVNOG UNOSA:", ln=True)
+    pdf.set_font("Helvetica", size=11)
+    pdf.ln(2)
+    
+    # Provera za Kalijum
+    if uk_k > 1500.0:
+        pdf.set_text_color(231, 76, 60) # Korisnički crvena
+        pdf.cell(180, 7, txt=f"  [ALARM] KALIJUM: {uk_k:.2f} mg  /  (Dozvoljeni limit: 1500.00 mg) - PREKORACENO!", ln=True)
+    else:
+        pdf.set_text_color(39, 174, 96) # Umirujuća tamno zelena
+        pdf.cell(180, 7, txt=f"  [OK] KALIJUM: {uk_k:.2f} mg  /  (Dozvoljeni limit: 1500.00 mg)", ln=True)
+        
+    # Provera za Fosfor
+    if uk_f > 1000.0:
+        pdf.set_text_color(231, 76, 60)
+        pdf.cell(180, 7, txt=f"  [ALARM] FOSFOR: {uk_f:.2f} mg  /  (Dozvoljeni limit: 1000.00 mg) - PREKORACENO!", ln=True)
+    else:
+        pdf.set_text_color(39, 174, 96)
+        pdf.cell(180, 7, txt=f"  [OK] FOSFOR: {uk_f:.2f} mg  /  (Dozvoljeni limit: 1000.00 mg)", ln=True)
+        
+    # Provera za Natrijum
+    if uk_n > 2000.0:
+        pdf.set_text_color(231, 76, 60)
+        pdf.cell(180, 7, txt=f"  [ALARM] NATRIJUM: {uk_n:.2f} mg  /  (Dozvoljeni limit: 2000.00 mg) - PREKORACENO!", ln=True)
+    else:
+        pdf.set_text_color(39, 174, 96)
+        pdf.cell(180, 7, txt=f"  [OK] NATRIJUM: {uk_n:.2f} mg  /  (Dozvoljeni limit: 2000.00 mg)", ln=True)
+        
+    pdf.set_text_color(44, 62, 80) # Vraćamo na standardnu tamnu boju
     return pdf.output(dest='S')
 
 # --- GLAVNI RENDER STRANICE ---
