@@ -117,7 +117,8 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf = FPDF()
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
-    
+    pdf.set_auto_page_break(auto=False, margin=5)
+
     # 1. Užo zeleno polje na vrhu
     pdf.set_fill_color(46, 204, 113)
     pdf.rect(0, 0, 210, 17, "F")
