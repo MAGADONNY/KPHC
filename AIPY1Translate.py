@@ -117,7 +117,6 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf.add_page()
     pdf.set_font("Helvetica", size=12)
     
-    # Zaglavlje izveštaja
     pdf.set_font("Helvetica", "B", size=16)
     pdf.cell(200, 10, txt="IZVESTAJ O DNEVNOM UNOSU MINERALA", ln=True, align="C")
     pdf.set_font("Helvetica", size=11)
@@ -125,7 +124,6 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
     pdf.cell(200, 10, txt=f"Datum generisanja: {datetime.now().strftime('%d.%m.%Y. u %H:%M')}", ln=True, align="L")
     pdf.ln(5)
     
-    # Tabela obroka u PDF-u
     pdf.set_font("Helvetica", "B", size=10)
     pdf.cell(60, 8, "Namirnica", border=1)
     pdf.cell(30, 8, "Kolicina (g)", border=1)
@@ -144,13 +142,12 @@ def generisi_pdf_file(ime_pacijenta, df_podaci, uk_k, uk_f, uk_n):
         pdf.ln()
         
     pdf.ln(5)
-    # Ukupni zbirovi
     pdf.set_font("Helvetica", "B", size=11)
     pdf.cell(200, 8, txt="UKUPAN DNEVNI ZBIR:", ln=True, align="L")
     pdf.set_font("Helvetica", size=11)
-    pdf.cell(200, 7, txt=f"-> KALIJUM: {uk_k:.2f} mg  (Limit: 1500 mg) " + (" [PREKORACENJE]" if uk_k > 1500 else ""), ln=True)
-    pdf.cell(200, 7, txt=f"-> FOSFOR: {uk_f:.2f} mg  (Limit: 1000 mg) " + (" [PREKORACENJE]" if uk_f > 1000 else ""), ln=True)
-    pdf.cell(200, 7, txt=f"-> NATRIJUM: {uk_n:.2f} mg  (Limit: 2000 mg) " + (" [PREKORACENJE]" if uk_n > 2000 else ""), ln=True)
+    pdf.cell(200, 7, txt=f"-> KALIJUM: {uk_k:.2f} mg " + (" [PREKORACENJE]" if uk_k > 1500 else ""), ln=True)
+    pdf.cell(200, 7, txt=f"-> FOSFOR: {uk_f:.2f} mg " + (" [PREKORACENJE]" if uk_f > 1000 else ""), ln=True)
+    pdf.cell(200, 7, txt=f"-> NATRIJUM: {uk_n:.2f} mg " + (" [PREKORACENJE]" if uk_n > 2000 else ""), ln=True)
     
     return pdf.output(dest='S')
 
@@ -166,10 +163,12 @@ if df is not None:
     
     trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
-        # Sigurno i direktno čitanje vrednosti iz tabela bez prisilnog float-a
-        k_100 = trenutni_red['Kalijum'].values[0]
-        f_100 = trenutni_red['Fosfor'].values[0]
-        n_100 = trenutni_red['Natrijum'].values[0]
+        k_100 = float(trenutni_red['Kalijum'].values[0])
+        f_100 = float(trenutni_red['Fosfor'].values[0])
+        n_100 = float(trenutni_red['Natrijum'].values[0])
         
         k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
         f_boja = "#FF4B4B" if f_100 > 150.0 else "#2ECC71"
+        n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
+        
+        st.markdown(f"""
