@@ -79,7 +79,7 @@ else:
     t_naslov, t_podnaslov = "♠️♥️Dnevnik Ishrane♦️♣️", "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa"
     t_napomena1 = "⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice.*"
     t_napomena2 = "ⓘ *Preporučeni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg | Natrijum max 1500-2000mg*"
-    t_korak1 = "🔍 Korak 1: Izaberite namirnicu (sortirano po abecedi A-Z)"
+    t_korak1 = "🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)"
     t_okvir_baza = "Vrednosti na 100g -> "
     t_korak2 = "⚖️ Korak 2: Upišite količinu namirnice u gramima"
     t_dugme_dodaj = "➕ Dodaj obrok u moj dnevnik"
@@ -160,18 +160,24 @@ if df is not None:
     st.subheader(t_korak1)
     
     izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
-    
-    trenutni_red = df[df[ime_kolone_baza] == izbor]
-    trenutni_red = df[df[ime_kolone_baza] == izbor]
+        trenutni_red = df[df[ime_kolone_baza] == izbor]
     if not trenutni_red.empty:
-        # Vraćamo tvoj originalni format koji je dokazano radio
-        k_100 = trenutni_red['Kalijum'].values[0]
-        f_100 = trenutni_red['Fosfor'].values[0]
-        n_100 = trenutni_red['Natrijum'].values[0]
+        k_100 = float(trenutni_red['Kalijum'].values[0])
+        f_100 = float(trenutni_red['Fosfor'].values[0])
+        n_100 = float(trenutni_red['Natrijum'].values[0])
         
-        # Običan Streamlit info okvir koji ne može da pukne zbog formata brojeva
-        tekst_info = f"Potassium: {k_100:.0f} mg | Phosphorus: {f_100:.0f} mg | Sodium: {n_100:.0f} mg"
-        st.info(tekst_info)
+        k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
+        f_boja = "#FF4B4B" if f_100 > 150.0 else "#2ECC71"
+        n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
+        
+        st.markdown(f"""
+        <div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #2ECC71; border-radius: 4px; color: #ffffff; font-weight: bold; font-size: 15px;'>
+            {t_okvir_baza} 
+            <span style='color: {k_boja};'>{l_kalijum}: {k_100:.0f} mg</span> | 
+            <span style='color: {f_boja};'>{l_fosfor}: {f_100:.0f} mg</span> | 
+            <span style='color: {n_boja};'>{l_natrijum}: {n_100:.0f} mg</span>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.write("---")
     st.subheader(t_korak2)
@@ -195,4 +201,93 @@ if df is not None:
                 'sodium': round((n_d * kolicina_g) / 100.0, 2)
             })
             st.rerun()
+
+    # --- PRIKAZ DNEVNIKA ISHRANE ---
+    if st.session_state['dnevnik_obroka']:
+        st.write("---")
+        st.subheader(t_naslov_tabele)
+        
+        df_prikaz = pd.DataFrame(st.session_state['dnevnik_obroka'])
+        
+        uk_k = df_prikaz['potassium'].sum()
+        uk_f = df_prikaz['phosphorus'].sum()
+        uk_n = df_prikaz['sodium'].sum()
+        
+        df_prikaz_prevedeno = df_prikaz.rename(columns={
+            'food': l_namirnica,
+            'amount': l_kolicina,
+            'potassium': l_kalijum,
+            'phosphorus': l_fosfor,
+            'sodium': l_natrijum
+        })
+        
+        st.dataframe(df_prikaz_prevedeno, use_container_width=True, hide_index=True)
+        
+        st.write("")
+        st.markdown(f"### {t_zbir_okvir}")
+        
+        dnevna_k_boja = "#FF4B4B" if uk_k > 1500.0 else "#2ECC71"
+        dnevna_f_boja = "#FF4B4B" if uk_f > 1000.0 else "#2ECC71"
+        dnevna_n_boja = "#FF4B4B" if uk_n > 2000.0 else "#2ECC71"
+        
+        col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.markdown(f"""
+            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_k_boja};'>
+                <p style='margin: 0px; color: #a0aec0; font-size: 15px; font-weight: bold;'>{l_kalijum}</p>
+                <p style='margin: 5px 0px 0px 0px; color: {dnevna_k_boja}; font-size: 22px; font-weight: 900;'>{uk_k:.2f} mg</p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_m2:
+            st.markdown(f"""
+            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_f_boja};'>
+                <p style='margin: 0px; color: #a0aec0; font-size: 15px; font-weight: bold;'>{l_fosfor}</p>
+                <p style='margin: 5px 0px 0px 0px; color: {dnevna_f_boja}; font-size: 22px; font-weight: 900;'>{uk_f:.2f} mg</p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_m3:
+            st.markdown(f"""
+            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_n_boja};'>
+                <p style='margin: 0px; color: #a0aec0; font-size: 15px; font-weight: bold;'>{l_natrijum}</p>
+                <p style='margin: 5px 0px 0px 0px; color: {dnevna_n_boja}; font-size: 22px; font-weight: 900;'>{uk_n:.2f} mg</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        st.write("---")
+        st.markdown(f"**{t_labela_ime}**")
+        ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
+        
+        col_btn1, col_btn2 = st.columns(2)
+        with col_btn1:
+            if ime_pacijenta:
+                try:
+                    pdf_bytes = generisi_pdf_file(ime_pacijenta, df_prikaz, uk_k, uk_f, uk_n)
+                    st.download_button(
+                        label=t_dugme_pdf,
+                        data=bytes(pdf_bytes),
+                        file_name=f"Izvestaj_{ime_pacijenta.replace(' ', '_')}.pdf",
+                        mime="application/pdf",
+                        use_container_width=True
+                    )
+                except Exception as e:
+                    st.error(f"Greska: {e}")
+            else:
+                st.button(t_dugme_pdf, disabled=True, use_container_width=True)
+        with col_btn2:
+            if st.button(t_dugme_obrisi, use_container_width=True):
+                st.session_state['dnevnik_obroka'] = []
+                st.rerun()
+else:
+    st.error("Baza podataka 'KPH-AI-GLOBAL.xlsx' nije pronađena ili je oštećena.")
+
+# --- FUTER SA INFORMACIJAMA I BROJAČEM POSETA ---
+st.write("---")
+st.markdown("""
+<div style='text-align: center; line-height: 1.2;'>
+    <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <span style='color: #2ECC71; font-weight: bold;'>3010</span></p>
+    <p style='margin: 5px 0px 0px 0px; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>
+    <p style='margin: 0px; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
+    <p style='margin: 0px;  color: #888888; font-size: 12px;'>Powered by PYTHON</p>
+</div>
+""", unsafe_allow_html=True)
 
