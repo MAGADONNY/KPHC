@@ -178,7 +178,37 @@ if df is not None:
         dnevna_f_boja = "#FF4B4B" if uk_f > 1000.0 else "#2ECC71"
         dnevna_n_boja = "#FF4B4B" if uk_n > 2000.0 else "#2ECC71"
         
+               # Prikaz modernih HTML metričkih kartica sa zelenom/crvenom gornjom ivicom (VEĆI I BOLD FONT)
         col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.markdown(f"""
+            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_k_boja};'>
+                <p style='margin: 0px; color: #a0aec0; font-size: 16px; font-weight: bold;'>{l_kalijum}</p>
+                <p style='margin: 5px 0px 0px 0px; color: {dnevna_k_boja}; font-size: 26px; font-weight: 900;'>{uk_k:.2f} mg</p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_m2:
+            st.markdown(f"""
+            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_f_boja};'>
+                <p style='margin: 0px; color: #a0aec0; font-size: 16px; font-weight: bold;'>{l_fosfor}</p>
+                <p style='margin: 5px 0px 0px 0px; color: {dnevna_f_boja}; font-size: 26px; font-weight: 900;'>{uk_f:.2f} mg</p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_m3:
+            st.markdown(f"""
+            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_n_boja};'>
+                <p style='margin: 0px; color: #a0aec0; font-size: 16px; font-weight: bold;'>{l_natrijum}</p>
+                <p style='margin: 5px 0px 0px 0px; color: {dnevna_n_boja}; font-size: 26px; font-weight: 900;'>{uk_n:.2f} mg</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        st.write("")
+        if st.button(t_dugme_obrisi):
+            st.session_state['dnevnik_obroka'] = []
+            st.rerun()
+else:
+    st.error("Baza podataka 'KPH-AI-GLOBAL.xlsx' nije pronađena ili je oštećena.")
+
 # --- FUTER SA INFORMACIJAMA I BROJAČEM POSETA ---
 st.write("---")
 st.markdown("""
