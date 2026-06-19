@@ -252,7 +252,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_text_color(150, 150, 150)
     
     # Širina 0 i tekst se ispisuje odmah ispod legende na prvoj strani
-    pdf.cell(0, 10, "Automatski generisan medicinski izvestaj | Sva prava zadrzana.", 0, 0, "C")
+    pdf.cell(0, 10, "Izvestaj generisao AI | Powered by Python ♣️♦️♥️♠️ MAGICOMP magicomp@bluewin.ch +38163310850 .", 0, 0, "C")
 
     # DODAJTE OVE 4 LINIJE ODMAH ISPOD (U REDOVE 255 I 256):
     pdf.set_text_color(44, 62, 80)
