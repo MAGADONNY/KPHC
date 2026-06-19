@@ -5,7 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
 # Bezbedan CSS stil za tamnu temu i široko plavo dugme preko celog ekrana
-st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:4px;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#279FF5!important; border:none!important; width:100%!important; text-shadow:none!important; height: 45px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#279FF5!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;} div[data-testid='stNotification'] p {color:#ffffff!important;}</style>", unsafe_allow_html=True)
+st.info(f"<span style='color: #7cd0ff; font-weight: bold;'>{t_okvir.format(k_100, f_100, n_100)}</span>", unsafe_allow_html=True)
 
 # Inicijalizacija session_state liste za čuvanje unetih obroka
 if 'dnevnik_obroka' not in st.session_state:
