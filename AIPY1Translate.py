@@ -2,12 +2,13 @@ import streamlit as st
 import pandas as pd
 from fpdf import FPDF
 from datetime import datetime
+import io
 
 # Osnovna podešavanja aplikacije
 st.set_page_config(page_title="Diet Diary / Dnevnik Ishrane", page_icon="🃏", layout="centered")
 
 # Bezbedan CSS stil za tamnu temu, ZELENO DUGME i prostor za futer na telefonima
-st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;padding-bottom:200px!important;} footer {visibility: hidden!important;} [data-testid='stActionButton'] {display: none!important;} [data-testid='stStatusWidget'] {display: none!important;} div[data-baseweb='select'] font-size:18px!important; font-weight:bold!important;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:6px!important; height:50px!important;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important; font-size:18px!important; font-weight:bold!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#2ECC71!important; border:none!important; width:100%!important; text-shadow:none!important; padding: 12px 0px!important; font-size:18px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#2ECC71!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:18px!important;} .stSelectbox div[data-baseweb='select'] {font-size:18px!important; font-weight:bold!important; color:#ffffff!important;}</style>", unsafe_allow_html=True)
+st.markdown("<style>.stApp{background-color:#0e1117;color:#ffffff;padding-bottom:200px!important;} footer {visibility: hidden!important;} [data-testid='stActionButton'] {display: none!important;} [data-testid='stStatusWidget'] {display: none!important;} div[data-baseweb='select'] font-size:18px!important; font-weight:bold!important;} div[data-baseweb='input'] {background-color:#1e2430!important; border-radius:6px!important; height:50px!important;} div[data-baseweb='input'] input, div[data-baseweb='input'] input:focus {color:#ffffff!important; -webkit-text-fill-color:#ffffff!important; background-color:#1e2430!important; font-size:18px!important; font-weight:bold!important;} div.stButton > button {font-weight:900!important; font-family:sans-serif!important; color:#000000!important; background-color:#2ECC71!important; border:none!important; width:100%!important; text-shadow:none!important; padding: 12px 0px!important; font-size:18px!important;} div.stButton > button:focus, div.stButton > button:active {color:#000000!important; background-color:#2ECC71!important; font-weight:900!important;} label, div[data-testid='stWidgetLabel'] p {color:#ffffff!important; font-weight:bold!important; font-size:16px!important;} .stSelectbox div[data-baseweb='select'] {font-size:18px!important; font-weight:bold!important; color:#ffffff!important;}</style>", unsafe_allow_html=True)
 
 # Inicijalizacija session_state liste za čuvanje unetih obroka
 if 'dnevnik_obroka' not in st.session_state:
@@ -88,8 +89,8 @@ else:
     t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
     t_dugme_pdf = "📄 Preuzmi PDF izveštaj"
     t_placeholder_ime = "npr. Petar Petrović"
-    t_labela_ime = "Ime i prezime pacijenta:"
-    
+    t_labela_ime = "Ime i prezime:"
+
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
     ime_kolone_baza = 'Namirnica'
@@ -112,20 +113,19 @@ def ucitaj_bazu():
 df = ucitaj_bazu()
 
 # --- FUNKCIJA ZA KREIRANJE PDF-a ---
-# --- RESTRUKTURIRANA FUNKCIJA ZA PDF SA GODINOM ROĐENJA ---
 def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_n):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
     
-    # 1. Uže zeleno polje na vrhu (Visina 17)
+    # 1. Užo zeleno polje na vrhu
     pdf.set_fill_color(46, 204, 113)
     pdf.rect(0, 0, 210, 17, "F")
     
-    # Naslov unutar uže zelene trake
+    # Naslov unutar zelene trake
     pdf.set_text_color(255, 255, 255)
-    pdf.set_font("Helvetica", "B", size=12)
-    pdf.cell(180, 7, text="DNEVNIK ISHRANE & UNOSA MINERALA", border=0, ln=True, align="C")
+    pdf.set_font("Helvetica", "B", 12)
+    pdf.cell(180, 7, "DNEVNIK ISHRANE & UNOSA MINERALA", 0, 1, "C")
     
     # Vraćamo tekst na tamno sivu
     pdf.set_text_color(44, 62, 80)
@@ -135,158 +135,48 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 24, 180, 16, "F")
     
-    pdf.set_font("Helvetica", "B", size=10)
-    pdf.cell(120, 6, txt=" IME I PREZIME / GODINA RODJENJA: {ime_pacijenta.upper()} ({godina_rodjenja})", ln=False)
+    pdf.set_font("Helvetica", "B", 10)
+    pdf.cell(120, 6, f" IME I PREZIME / GODINA RODJENJA: {ime_pacijenta.upper()} ({godina_rodjenja})", 0, 0)
     pdf.set_font("Helvetica", size=10)
-    pdf.cell(60, 6, txt=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", ln=True, align="R")
+    pdf.cell(60, 6, f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", 0, 1, "R")
     pdf.ln(6)
-
-
-# --- GLAVNI RENDER STRANICE ---
-if df is not None:
-    df_sortirano = df.dropna(subset=[ime_kolone_baza]).sort_values(by=ime_kolone_baza)
-    kompletna_lista = df_sortirano[ime_kolone_baza].tolist()
     
-    st.write("---")
-    st.subheader(t_korak1)
+    # 3. Tabela obroka (Zeleno-sivo zaglavlje)
+    pdf.set_font("Helvetica", "B", 10)
+    pdf.set_fill_color(52, 73, 94) 
+    pdf.set_text_color(255, 255, 255) 
     
-    izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
-    trenutni_red = df[df[ime_kolone_baza] == izbor]
-    if not trenutni_red.empty:
-        k_100 = float(trenutni_red['Kalijum'].values[0])
-        f_100 = float(trenutni_red['Fosfor'].values[0])
-        n_100 = float(trenutni_red['Natrijum'].values[0])
-        
-        k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
-        f_boja = "#FF4B4B" if f_100 > 150.0 else "#2ECC71"
-        n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
-        
-        st.markdown(f"""
-        <div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #2ECC71; border-radius: 4px; color: #ffffff; font-weight: bold; font-size: 15px;'>
-            {t_okvir_baza} 
-            <span style='color: {k_boja};'>{l_kalijum}: {k_100:.0f} mg</span> | 
-            <span style='color: {f_boja};'>{l_fosfor}: {f_100:.0f} mg</span> | 
-            <span style='color: {n_boja};'>{l_natrijum}: {n_100:.0f} mg</span>
-        </div>
-        """, unsafe_allow_html=True)
+    pdf.cell(65, 9, " Namirnica", 0, 0, "", True)
+    pdf.cell(25, 9, "Kolicina (g)", 0, 0, "C", True)
+    pdf.cell(30, 9, "Kalijum (mg)", 0, 0, "C", True)
+    pdf.cell(30, 9, "Fosfor (mg)", 0, 0, "C", True)
+    pdf.cell(30, 9, "Natrijum (mg)", 0, 1, "C", True)
     
-    st.write("---")
-    st.subheader(t_korak2)
+    pdf.set_text_color(44, 62, 80)
+    pdf.set_font("Helvetica", size=10)
     
-    kolicina_g = st.number_input(t_labela_unos, min_value=1.0, max_value=5000.0, value=100.0, step=10.0, label_visibility="collapsed", key="trenutna_kolicina")
-    
-    st.write("")
-    
-    if st.button(t_dugme_dodaj):
-        red_dodaj = df[df[ime_kolone_baza] == izbor]
-        if not red_dodaj.empty:
-            k_d = float(red_dodaj['Kalijum'].values[0])
-            f_d = float(red_dodaj['Fosfor'].values[0])
-            n_d = float(red_dodaj['Natrijum'].values[0])
+    brojac_reda = 0
+    for _, red in df_podaci.iterrows():
+        if brojac_reda % 2 == 0:
+            pdf.set_fill_color(248, 250, 252) 
+            is_fill = True
+        else:
+            is_fill = False
             
-            st.session_state['dnevnik_obroka'].append({
-                'food': izbor,
-                'amount': kolicina_g,
-                'potassium': round((k_d * kolicina_g) / 100.0, 2),
-                'phosphorus': round((f_d * kolicina_g) / 100.0, 2),
-                'sodium': round((n_d * kolicina_g) / 100.0, 2)
-            })
-            st.rerun()
-
-    # --- PRIKAZ DNEVNIKA ISHRANE ---
-    if st.session_state['dnevnik_obroka']:
-        st.write("---")
-        st.subheader(t_naslov_tabele)
+        pdf.cell(65, 8, f" {str(red['food'])[:28]}", "B", 0, "", is_fill)
+        pdf.cell(25, 8, f"{red['amount']:.1f} g", "B", 0, "C", is_fill)
+        pdf.cell(30, 8, f"{red['potassium']:.1f}", "B", 0, "C", is_fill)
+        pdf.cell(30, 8, f"{red['phosphorus']:.1f}", "B", 0, "C", is_fill)
+        pdf.cell(30, 8, f"{red['sodium']:.1f}", "B", 1, "C", is_fill)
+        brojac_reda += 1
         
-        df_prikaz = pd.DataFrame(st.session_state['dnevnik_obroka'])
-        
-        uk_k = df_prikaz['potassium'].sum()
-        uk_f = df_prikaz['phosphorus'].sum()
-        uk_n = df_prikaz['sodium'].sum()
-        
-        df_prikaz_prevedeno = df_prikaz.rename(columns={
-            'food': l_namirnica,
-            'amount': l_kolicina,
-            'potassium': l_kalijum,
-            'phosphorus': l_fosfor,
-            'sodium': l_natrijum
-        })
-        
-        st.dataframe(df_prikaz_prevedeno, use_container_width=True, hide_index=True)
-        
-        st.write("")
-        st.markdown(f"### {t_zbir_okvir}")
-        
-        dnevna_k_boja = "#FF4B4B" if uk_k > 1500.0 else "#2ECC71"
-        dnevna_f_boja = "#FF4B4B" if uk_f > 1000.0 else "#2ECC71"
-        dnevna_n_boja = "#FF4B4B" if uk_n > 2000.0 else "#2ECC71"
-        
-        col_m1, col_m2, col_m3 = st.columns(3)
-        with col_m1:
-            st.markdown(f"""
-            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_k_boja};'>
-                <p style='margin: 0px; color: #a0aec0; font-size: 15px; font-weight: bold;'>{l_kalijum}</p>
-                <p style='margin: 5px 0px 0px 0px; color: {dnevna_k_boja}; font-size: 22px; font-weight: 900;'>{uk_k:.2f} mg</p>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_m2:
-            st.markdown(f"""
-            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_f_boja};'>
-                <p style='margin: 0px; color: #a0aec0; font-size: 15px; font-weight: bold;'>{l_fosfor}</p>
-                <p style='margin: 5px 0px 0px 0px; color: {dnevna_f_boja}; font-size: 22px; font-weight: 900;'>{uk_f:.2f} mg</p>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_m3:
-            st.markdown(f"""
-            <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_n_boja};'>
-                <p style='margin: 0px; color: #a0aec0; font-size: 15px; font-weight: bold;'>{l_natrijum}</p>
-                <p style='margin: 5px 0px 0px 0px; color: {dnevna_n_boja}; font-size: 22px; font-weight: 900;'>{uk_n:.2f} mg</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        st.write("---")
-        # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU
-        col_inp1, col_inp2 = st.columns(2)
-        with col_inp1:
-            st.markdown(f"**{t_labela_ime}**")
-            ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
-        with col_inp2:
-            st.markdown("**Godina rođenja:**")
-            godina_rodjenja = st.text_input("Godina", placeholder="npr. 1965", label_visibility="collapsed")
-        
-        col_btn1, col_btn2 = st.columns(2)
-        with col_btn1:
-            if ime_pacijenta and godina_rodjenja:
-                try:
-                    pdf_bytes = generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_prikaz, uk_k, uk_f, uk_n)
-                    st.download_button(
-                        label=t_dugme_pdf,
-                        data=bytes(pdf_bytes),
-                        file_name=f"Izvestaj_{ime_pacijenta.replace(' ', '_')}.pdf",
-                        mime="application/pdf",
-                        use_container_width=True
-                    )
-                except Exception as e:
-                    st.error(f"Greska: {e}")
-            else:
-                st.button(t_dugme_pdf, disabled=True, use_container_width=True)
-        with col_btn2:
-            if st.button(t_dugme_obrisi, use_container_width=True):
-                st.session_state['dnevnik_obroka'] = []
-                st.rerun()
-
-
-else:
-    st.error("Baza podataka 'KPH-AI-GLOBAL.xlsx' nije pronađena ili je oštećena.")
-
-# --- FUTER SA INFORMACIJAMA I BROJAČEM POSETA ---
-st.write("---")
-st.markdown("""
-<div style='text-align: center; line-height: 1.2;'>
-    <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <span style='color: #2ECC71; font-weight: bold;'>3010</span></p>
-    <p style='margin: 5px 0px 0px 0px; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>
-    <p style='margin: 0px; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
-    <p style='margin: 0px;  color: #888888; font-size: 12px;'>Powered by PYTHON</p>
-</div>
-""", unsafe_allow_html=True)
-
+    pdf.ln(10)
+    
+    # 4. Donji rezime u tabeli
+    pdf.set_font("Helvetica", "B", 12)
+    pdf.cell(180, 8, "REZIME UKUPNOG DNEVNOG UNOSA:", 0, 1)
+    pdf.ln(2)
+    
+    pdf.set_font("Helvetica", "B", 10)
+    pdf.set_fill_color(230, 235, 240)
+    pdf.cell(40, 8, " Mineral", 1, 0, "C", True)
