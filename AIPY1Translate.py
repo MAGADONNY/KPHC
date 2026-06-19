@@ -184,7 +184,7 @@ if df is not None:
             st.markdown(f"""
             <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_k_boja};'>
                 <p style='margin: 0px; color: #a0aec0; font-size: 16px; font-weight: bold;'>{l_kalijum}</p>
-                <p style='margin: 5px 0px 0px 0px; color: {dnevna_k_boja}; font-size: 26px; font-weight: 900;'>{uk_k:.2f} mg</p>
+                <p style='margin: 5px 0px 0px 0px; color: {dnevna_k_boja}; font-size: 24px; font-weight: 900;'>{uk_k:.2f} mg</p>
             </div>
             """, unsafe_allow_html=True)
         with col_m2:
