@@ -207,7 +207,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     if uk_f > 1000.0:
         pdf.set_text_color(231, 76, 60)
         pdf.set_font("Helvetica", "B", 10)
-        pdf.cell(50, 8, " [ALARM] Prekoraceno", 1, 1, "C")
+        pdf.cell(50, 8, " Prekoraceno", 1, 1, "C")
     else:
         pdf.set_text_color(39, 174, 96)
         pdf.cell(50, 8, " [OK] U granicama", 1, 1, "C")
@@ -221,7 +221,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     if uk_n > 2000.0:
         pdf.set_text_color(231, 76, 60)
         pdf.set_font("Helvetica", "B", 10)
-        pdf.cell(50, 8, " [ALARM] Prekoraceno", 1, 1, "C")
+        pdf.cell(50, 8, " Prekoraceno", 1, 1, "C")
     else:
         pdf.set_text_color(39, 174, 96)
         pdf.cell(50, 8, " [OK] U granicama", 1, 1, "C")
