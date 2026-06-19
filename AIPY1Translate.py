@@ -119,8 +119,8 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_margins(15, 15, 15)
     
     # 1. Užo zeleno polje na vrhu
-    pdf.set_fill_color(46, 204, 113)
-    pdf.rect(0, 0, 300, 17, "F")
+    pdf.set_fill_color(46, 240, 113)
+    pdf.rect(0, 0, 210, 17, "F")
     
     # Naslov unutar zelene trake
     pdf.set_text_color(255, 255, 255)
