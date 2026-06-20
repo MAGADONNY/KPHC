@@ -141,7 +141,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     # Ispis tekstova IZNAD sive trake (Normal font, crna boja)
     pdf.set_text_color(0, 0, 0)
     pdf.set_font("Helvetica", "", 9)
-    pdf.cell(120, 5, text="IME I PREZIME / GODINA RODJENJA:", border=0, ln=0)
+    pdf.cell(120, 5, text="Ime i prezime / godina rodjenja:", border=0, ln=0)
     pdf.cell(60, 5, text="DATUM:", border=0, ln=1, align="R")
     
     # 2. Spuštamo kursor na visinu 32 gde počinje siva traka
