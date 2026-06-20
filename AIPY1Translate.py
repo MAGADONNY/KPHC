@@ -214,13 +214,13 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(45, 8, "1500.00 mg", 1, 0, "C")
     if uk_k > 1500.0:
         pdf.set_text_color(231, 76, 60)
-        pdf.set_font("Helvetica", "B", 10)
+        pdf.set_font("Courier", "", 10)
         pdf.cell(50, 8, " Prekoraceno", 1, 1, "C")
     else:
         pdf.set_text_color(39, 174, 96)
         pdf.cell(50, 8, " [OK] U granicama", 1, 1, "C")
     pdf.set_text_color(44, 62, 80)
-    pdf.set_font("Helvetica", size=10)
+    pdf.set_font("Courier", "", 10)
     
     # Fosfor
     pdf.cell(40, 8, " Fosfor", 1)
@@ -228,13 +228,13 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(45, 8, "1000.00 mg", 1, 0, "C")
     if uk_f > 1000.0:
         pdf.set_text_color(231, 76, 60)
-        pdf.set_font("Helvetica", "B", 10)
+        pdf.set_font("Courier", "", 10)
         pdf.cell(50, 8, " Prekoraceno", 1, 1, "C")
     else:
         pdf.set_text_color(39, 174, 96)
         pdf.cell(50, 8, " [OK] U granicama", 1, 1, "C")
     pdf.set_text_color(44, 62, 80)
-    pdf.set_font("Helvetica", size=10)
+    pdf.set_font("Courier", "", 10)
     
     # Natrijum
     pdf.cell(40, 8, " Natrijum", 1)
@@ -242,14 +242,14 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(45, 8, "2000.00 mg", 1, 0, "C")
     if uk_n > 2000.0:
         pdf.set_text_color(231, 76, 60)
-        pdf.set_font("Helvetica", "B", 10)
+        pdf.set_font("Courier", "", 10)
         pdf.cell(50, 8, " Prekoraceno", 1, 1, "C")
     else:
         pdf.set_text_color(39, 174, 96)
         pdf.cell(50, 8, " [OK] U granicama", 1, 1, "C")
 
     pdf.set_text_color(44, 62, 80)
-    pdf.set_font("Helvetica", size=10)
+    pdf.set_font("Courier", "", 10)
     pdf.ln(12)
 
         # Pozicioniramo kursor za legendu visoko (na prvu stranu)
