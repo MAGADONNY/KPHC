@@ -152,20 +152,20 @@ pdf.cell(120, 6, text=f" {ime_pacijenta.upper()} ({godina_rodjenja})", border=0,
 pdf.ln(6)
 
     
-    # 3. Tabela obroka (Zeleno-sivo zaglavlje)
-    pdf.set_font("Helvetica", "B", 10)
-    pdf.set_fill_color(52, 73, 94) 
-    pdf.set_text_color(255, 255, 255) 
+# 3. Tabela obroka (Zeleno-sivo zaglavlje)
+pdf.set_font("Helvetica", "B", 10)
+pdf.set_fill_color(52, 73, 94) 
+pdf.set_text_color(255, 255, 255) 
     
-    pdf.cell(65, 9, text=" Namirnica", border=0, fill=True)
-    pdf.cell(25, 9, text="Kolicina (g)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, text="Kalijum (mg)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, text="Fosfor (mg)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, text="Natrijum (mg)", border=0, fill=True, align="C")
-    pdf.ln()
+pdf.cell(65, 9, text=" Namirnica", border=0, fill=True)
+pdf.cell(25, 9, text="Kolicina (g)", border=0, fill=True, align="C")
+pdf.cell(30, 9, text="Kalijum (mg)", border=0, fill=True, align="C")
+pdf.cell(30, 9, text="Fosfor (mg)", border=0, fill=True, align="C")
+pdf.cell(30, 9, text="Natrijum (mg)", border=0, fill=True, align="C")
+pdf.ln()
     
-    pdf.set_text_color(44, 62, 80)
-    pdf.set_font("Helvetica", size=10)
+pdf.set_text_color(44, 62, 80)
+pdf.set_font("Helvetica", size=10)
     
     brojac_reda = 0
     for _, red in df_podaci.iterrows():
