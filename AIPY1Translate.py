@@ -189,11 +189,12 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         else:
             is_fill = False
             
-        pdf.cell(45.5, 8, text=f" {str(red['Food'])[:28]}", border="B", fill=is_fill)
-        pdf.cell(17.5, 8, text=f"{red['Amount']:.1f} g", border="B", fill=is_fill, align="C")
-        pdf.cell(21, 8, text=f"{red['Potassium']:.1f}", border="B", fill=is_fill, align="C")
-        pdf.cell(21, 8, text=f"{red['Phosphorus']:.1f}", border="B", fill=is_fill, align="C")
-        pdf.cell(21, 8, text=f"{red['Sodium']:.1f}", border="B", fill=is_fill, align="C")
+                pdf.cell(65, 5, text=f" {str(red['food'])[:28]}", border="B", fill=is_fill)
+        pdf.cell(25, 5, text=f"{red['amount']:.1f} g", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 5, text=f"{red['potassium']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 5, text=f"{red['phosphorus']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 5, text=f"{red['sodium']:.1f}", border="B", fill=is_fill, align="C")
+
 
         pdf.ln()
         brojac_reda += 1
