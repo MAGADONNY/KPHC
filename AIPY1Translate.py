@@ -89,7 +89,7 @@ else:
     t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
     t_dugme_pdf = "📄 Preuzmi PDF izveštaj"
     t_placeholder_ime = "npr. Petar Petrović"
-    t_labela_ime = "Ime i prezime:"
+    t_labela_ime = "Ime i prezime pacijenta:"
 
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
