@@ -89,7 +89,7 @@ else:
     t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
     t_dugme_pdf = "📄 Preuzmi PDF izveštaj"
     t_placeholder_ime = "npr. Petar Petrović"
-    t_labela_ime = "Ime i prezime :"
+    t_labela_ime = "Ime i prezime pacijenta:"
 
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
@@ -136,41 +136,31 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 24, 180, 16, "F")
     
-   # 1. Ispisuje se fiksni naslov (ln=0 ostaje u istom redu za datum)
-pdf.set_font("Helvetica", "B", 9)
-pdf.cell(120, 6, text=" IME I PREZIME / Godina rodjenja:", border=0, ln=0)
-
-# 2. Ispisuje se datum na desnoj strani i skače se u novi red (ln=1)
-pdf.set_font("Helvetica", size=10)
-pdf.cell(60, 6, text=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
-
-# 3. Sada se ime ispisuje tačno ispod naslova, u novom redu
-pdf.set_font("Helvetica", "B", 9)
-pdf.cell(120, 6, text=f" {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=1)
-
-# 4. Dodatni razmak nakon celog bloka
-pdf.ln(6)
-
+    pdf.set_font("Helvetica", "B", 9)
+    pdf.cell(120, 6, text=f" IME I PREZIME / GODINA RODJENJA: {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
+    pdf.set_font("Helvetica", size=10)
+    pdf.cell(60, 6, text=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
+    pdf.ln(6)
     
-# 3. Tabela obroka (Zeleno-sivo zaglavlje)
-pdf.set_font("Helvetica", "B", 10)
-pdf.set_fill_color(52, 73, 94) 
-pdf.set_text_color(255, 255, 255) 
+    # 3. Tabela obroka (Zeleno-sivo zaglavlje)
+    pdf.set_font("Helvetica", "B", 10)
+    pdf.set_fill_color(52, 73, 94) 
+    pdf.set_text_color(255, 255, 255) 
     
-pdf.cell(65, 9, text=" Namirnica", border=0, fill=True)
-pdf.cell(25, 9, text="Kolicina (g)", border=0, fill=True, align="C")
-pdf.cell(30, 9, text="Kalijum (mg)", border=0, fill=True, align="C")
-pdf.cell(30, 9, text="Fosfor (mg)", border=0, fill=True, align="C")
-pdf.cell(30, 9, text="Natrijum (mg)", border=0, fill=True, align="C")
-pdf.ln()
+    pdf.cell(65, 9, text=" Namirnica", border=0, fill=True)
+    pdf.cell(25, 9, text="Kolicina (g)", border=0, fill=True, align="C")
+    pdf.cell(30, 9, text="Kalijum (mg)", border=0, fill=True, align="C")
+    pdf.cell(30, 9, text="Fosfor (mg)", border=0, fill=True, align="C")
+    pdf.cell(30, 9, text="Natrijum (mg)", border=0, fill=True, align="C")
+    pdf.ln()
     
-pdf.set_text_color(44, 62, 80)
-pdf.set_font("Helvetica", size=10)
+    pdf.set_text_color(44, 62, 80)
+    pdf.set_font("Helvetica", size=10)
     
-brojac_reda = 0
-for _, red in df_podaci.iterrows():
-if brojac_reda % 2 == 0:
-pdf.set_fill_color(248, 250, 252) 
+    brojac_reda = 0
+    for _, red in df_podaci.iterrows():
+        if brojac_reda % 2 == 0:
+            pdf.set_fill_color(248, 250, 252) 
             is_fill = True
         else:
             is_fill = False
