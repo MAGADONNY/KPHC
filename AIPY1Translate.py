@@ -170,7 +170,7 @@ pdf.ln(6)
     brojac_reda = 0
     for _, red in df_podaci.iterrows():
         if brojac_reda % 2 == 0:
-            pdf.set_fill_color(248, 250, 252) 
+    pdf.set_fill_color(248, 250, 252) 
             is_fill = True
         else:
             is_fill = False
