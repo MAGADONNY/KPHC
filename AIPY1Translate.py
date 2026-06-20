@@ -135,28 +135,30 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
        # 2. Blok sa podacima - Siva pozadina (povećana visina na 22 sa 16 zbog novog reda)
     pdf.set_fill_color(205, 212, 218) 
         
-         # Resetovanje boje teksta na crnu za naslove iznad trake
-    pdf.set_text_color(0, 0, 0)
+            # 1. Eksplicitno postavljamo kursor na visinu 25 (ispod zelenog zaglavlja)
+    pdf.set_y(25)
     
-    # Tekst iznad polja (Normal font, veličina 9, visina ćelije 5)
+    # Ispis tekstova IZNAD sive trake (Normal font, crna boja)
+    pdf.set_text_color(0, 0, 0)
     pdf.set_font("Helvetica", "", 9)
     pdf.cell(120, 5, text="IME I PREZIME / GODINA RODJENJA:", border=0, ln=0)
     pdf.cell(60, 5, text="DATUM:", border=0, ln=1, align="R")
     
-    # Razmak od 2mm između teksta i sive trake
-    pdf.ln(2)
-
-    # 2. Blok sa podacima - Siva pozadina (Spuštena na Y=31 da ne smeta gornjem tekstu)
-    pdf.set_fill_color(205, 212, 218) 
-    pdf.rect(15, 31, 180, 12, "F")
+    # 2. Spuštamo kursor na visinu 32 gde počinje siva traka
+    pdf.set_y(32)
     
-    # Podaci UNUTAR sive trake (Ime levo, Datum desno - Boldovano)
+    # Crtanje sive trake (od visine 32 do visine 44 -> ukupna visina je 12mm)
+    pdf.set_fill_color(205, 212, 218) 
+    pdf.rect(15, 32, 180, 12, "F")
+    
+    # Ispis podataka UNUTAR sive trake (Bold font, visina ćelije pronalazi centar trake)
     pdf.set_font("Helvetica", "B", 10)
     pdf.cell(120, 12, text=f" {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
     pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
     
-    # Razmak do tabele ispod sive trake
-    pdf.ln(6)
+    # 3. Postavljamo kursor na visinu 48 kako bi tabela počela tačno ispod sive trake
+    pdf.set_y(48)
+
 
 
 
