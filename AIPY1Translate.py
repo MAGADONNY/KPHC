@@ -202,64 +202,67 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         brojac_reda += 1
         
     pdf.ln(10)
-    
+
+
+    #TABELA REZIME
     pdf.cell(180, 8, "REZIME UKUPNOG DNEVNOG UNOSA:", 0, 1)
     pdf.ln(2)
     
     pdf.set_font("Courier", "", 10)
     pdf.set_fill_color(230, 235, 240)
-    pdf.cell(40, 8, " Mineral", 1, 0, "C", True)
-    pdf.cell(45, 8, "Ukupno uneto", 1, 0, "C", True)
-    pdf.cell(45, 8, "Dozvoljeni limit", 1, 0, "C", True)
-    pdf.cell(50, 8, "Status / Upozorenje", 1, 1, "C", True)
+    # Smanjena visina zaglavlja sa 8 na 5.5
+    pdf.cell(40, 5.5, " Mineral", 1, 0, "C", True)
+    pdf.cell(45, 5.5, "Ukupno uneto", 1, 0, "C", True)
+    pdf.cell(45, 5.5, "Dozvoljeni limit", 1, 0, "C", True)
+    pdf.cell(50, 5.5, "Status / Upozorenje", 1, 1, "C", True)
     
     pdf.set_font("Courier", "", 10)
     
-    # Kalijum
-    pdf.cell(40, 8, " Kalijum", 1)
-    pdf.cell(45, 8, f"{uk_k:.2f} mg", 1, 0, "C")
-    pdf.cell(45, 8, "1500.00 mg", 1, 0, "C")
+    # Kalijum (Smanjena visina sa 8 na 5.5)
+    pdf.cell(40, 5.5, " Kalijum", 1)
+    pdf.cell(45, 5.5, f"{uk_k:.2f} mg", 1, 0, "C")
+    pdf.cell(45, 5.5, "1500.00 mg", 1, 0, "C")
     if uk_k > 1500.0:
         pdf.set_text_color(231, 76, 60)
         pdf.set_font("Courier", "", 10)
-        pdf.cell(50, 8, " Prekoraceno", 1, 1, "C")
+        pdf.cell(50, 5.5, " Prekoraceno", 1, 1, "C")
     else:
         pdf.set_text_color(39, 174, 96)
-        pdf.cell(50, 8, " [OK] U granicama", 1, 1, "C")
+        pdf.cell(50, 5.5, " [OK] U granicama", 1, 1, "C")
     pdf.set_text_color(44, 62, 80)
     pdf.set_font("Courier", "", 10)
     
-    # Fosfor
-    pdf.cell(40, 8, " Fosfor", 1)
-    pdf.cell(45, 8, f"{uk_f:.2f} mg", 1, 0, "C")
-    pdf.cell(45, 8, "1000.00 mg", 1, 0, "C")
+    # Fosfor (Smanjena visina sa 8 na 5.5)
+    pdf.cell(40, 5.5, " Fosfor", 1)
+    pdf.cell(45, 5.5, f"{uk_f:.2f} mg", 1, 0, "C")
+    pdf.cell(45, 5.5, "1000.00 mg", 1, 0, "C")
     if uk_f > 1000.0:
         pdf.set_text_color(231, 76, 60)
         pdf.set_font("Courier", "", 10)
-        pdf.cell(50, 8, " Prekoraceno", 1, 1, "C")
+        pdf.cell(50, 5.5, " Prekoraceno", 1, 1, "C")
     else:
         pdf.set_text_color(39, 174, 96)
-        pdf.cell(50, 8, " [OK] U granicama", 1, 1, "C")
+        pdf.cell(50, 5.5, " [OK] U granicama", 1, 1, "C")
     pdf.set_text_color(44, 62, 80)
     pdf.set_font("Courier", "", 10)
     
-    # Natrijum
-    pdf.cell(40, 8, " Natrijum", 1)
-    pdf.cell(45, 8, f"{uk_n:.2f} mg", 1, 0, "C")
-    pdf.cell(45, 8, "2000.00 mg", 1, 0, "C")
+    # Natrijum (Smanjena visina sa 8 na 5.5)
+    pdf.cell(40, 5.5, " Natrijum", 1)
+    pdf.cell(45, 5.5, f"{uk_n:.2f} mg", 1, 0, "C")
+    pdf.cell(45, 5.5, "2000.00 mg", 1, 0, "C")
     if uk_n > 2000.0:
         pdf.set_text_color(231, 76, 60)
         pdf.set_font("Courier", "", 10)
-        pdf.cell(50, 8, " Prekoraceno", 1, 1, "C")
+        pdf.cell(50, 5.5, " Prekoraceno", 1, 1, "C")
     else:
         pdf.set_text_color(39, 174, 96)
-        pdf.cell(50, 8, " [OK] U granicama", 1, 1, "C")
+        pdf.cell(50, 5.5, " [OK] U granicama", 1, 1, "C")
 
     pdf.set_text_color(44, 62, 80)
     pdf.set_font("Courier", "", 10)
     pdf.ln(12)
 
-        # Pozicioniramo kursor za legendu visoko (na prvu stranu)
+    # Pozicioniramo kursor za legendu visoko (na prvu stranu)
     pdf.set_y(-60)
     
     # Legenda
@@ -271,6 +274,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(180, 4, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja ! = preko 1500.00 mg", 0, 1)
     pdf.cell(180, 4, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja ! = preko 1000.00 mg", 0, 1)
     pdf.cell(180, 4, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja ! = preko 2000.00 mg (oko 5g soli)", 0, 1)
+
     
     # === REŠENJE ZA FUTER ===
     # Pravimo fiksni razmak na dole od 15mm nakon legende, tako da ostane na istoj strani
