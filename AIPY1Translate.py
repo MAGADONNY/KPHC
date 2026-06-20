@@ -199,7 +199,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(180, 8, "REZIME UKUPNOG DNEVNOG UNOSA:", 0, 1)
     pdf.ln(2)
     
-    pdf.set_font("Helvetica", "B", 10)
+    pdf.set_font("Courier", "", 10)
     pdf.set_fill_color(230, 235, 240)
     pdf.cell(40, 8, " Mineral", 1, 0, "C", True)
     pdf.cell(45, 8, "Ukupno uneto", 1, 0, "C", True)
