@@ -136,11 +136,21 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 24, 180, 16, "F")
     
-    pdf.set_font("Helvetica", "B", 9)
-    pdf.cell(120, 6, text=f" IME I PREZIME / Godina rodjenja:,(pdf.ln()) {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
-    pdf.set_font("Helvetica", size=10)
-    pdf.cell(60, 6, text=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
-    pdf.ln(6)
+   # 1. Ispisuje se fiksni naslov (ln=0 ostaje u istom redu za datum)
+pdf.set_font("Helvetica", "B", 9)
+pdf.cell(120, 6, text=" IME I PREZIME / Godina rodjenja:", border=0, ln=0)
+
+# 2. Ispisuje se datum na desnoj strani i skače se u novi red (ln=1)
+pdf.set_font("Helvetica", size=10)
+pdf.cell(60, 6, text=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
+
+# 3. Sada se ime ispisuje tačno ispod naslova, u novom redu
+pdf.set_font("Helvetica", "B", 9)
+pdf.cell(120, 6, text=f" {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=1)
+
+# 4. Dodatni razmak nakon celog bloka
+pdf.ln(6)
+
     
     # 3. Tabela obroka (Zeleno-sivo zaglavlje)
     pdf.set_font("Helvetica", "B", 10)
