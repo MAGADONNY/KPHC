@@ -137,9 +137,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.rect(15, 24, 180, 16, "F")
     
     pdf.set_font("Helvetica", "B", 9)
-    pdf.cell(120, 6, text=f" IME I PREZIME / Godina rodjenja:
-    pdf.set_font("Helvetica", size=10)
-    {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
+    pdf.cell(120, 6, text=f" IME I PREZIME / GODINA RODJENJA: {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
     pdf.set_font("Helvetica", size=10)
     pdf.cell(60, 6, text=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
     pdf.ln(6)
