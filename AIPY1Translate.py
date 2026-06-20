@@ -136,18 +136,26 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 24, 180, 22, "F")
     
-    # Prvi red: Naslov levo, Datum desno
-    pdf.set_font("Helvetica", "B", 9)
-    pdf.cell(120, 6, text=" IME I PREZIME / GODINA RODJENJA:", border=0, ln=0)
-    pdf.set_font("Helvetica", size=10)
-    pdf.cell(60, 6, text=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
+     # IZMENA: Tekst iznad polja (Normal font, veličina 9)
+    pdf.set_font("Helvetica", "", 9)
+    pdf.cell(120, 5, text="IME I PREZIME / GODINA RODJENJA:", border=0, ln=0)
+    pdf.cell(60, 5, text="DATUM:", border=0, ln=1, align="R")
     
-    # Drugi red: Podaci pacijenta idu ispod naslova (ln=1 skače u novi red za tabelu)
-    pdf.set_font("Helvetica", "B", 9)
-    pdf.cell(180, 6, text=f" {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=1)
+    # Razmak od 1mm između teksta i sive trake
+    pdf.ln(1)
+
+    # 2. Blok sa podacima - Siva pozadina (Spuštena na Y=29, visina smanjena na 12)
+    pdf.set_fill_color(205, 212, 218) 
+    pdf.rect(15, 29, 180, 12, "F")
     
-    # Smanjen razmak sa 6 na 4 jer smo već napravili jedan prelaz sa ln=1
-    pdf.ln(4)
+    # Podaci UNUTAR sive trake (Ime levo, Datum desno - Boldovano)
+    pdf.set_font("Helvetica", "B", 10)
+    pdf.cell(120, 12, text=f" {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
+    pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
+    
+    # Razmak do tabele ispod sive trake
+    pdf.ln(5)
+
 
     
     # 3. Tabela obroka (Zeleno-sivo zaglavlje)
