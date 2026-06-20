@@ -189,7 +189,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         else:
             is_fill = False
             
-                pdf.cell(65, 5, text=f" {str(red['food'])[:28]}", border="B", fill=is_fill)
+        pdf.cell(65, 5, text=f" {str(red['food'])[:28]}", border="B", fill=is_fill)
         pdf.cell(25, 5, text=f"{red['amount']:.1f} g", border="B", fill=is_fill, align="C")
         pdf.cell(30, 5, text=f"{red['potassium']:.1f}", border="B", fill=is_fill, align="C")
         pdf.cell(30, 5, text=f"{red['phosphorus']:.1f}", border="B", fill=is_fill, align="C")
