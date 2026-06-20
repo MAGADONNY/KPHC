@@ -134,8 +134,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     
        # 2. Blok sa podacima - Siva pozadina (povećana visina na 22 sa 16 zbog novog reda)
     pdf.set_fill_color(205, 212, 218) 
-    pdf.rect(15, 24, 180, 22, "F")
-    
+        
          # Resetovanje boje teksta na crnu za naslove iznad trake
     pdf.set_text_color(0, 0, 0)
     
