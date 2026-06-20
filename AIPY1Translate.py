@@ -218,7 +218,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(40, 5.5, " Mineral", 1, 0, "C", True)
     pdf.cell(45, 5.5, "Ukupno uneto", 1, 0, "C", True)
     pdf.cell(45, 5.5, "Dozvoljeni limit", 1, 0, "C", True)
-    pdf.cell(50, 5.5, "Status / Upozorenje", 1, 1, "C", True)
+    pdf.cell(50, 5.5, "Status", 1, 1, "C", True)
     
     pdf.set_font("Courier", "", 10)
     
