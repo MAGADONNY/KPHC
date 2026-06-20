@@ -167,12 +167,14 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(52, 73, 94) 
     pdf.set_text_color(255, 255, 255) 
     
-    # FORMAT TABELE 1
-    pdf.cell(65, 9, text=" Namirnica", border=0, fill=True)
-    pdf.cell(25, 9, text="Kolicina (g)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, text="Kalijum (mg)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, text="Fosfor (mg)", border=0, fill=True, align="C")
-    pdf.cell(30, 9, text="Natrijum (mg)", border=0, fill=True, align="C")
+    
+        # FORMAT TABELE 1 (Smanjena visina na 5 da odgovara podacima)
+    pdf.cell(65, 5, text=" Namirnica", border=0, fill=True)
+    pdf.cell(25, 5, text="Kolicina (g)", border=0, fill=True, align="C")
+    pdf.cell(30, 5, text="Kalijum (mg)", border=0, fill=True, align="C")
+    pdf.cell(30, 5, text="Fosfor (mg)", border=0, fill=True, align="C")
+    pdf.cell(30, 5, text="Natrijum (mg)", border=0, fill=True, align="C")
+
     pdf.ln()
     
     pdf.set_text_color(44, 62, 80)
