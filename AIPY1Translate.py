@@ -269,7 +269,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     # Pravimo fiksni razmak na dole od 15mm nakon legende, tako da ostane na istoj strani
     pdf.ln(15) 
     
-    pdf.set_font("Helvetica", "I", 8)
+    pdf.set_font("Courier", "", 8)
     pdf.set_text_color(150, 150, 150)
     
     # Širina 0 i tekst se ispisuje odmah ispod legende na prvoj strani
