@@ -206,7 +206,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(45, 8, "Dozvoljeni limit", 1, 0, "C", True)
     pdf.cell(50, 8, "Status / Upozorenje", 1, 1, "C", True)
     
-    pdf.set_font("Courier", "", 10)
+    pdf.set_font("Courier", "B", 10)
     
     # Kalijum
     pdf.cell(40, 8, " Kalijum", 1)
