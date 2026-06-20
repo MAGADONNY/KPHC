@@ -261,8 +261,8 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(180, 5, "LEGENDA - GRANICNE VREDNOSTI (24h):", 0, 1)
     
     pdf.set_font("Helvetica", size=9)
-    pdf.cell(180, 4, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja ! = preko 1500.00 mg", 0, 1)
-    pdf.cell(180, 4, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja ! = preko 1000.00 mg", 0, 1)
+    pdf.cell(180, 4, "* KALIJUM:    Zelena boja = do 1500.00 mg  |  Crvena boja ! = preko 1500.00 mg", 0, 1)
+    pdf.cell(180, 4, "* FOSFOR:    Zelena boja = do 1000.00 mg  |  Crvena boja ! = preko 1000.00 mg", 0, 1)
     pdf.cell(180, 4, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja ! = preko 2000.00 mg (oko 5g soli)", 0, 1)
     
     # === REŠENJE ZA FUTER ===
