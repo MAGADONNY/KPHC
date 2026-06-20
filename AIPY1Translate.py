@@ -132,15 +132,23 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_text_color(44, 62, 80)
     pdf.ln(5) 
     
-    # 2. Blok sa podacima - Siva pozadina pojačana na oko 20%
+       # 2. Blok sa podacima - Siva pozadina (povećana visina na 22 sa 16 zbog novog reda)
     pdf.set_fill_color(205, 212, 218) 
-    pdf.rect(15, 24, 180, 16, "F")
+    pdf.rect(15, 24, 180, 22, "F")
     
+    # Prvi red: Naslov levo, Datum desno
     pdf.set_font("Helvetica", "B", 9)
-    pdf.cell(120, 6, text=f" IME I PREZIME / GODINA RODJENJA: {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
+    pdf.cell(120, 6, text=" IME I PREZIME / GODINA RODJENJA:", border=0, ln=0)
     pdf.set_font("Helvetica", size=10)
     pdf.cell(60, 6, text=f"DATUM: {datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
-    pdf.ln(6)
+    
+    # Drugi red: Podaci pacijenta idu ispod naslova (ln=1 skače u novi red za tabelu)
+    pdf.set_font("Helvetica", "B", 9)
+    pdf.cell(180, 6, text=f" {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=1)
+    
+    # Smanjen razmak sa 6 na 4 jer smo već napravili jedan prelaz sa ln=1
+    pdf.ln(4)
+
     
     # 3. Tabela obroka (Zeleno-sivo zaglavlje)
     pdf.set_font("Helvetica", "B", 10)
