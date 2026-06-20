@@ -256,7 +256,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_y(-60)
     
     # Legenda
-    pdf.set_font("Courier", "", 10)
+    pdf.set_font("Courier", "U", 10)
     pdf.set_text_color(100, 100, 100)
     pdf.cell(180, 5, "LEGENDA - GRANICNE VREDNOSTI (24h):", 0, 1)
     
