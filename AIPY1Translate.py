@@ -136,17 +136,20 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 24, 180, 22, "F")
     
-     # IZMENA: Tekst iznad polja (Normal font, veličina 9)
+         # Resetovanje boje teksta na crnu za naslove iznad trake
+    pdf.set_text_color(0, 0, 0)
+    
+    # Tekst iznad polja (Normal font, veličina 9, visina ćelije 5)
     pdf.set_font("Helvetica", "", 9)
     pdf.cell(120, 5, text="IME I PREZIME / GODINA RODJENJA:", border=0, ln=0)
     pdf.cell(60, 5, text="DATUM:", border=0, ln=1, align="R")
     
-    # Razmak od 1mm između teksta i sive trake
-    pdf.ln(1)
+    # Razmak od 2mm između teksta i sive trake
+    pdf.ln(2)
 
-    # 2. Blok sa podacima - Siva pozadina (Spuštena na Y=29, visina smanjena na 12)
+    # 2. Blok sa podacima - Siva pozadina (Spuštena na Y=31 da ne smeta gornjem tekstu)
     pdf.set_fill_color(205, 212, 218) 
-    pdf.rect(15, 29, 180, 12, "F")
+    pdf.rect(15, 31, 180, 12, "F")
     
     # Podaci UNUTAR sive trake (Ime levo, Datum desno - Boldovano)
     pdf.set_font("Helvetica", "B", 10)
@@ -154,7 +157,8 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
     
     # Razmak do tabele ispod sive trake
-    pdf.ln(5)
+    pdf.ln(6)
+
 
 
     
