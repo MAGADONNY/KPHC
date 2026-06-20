@@ -168,11 +168,11 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_text_color(255, 255, 255) 
     
     # Širine su vraćene na staro, a visina je smanjena sa 9 na 6.3
-    pdf.cell(65, 6.3, text=" Namirnica", border=0, fill=True)
-    pdf.cell(25, 6.3, text="Kolicina (g)", border=0, fill=True, align="C")
-    pdf.cell(30, 6.3, text="Kalijum (mg)", border=0, fill=True, align="C")
-    pdf.cell(30, 6.3, text="Fosfor (mg)", border=0, fill=True, align="C")
-    pdf.cell(30, 6.3, text="Natrijum (mg)", border=0, fill=True, align="C")
+    pdf.cell(45.5, 6.3, text=" Namirnica", border=0, fill=True)
+    pdf.cell(17.5, 6.3, text="Kolicina (g)", border=0, fill=True, align="C")
+    pdf.cell(21, 6.3, text="Kalijum (mg)", border=0, fill=True, align="C")
+    pdf.cell(21, 6.3, text="Fosfor (mg)", border=0, fill=True, align="C")
+    pdf.cell(21, 6.3, text="Natrijum (mg)", border=0, fill=True, align="C")
     pdf.ln()
     
     pdf.set_text_color(44, 62, 80)
@@ -189,11 +189,11 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         else:
             is_fill = False
             
-        pdf.cell(65, 8, text=f" {str(red['food'])[:28]}", border="B", fill=is_fill)
-        pdf.cell(25, 8, text=f"{red['amount']:.1f} g", border="B", fill=is_fill, align="C")
-        pdf.cell(30, 8, text=f"{red['potassium']:.1f}", border="B", fill=is_fill, align="C")
-        pdf.cell(30, 8, text=f"{red['phosphorus']:.1f}", border="B", fill=is_fill, align="C")
-        pdf.cell(30, 8, text=f"{red['sodium']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(45.5, 8, text=f" {str(red['food'])[:28]}", border="B", fill=is_fill)
+        pdf.cell(17.5, 8, text=f"{red['amount']:.1f} g", border="B", fill=is_fill, align="C")
+        pdf.cell(21, 8, text=f"{red['potassium']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(21, 8, text=f"{red['phosphorus']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(21, 8, text=f"{red['sodium']:.1f}", border="B", fill=is_fill, align="C")
         pdf.ln()
         brojac_reda += 1
         
