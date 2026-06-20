@@ -168,7 +168,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_text_color(255, 255, 255) 
     
     # FORMAT TABELE 1
-   pdf.cell(65, 9, text=" Namirnica", border=0, fill=True)
+    pdf.cell(65, 9, text=" Namirnica", border=0, fill=True)
     pdf.cell(25, 9, text="Kolicina (g)", border=0, fill=True, align="C")
     pdf.cell(30, 9, text="Kalijum (mg)", border=0, fill=True, align="C")
     pdf.cell(30, 9, text="Fosfor (mg)", border=0, fill=True, align="C")
