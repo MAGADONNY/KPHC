@@ -164,7 +164,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
 
     
     # 3. Tabela obroka (Zeleno-sivo zaglavlje)
-    pdf.set_font("Courier", "B", 10)
+    pdf.set_font("Courier", "", 10)
     pdf.set_fill_color(52, 73, 94) 
     pdf.set_text_color(255, 255, 255) 
     
