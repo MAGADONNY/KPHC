@@ -124,7 +124,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.rect(0, 0, 210, 17, "F")
 
     # LOGO
-    pdf.image('QRF.png', x=175, y=3, w=20)
+    pdf.image('QRF.png', x=175, y=3, w=24)
 
     
     # Naslov unutar zelene trake
