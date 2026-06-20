@@ -237,12 +237,12 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     # Legenda
     pdf.set_font("Helvetica", "B", 10)
     pdf.set_text_color(100, 100, 100)
-    pdf.cell(180, 5, "LEGENDA I MEDICINSKE GRANICE ALARMA (24h):", 0, 1)
+    pdf.cell(180, 5, "LEGENDA - GRANICNE VREDNOSTI (24h):", 0, 1)
     
     pdf.set_font("Helvetica", size=9)
-    pdf.cell(180, 4, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja [ALARM] = preko 1500.00 mg", 0, 1)
-    pdf.cell(180, 4, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja [ALARM] = preko 1000.00 mg", 0, 1)
-    pdf.cell(180, 4, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja [ALARM] = preko 2000.00 mg (oko 5g soli)", 0, 1)
+    pdf.cell(180, 4, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja ! = preko 1500.00 mg", 0, 1)
+    pdf.cell(180, 4, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja ! = preko 1000.00 mg", 0, 1)
+    pdf.cell(180, 4, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja ! = preko 2000.00 mg (oko 5g soli)", 0, 1)
     
     # === REŠENJE ZA FUTER ===
     # Pravimo fiksni razmak na dole od 15mm nakon legende, tako da ostane na istoj strani
@@ -354,7 +354,7 @@ if df is not None:
             st.markdown(f"""
             <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {dnevna_f_boja};'>
                 <p style='margin: 0px; color: #a0aec0; font-size: 15px; font-weight: bold;'>{l_fosfor}</p>
-                <p style='margin: 5px 0px 0px 0px; color: {dnevna_f_boja}; font-size: 26px; font-weight: 900;'>{uk_f:.2f} mg</p>
+                <p style='margin: 5px 0px 0px 0px; color: {dnevna_f_boja}; font-size: 22px; font-weight: 900;'>{uk_f:.2f} mg</p>
             </div>
             """, unsafe_allow_html=True)
         with col_m3:
