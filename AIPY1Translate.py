@@ -304,7 +304,7 @@ pdf.set_font("Helvetica", "", 9)
 
 
     # DODAJTE OVE 4 LINIJE ODMAH ISPOD (U REDOVE 255 I 256):
-    pdf.set_text_color(44, 62, 80)
+pdf.set_text_color(44, 62, 80)
     buffer = io.BytesIO()
     pdf.output(buffer)
     return buffer.getvalue()
