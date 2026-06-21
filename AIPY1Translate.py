@@ -300,7 +300,7 @@ pdf.cell(0, 8, "Writed by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by 
 
 
     # 4. Poništavanje (vraćanje na standardni font za sve što ide posle)
-    pdf.set_font("Helvetica", "", 9)
+pdf.set_font("Helvetica", "", 9)
 
 
     # DODAJTE OVE 4 LINIJE ODMAH ISPOD (U REDOVE 255 I 256):
