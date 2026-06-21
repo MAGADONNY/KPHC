@@ -21,19 +21,28 @@ import streamlit as st
 st.markdown(
     """
     <style>
-    /* Kreiramo posebnu klasu za vaš link */
+    /* Definisanje animacije treperenja */
+    @keyframes blinker {
+        0% { opacity: 1.0; }
+        50% { opacity: 0.2; }
+        100% { opacity: 1.0; }
+    }
+
     .moj-custom-link {
         color: #4CAF50 !important;   /* Osnovna zelena boja */
         font-size: 22px !important;  /* Veličina fonta */
-        font-weight: 900 !important; /* Maksimalno podebljan font (Bold) */
+        font-weight: 900 !important; /* Maksimalno podebljan font */
         text-decoration: none !important; /* Bez podvučene crte */
         transition: color 0.3s ease; /* Glatki prelaz boje */
+        
+        /* Dodavanje animacije: traje 1.5 sekundu i ponavlja se beskonačno */
+        animation: blinker 1.5s linear infinite; 
     }
     
-    /* Šta se dešava kada se mišem pređe preko linka */
     .moj-custom-link:hover {
         color: #FF5722 !important;   /* Menja boju u narandžastu na hover */
-        text-decoration: underline !important; /* Opciono: podvlači se na hover */
+        text-decoration: underline !important; 
+        animation: none;             /* Zaustavlja treperenje kada je miš iznad linka radi lakšeg čitanja */
     }
     </style>
 
@@ -44,6 +53,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+#KRAJ LINKA
 
 
 
