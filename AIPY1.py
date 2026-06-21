@@ -13,7 +13,7 @@ st.markdown("<h1 style='text-align: center; font-size: 38px;'>♠️♥️Dnevni
 st.write("⚠️ *Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama očišćene, sirove namirnice (osim ako nije drugačije naznačeno).* Nivo minerala se odredjuje AI pretragom USDA baze.")
 st.write("ⓘ *Preporuceni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg *")
 
-st.write("ⓘ * NOVOJ UNAPREDJENOJ VERZIJI APLIKACIJE MOZETE PRISTUPITI NA DONJEM LINKU *")
+st.write("  Novoj  UNAPREDJENOJ verziji aplikacije mozete pristupiti ovde: https://kph-translate.streamlit.app/ *")
 
 # Inicijalizacija liste obroka u memoriji stranice (ako već ne postoji)
 if 'dnevnik_obroka' not in st.session_state:
