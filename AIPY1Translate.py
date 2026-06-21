@@ -280,34 +280,35 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.cell(180, 4, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja ! = preko 2000.00 mg (oko 5g soli)", 0, 1)
 
     
-        # === REŠENJE ZA FUTER ===
+            # === REŠENJE ZA FUTER ===
     # Pravimo fiksni razmak na dole od 15mm nakon legende, tako da ostane na istoj strani
     pdf.ln(15) 
     
     # 1. Postavljanje fonta za futer
     pdf.set_font("Courier", "", 8)
 
-    # 2. Podešavanje sive boje pozadine
+    # 2. Ispis teksta BEZ osenčene pozadine (fill=False)
+    # Prvi red sa informativnim medicinskim odricanjem
+    pdf.cell(0, 8, "Izvestaj generisan putem AI je informativnog karaktera i ne predstavlja medicinski savet.", 0, 1, "C", fill=False)
+
+    # 3. Podešavanje sive boje pozadine SAMO za drugi red
     pdf.set_fill_color(205, 212, 218)
 
-    # 3. Ispis sa sivom pozadinom (fill=True) i skokom u novi red (ln=1)
-
-    # Prvi red sa informativnim medicinskim odricanjem
-    pdf.cell(0, 8, "Izvestaj generisan putem AI je informativnog karaktera i ne predstavlja medicinski savet.", 0, 1, "C", fill=True)
-
+    # 4. Ispis SA sivom pozadinom (fill=True)
     # Drugi red sa vašim potpisom i kontaktom
     pdf.cell(0, 8, "Writed by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by Python", 0, 1, "C", fill=True)
 
-    # 4. Poništavanje (vraćanje na standardni font za sve što ide posle)
+    # 5. Poništavanje (vraćanje na standardni font za sve što ide posle)
     pdf.set_font("Helvetica", "", 9)
 
-    # DODAJTE OVE 4 LINIJE ODMAH ISPOD:
+    # OVE 4 LINIJE GENERIŠU PDF BUFFER:
     pdf.set_text_color(44, 62, 80)
     buffer = io.BytesIO()
     pdf.output(buffer)
     return buffer.getvalue()
 
     # KRAJ FUTERA
+
 
 
 # --- GLAVNI RENDER STRANICE ---
