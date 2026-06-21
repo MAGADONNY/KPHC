@@ -285,7 +285,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.ln(15) 
     
     # 1. Postavljanje fonta za futer
-    pdf.set_font("Courier", "I", 8)
+    pdf.set_font("Courier", "", 8)
 
     # 2. Ispis teksta BEZ osenčene pozadine (fill=False)
     # Prvi red sa informativnim medicinskim odricanjem
