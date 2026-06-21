@@ -291,7 +291,13 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218)
 
     # 3. Ispis sa sivom pozadinom (fill=True) i skokom u novi red (ln=1)
-    pdf.cell(0, 8, "Izvestaj generisan putem AI je informativnog karaktera i ne predstavlja medicinski savet, | Writed by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by Python", 0, 1, "C", fill=True)
+
+    # Prvi red sa informativnim medicinskim odricanjem
+pdf.cell(0, 8, "Izvestaj generisan putem AI je informativnog karaktera i ne predstavlja medicinski savet.", 0, 1, "C", fill=True)
+
+# Drugi red sa vašim potpisom i kontaktom
+pdf.cell(0, 8, "Writed by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by Python", 0, 1, "C", fill=True)
+
 
     # 4. Poništavanje (vraćanje na standardni font za sve što ide posle)
     pdf.set_font("Helvetica", "", 9)
