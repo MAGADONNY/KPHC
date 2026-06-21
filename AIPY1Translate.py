@@ -291,7 +291,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218)
 
     # 3. Ispis sa sivom pozadinom (fill=True) i skokom u novi red (ln=1)
-    pdf.cell(0, 8, "Izvestaj generisao AI | Writed by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by Python", 0, 1, "C", fill=True)
+    pdf.cell(0, 8, "Izvestaj generisan putem AI je informativnog karaktera i ne predstavlja medicinski savet, | Writed by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by Python", 0, 1, "C", fill=True)
 
     # 4. Poništavanje (vraćanje na standardni font za sve što ide posle)
     pdf.set_font("Helvetica", "", 9)
@@ -303,7 +303,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.output(buffer)
     return buffer.getvalue()
 
-
+# KRAJ FUTERA
 
 # --- GLAVNI RENDER STRANICE ---
 if df is not None:
