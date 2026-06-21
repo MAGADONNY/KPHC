@@ -296,7 +296,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
 
     # 4. Ispis SA sivom pozadinom (fill=True)
     # Drugi red sa vašim potpisom i kontaktom
-    pdf.cell(0, 8, "Writed by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by Python", 0, 1, "C", fill=True)
+    pdf.cell(0, 8, "Writen by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by Python", 0, 1, "C", fill=True)
 
     # 5. Poništavanje (vraćanje na standardni font za sve što ide posle)
     pdf.set_font("Helvetica", "", 9)
