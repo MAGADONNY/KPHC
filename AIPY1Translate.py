@@ -469,8 +469,8 @@ if df is not None:
             </div>
             """, unsafe_allow_html=True)
         
-                      st.write("---")
-        # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU
+        st.write("---")
+   # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU
         col_inp1, col_inp2 = st.columns(2)
         with col_inp1:
             st.markdown(f"**{t_labela_ime}**")
@@ -478,7 +478,6 @@ if df is not None:
         with col_inp2:
             st.markdown(f"**{t_labela_godina}**")
             godina_rodjenja = st.text_input("Godina", placeholder=t_placeholder_godina, label_visibility="collapsed")
-        # KRAJ CMD ZA UNOS PODATAKA
 
 # KRAJ CMD ZA UNOS PODATAKA
 
