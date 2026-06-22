@@ -403,7 +403,7 @@ if df is not None:
         )
 
         # Uputstvo za brisanja 
-               st.markdown(f"""
+st.markdown(f"""
 <p style='color: #ffffff; font-size: 16px; line-height: 1.4; margin-top: 10px;'>
 {t_uputstvo_brisanje}
 </p>
