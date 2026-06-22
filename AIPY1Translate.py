@@ -394,16 +394,14 @@ if df is not None:
             disabled=[l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum], # Sprečava menjanje teksta, dozvoljava samo brisanje
             column_config={"ID": None}  # Potpuno sakriva ID kolonu od korisnika
         )
-# Uputstvo za brisanje
-        
-st.markdown("""
+        # Uputstvo za brisanje
+        st.markdown("""
 <p style='color: #ffffff; font-size: 16px; line-height: 1.4; margin-top: 10px;'>
 💡 <b>Uputstvo za brisanje:</b> Čekirajte kvadrat ispred naziva namirnice, pa kliknite na kantu za smeće (gore desno iznad tabele) ili pritisnite <b>DELETE</b> na tastaturi.
 </p>
 """, unsafe_allow_html=True)
-        
-# KRAJ Uputstva za brisanje
-        
+        # KRAJ Uputstva za brisanje
+
         # Ako je korisnik obrisao neki red, ažuriramo session_state
         if len(izmenjeni_df) != len(df_prikaz_prevedeno):
             preostali_id_lista = izmenjeni_df['ID'].tolist()
@@ -411,6 +409,7 @@ st.markdown("""
                 st.session_state['dnevnik_obroka'][i] for i in preostali_id_lista
             ]
             st.rerun()
+
             
         # Računanje ukupnih vrednosti iz trenutnog stanja
         uk_k = df_prikaz['potassium'].sum()
