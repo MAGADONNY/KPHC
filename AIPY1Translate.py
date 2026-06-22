@@ -32,7 +32,7 @@ if jezik == "English":
     t_dugme_obrisi = "🗑️ Clear complete diary"
     t_dugme_pdf = "📄 Download PDF report"
     t_placeholder_ime = "e.g. John Doe"
-    t_labela_ime = "Patient name and surname:"
+    t_labela_ime = "Name and surname:"
     t_uputstvo_brisanje = "💡 <b>How to delete:</b> Check the box next to the food item, then click the trash can icon (top right above the table) or press <b>DELETE</b> on your keyboard."
     t_labela_godina = "Year of birth:"
     t_placeholder_godina = "e.g. 1965"
