@@ -397,10 +397,10 @@ if df is not None:
 # Uputstvo za brisanje
         
 st.markdown("""
-        <p style='color: #ffffff; font-size: 16px; line-height: 1.4; margin-top: 10px;'>
-            💡 <b>Uputstvo za brisanje:</b> Čekirajte kvadrat ispred naziva namirnice, pa kliknite na kantu za smeće (gore desno iznad tabele) ili pritisnite <b>DELETE</b> na tastaturi.
-        </p>
-        """, unsafe_allow_html=True)
+<p style='color: #ffffff; font-size: 16px; line-height: 1.4; margin-top: 10px;'>
+💡 <b>Uputstvo za brisanje:</b> Čekirajte kvadrat ispred naziva namirnice, pa kliknite na kantu za smeće (gore desno iznad tabele) ili pritisnite <b>DELETE</b> na tastaturi.
+</p>
+""", unsafe_allow_html=True)
         
 # KRAJ Uputstva za brisanje
         
