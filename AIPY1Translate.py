@@ -33,6 +33,8 @@ if jezik == "English":
     t_dugme_pdf = "📄 Download PDF report"
     t_placeholder_ime = "e.g. John Doe"
     t_labela_ime = "Patient name and surname:"
+    t_uputstvo_brisanje = "💡 <b>How to delete:</b> Check the box next to the food item, then click the trash can icon (top right above the table) or press <b>DELETE</b> on your keyboard."
+
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Food Item', 'Amount (g)', 'Potassium (mg)', 'Phosphorus (mg)', 'Sodium (mg)'
@@ -52,6 +54,8 @@ elif jezik == "Español":
     t_dugme_pdf = "📄 Descargar informe PDF"
     t_placeholder_ime = "por ejemplo, Juan Pérez"
     t_labela_ime = "Nombre y apellido del paciente:"
+    t_uputstvo_brisanje = "💡 <b>Cómo eliminar:</b> Marque la casilla al lado del alimento, luego haga clic en el icono del cubo de basura (arriba a la derecha de la tabla) o presione <b>DELETE</b> en el teclado."
+
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Alimento', 'Cantidad (g)', 'Potasio (mg)', 'Fósforo (mg)', 'Sodio (mg)'
@@ -71,6 +75,8 @@ elif jezik == "Deutsch":
     t_dugme_pdf = "📄 PDF-Bericht herunterladen"
     t_placeholder_ime = "z.B. Max Mustermann"
     t_labela_ime = "Name und Vorname des Patienten:"
+    t_uputstvo_brisanje = "💡 <b>Anleitung zum Löschen:</b> Markieren Sie das Kästchen neben dem Lebensmittel, klicken Sie dann auf das Mülleimer-Symbol (oben rechts über der Tabelle) oder drücken Sie <b>DELETE</b> auf der Tastatur."
+
     
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Lebensmittel', 'Menge (g)', 'Kalium (mg)', 'Phosphor (mg)', 'Natrium (mg)'
@@ -90,6 +96,7 @@ else:
     t_dugme_pdf = "📄 Preuzmi PDF izveštaj"
     t_placeholder_ime = "npr. Petar Petrović"
     t_labela_ime = "Ime i prezime:"
+    t_uputstvo_brisanje = "💡 <b>Uputstvo za brisanje:</b> Čekirajte kvadrat ispred naziva namirnice, pa kliknite na kantu za smeće (gore desno iznad tabele) ili pritisnite <b>DELETE</b> na tastaturi."
 
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
