@@ -81,7 +81,7 @@ elif jezik == "Deutsch":
     t_dugme_obrisi = "🗑️ Tagebuch leeren"
     t_dugme_pdf = "📄 PDF-Bericht herunterladen"
     t_placeholder_ime = "z.B. Max Mustermann"
-    t_labela_ime = "Name und Vorname des Patienten:"
+    t_labela_ime = "Name und Vorname:"
     t_uputstvo_brisanje = "💡 <b>Anleitung zum Löschen:</b> Markieren Sie das Kästchen neben dem Lebensmittel, klicken Sie dann auf das Mülleimer-Symbol (oben rechts über der Tabelle) oder drücken Sie <b>DELETE</b> auf der Tastatur."
     t_labela_godina = "Geburtsjahr:"
     t_placeholder_godina = "z.B. 1965"
