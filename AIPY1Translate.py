@@ -394,6 +394,11 @@ if df is not None:
             disabled=[l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum], # Sprečava menjanje teksta, dozvoljava samo brisanje
             column_config={"ID": None}  # Potpuno sakriva ID kolonu od korisnika
         )
+# Uputstvo za brisanje
+        
+        st.caption("Za brisanje namirnice cekirajte kvadrat ispred naziva pa kliknite DELETE na tastaturi.")
+        
+# KRAJ Uputstva za brisanje
         
         # Ako je korisnik obrisao neki red, ažuriramo session_state
         if len(izmenjeni_df) != len(df_prikaz_prevedeno):
