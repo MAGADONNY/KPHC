@@ -403,13 +403,12 @@ if df is not None:
         )
 
         # Uputstvo za brisanja 
-st.markdown(f"""
+        
+        st.markdown(f"""
 <p style='color: #ffffff; font-size: 16px; line-height: 1.4; margin-top: 10px;'>
 {t_uputstvo_brisanje}
 </p>
 """, unsafe_allow_html=True)
-
-
         # KRAJ Uputstva za brisanje
 
         # Ako je korisnik obrisao neki red, ažuriramo session_state
@@ -420,6 +419,7 @@ st.markdown(f"""
             ]
             st.rerun()
 
+# KRAJ Uputstvo za brisanje
             
         # Računanje ukupnih vrednosti iz trenutnog stanja
         uk_k = df_prikaz['potassium'].sum()
