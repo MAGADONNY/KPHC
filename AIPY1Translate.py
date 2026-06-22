@@ -363,16 +363,15 @@ if df is not None:
             })
             st.rerun()
 
-    # --- PRIKAZ DNEVNIKA ISHRANE ---
+    #=========================POCETAK TABELE DNEVNOG UNOSA NAMIRNICA==================================
     if st.session_state['dnevnik_obroka']:
         st.write("---")
         st.subheader(t_naslov_tabele)
         
         df_prikaz = pd.DataFrame(st.session_state['dnevnik_obroka'])
         
-        uk_k = df_prikaz['potassium'].sum()
-        uk_f = df_prikaz['phosphorus'].sum()
-        uk_n = df_prikaz['sodium'].sum()
+        # Privremeno dodajemo indeks kao kolonu da bismo znali šta brišemo
+        df_prikaz['ID'] = df_prikaz.index
         
         df_prikaz_prevedeno = df_prikaz.rename(columns={
             'food': l_namirnica,
@@ -382,7 +381,32 @@ if df is not None:
             'sodium': l_natrijum
         })
         
-        st.dataframe(df_prikaz_prevedeno, use_container_width=True, hide_index=True)
+        # Rekonstruišemo raspored kolona (ID ide prvi ali ga krijemo)
+        kolone_redosled = ['ID', l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum]
+        df_prikaz_prevedeno = df_prikaz_prevedeno[kolone_redosled]
+        
+        # PRIKAZ TABELE KROZ DATA_EDITOR SA OPCIJOM BRISANJA REDOVA
+        izmenjeni_df = st.data_editor(
+            df_prikaz_prevedeno,
+            use_container_width=True,
+            hide_index=True,
+            num_rows="dynamic",  # Ovo omogućava brisanje redova
+            disabled=[l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum], # Sprečava menjanje teksta, dozvoljava samo brisanje
+            column_config={"ID": None}  # Potpuno sakriva ID kolonu od korisnika
+        )
+        
+        # Ako je korisnik obrisao neki red, ažuriramo session_state
+        if len(izmenjeni_df) != len(df_prikaz_prevedeno):
+            preostali_id_lista = izmenjeni_df['ID'].tolist()
+            st.session_state['dnevnik_obroka'] = [
+                st.session_state['dnevnik_obroka'][i] for i in preostali_id_lista
+            ]
+            st.rerun()
+            
+        # Računanje ukupnih vrednosti iz trenutnog stanja
+        uk_k = df_prikaz['potassium'].sum()
+        uk_f = df_prikaz['phosphorus'].sum()
+        uk_n = df_prikaz['sodium'].sum()
         
         st.write("")
         st.markdown(f"### {t_zbir_okvir}")
@@ -446,9 +470,8 @@ if df is not None:
                 st.rerun()
 else:
     st.error("Baza podataka 'KPH-AI-GLOBAL.xlsx' nije pronađena ili je oštećena.")
-
-import os
-import streamlit as st
+    
+#=========================KRAJ TABELE DNEVNOG UNOSA NAMIRNICA==================================
 
 # --- LOGIKA ZA INTERNI BROJAČ POSETA ---
 ime_fajla = "brojac.txt"
