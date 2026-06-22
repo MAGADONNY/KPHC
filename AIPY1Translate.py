@@ -471,7 +471,7 @@ if df is not None:
         
         st.write("---")
         # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU
-               col_inp1, col_inp2 = st.columns(2)
+            col_inp1, col_inp2 = st.columns(2)
         with col_inp1:
             st.markdown(f"**{t_labela_ime}**")
             ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
