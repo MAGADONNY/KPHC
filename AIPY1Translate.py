@@ -396,7 +396,7 @@ if df is not None:
         )
 # Uputstvo za brisanje
         
-        st.caption("Za brisanje namirnice cekirajte kvadrat ispred naziva pa kliknite "kantu za smece" gore desno iznad tabele ili DELETE na tastaturi.")
+        st.caption("Za brisanje namirnice cekirajte kvadrat ispred naziva pa kliknite kantu za smece gore desno iznad tabele ili DELETE na tastaturi.")
         
 # KRAJ Uputstva za brisanje
         
