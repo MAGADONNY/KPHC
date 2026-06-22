@@ -447,11 +447,45 @@ if df is not None:
 else:
     st.error("Baza podataka 'KPH-AI-GLOBAL.xlsx' nije pronađena ili je oštećena.")
 
-# --- FUTER SA INFORMACIJAMA I BROJAČEM POSETA ---
+import os
+import streamlit as st
+
+# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
+ime_fajla = "brojac.txt"
+pocetni_broj = 3002
+
+if 'poseta_uracunata' not in st.session_state:
+    if not os.path.exists(ime_fajla):
+        with open(ime_fajla, "w") as f:
+            f.write(str(pocetni_broj))
+        trenutni_broj = pocetni_broj
+    else:
+        with open(ime_fajla, "r") as f:
+            try:
+                trenutni_broj = int(f.read().strip()) + 1
+            except:
+                trenutni_broj = pocetni_broj
+        with open(ime_fajla, "w") as f:
+            f.write(str(trenutni_broj))
+    st.session_state['poseta_uracunata'] = trenutni_broj
+else:
+    if os.path.exists(ime_fajla):
+        with open(ime_fajla, "r") as f:
+            try:
+                trenutni_broj = int(f.read().strip())
+            except:
+                trenutni_broj = pocetni_broj
+    else:
+        trenutni_broj = pocetni_broj
+
+
+# --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
 st.write("---")
-st.markdown("""
+
+# Dodato slovo 'f' ispred navodnika i zamenjen fiksni broj sa {trenutni_broj}
+st.markdown(f"""
 <div style='text-align: center; line-height: 1.2;'>
-    <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <span style='color: #2ECC71; font-weight: bold;'>3010</span></p>
+    <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <span style='color: #2ECC71; font-weight: bold;'>{trenutni_broj}</span></p>
     <p style='margin: 5px 0px 0px 0px; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>
     <p style='margin: 0px; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
     <p style='margin: 0px;  color: #888888; font-size: 12px;'>Powered by PYTHON</p>
