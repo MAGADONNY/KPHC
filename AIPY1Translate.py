@@ -34,6 +34,9 @@ if jezik == "English":
     t_placeholder_ime = "e.g. John Doe"
     t_labela_ime = "Patient name and surname:"
     t_uputstvo_brisanje = "💡 <b>How to delete:</b> Check the box next to the food item, then click the trash can icon (top right above the table) or press <b>DELETE</b> on your keyboard."
+    t_labela_godina = "Year of birth:"
+    t_placeholder_godina = "e.g. 1965"
+
 
     
     # Nazivi kolona za prikaz korisniku
@@ -55,6 +58,10 @@ elif jezik == "Español":
     t_placeholder_ime = "por ejemplo, Juan Pérez"
     t_labela_ime = "Nombre y apellido del paciente:"
     t_uputstvo_brisanje = "💡 <b>Cómo eliminar:</b> Marque la casilla al lado del alimento, luego haga clic en el icono del cubo de basura (arriba a la derecha de la tabla) o presione <b>DELETE</b> en el teclado."
+    t_labela_ime = "Nombre y apellido:"
+    t_labela_godina = "Año de nacimiento:"
+    t_placeholder_godina = "por ejemplo, 1965"
+
 
     
     # Nazivi kolona za prikaz korisniku
@@ -76,6 +83,9 @@ elif jezik == "Deutsch":
     t_placeholder_ime = "z.B. Max Mustermann"
     t_labela_ime = "Name und Vorname des Patienten:"
     t_uputstvo_brisanje = "💡 <b>Anleitung zum Löschen:</b> Markieren Sie das Kästchen neben dem Lebensmittel, klicken Sie dann auf das Mülleimer-Symbol (oben rechts über der Tabelle) oder drücken Sie <b>DELETE</b> auf der Tastatur."
+    t_labela_godina = "Geburtsjahr:"
+    t_placeholder_godina = "z.B. 1965"
+
 
     
     # Nazivi kolona za prikaz korisniku
@@ -97,6 +107,9 @@ else:
     t_placeholder_ime = "npr. Petar Petrović"
     t_labela_ime = "Ime i prezime:"
     t_uputstvo_brisanje = "💡 <b>Uputstvo za brisanje:</b> Čekirajte kvadrat ispred naziva namirnice, pa kliknite na kantu za smeće (gore desno iznad tabele) ili pritisnite <b>DELETE</b> na tastaturi."
+    t_labela_godina = "Godina rođenja:"
+    t_placeholder_godina = "npr. 1965"
+
 
     # Nazivi kolona za prikaz korisniku
     l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum = 'Namirnica', 'Količina (g)', 'Kalijum (mg)', 'Fosfor (mg)', 'Natrijum (mg)'
@@ -458,13 +471,15 @@ if df is not None:
         
         st.write("---")
         # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU
-        col_inp1, col_inp2 = st.columns(2)
+               col_inp1, col_inp2 = st.columns(2)
         with col_inp1:
             st.markdown(f"**{t_labela_ime}**")
             ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
         with col_inp2:
-            st.markdown("**Godina rođenja:**")
-            godina_rodjenja = st.text_input("Godina", placeholder="npr. 1965", label_visibility="collapsed")
+            st.markdown(f"**{t_labela_godina}**")
+            godina_rodjenja = st.text_input("Godina", placeholder=t_placeholder_godina, label_visibility="collapsed")
+# KRAJ CMD ZA UNOS PODATAKA
+
         
         col_btn1, col_btn2 = st.columns(2)
         with col_btn1:
