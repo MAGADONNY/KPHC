@@ -473,6 +473,10 @@ else:
     
 #=========================KRAJ TABELE DNEVNOG UNOSA NAMIRNICA==================================
 
+# --- UVOZ BIBLIOTEKA (MORA BITI NA POČETKU BLOKA) ---
+import os
+import streamlit as st
+
 # --- LOGIKA ZA INTERNI BROJAČ POSETA ---
 ime_fajla = "brojac.txt"
 pocetni_broj = 3002
@@ -501,11 +505,9 @@ else:
     else:
         trenutni_broj = pocetni_broj
 
-
 # --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
 st.write("---")
 
-# Dodato slovo 'f' ispred navodnika i zamenjen fiksni broj sa {trenutni_broj}
 st.markdown(f"""
 <div style='text-align: center; line-height: 1.2;'>
     <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <span style='color: #2ECC71; font-weight: bold;'>{trenutni_broj}</span></p>
