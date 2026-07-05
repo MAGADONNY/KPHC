@@ -189,7 +189,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.rect(15, 32, 180, 12, "F")
     
     # Ispis podataka UNUTAR sive trake (Tekst osiguran kroz ocisti_tekst)
-        pdf.set_font("Arial", "B", 10)
+    pdf.set_font("Arial", "B", 10)
     originalno_ime = str(ime_pacijenta).upper()
     pdf.cell(120, 12, text=f" {originalno_ime} ({godina_rodjenja})", border=0, ln=0)
     pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
