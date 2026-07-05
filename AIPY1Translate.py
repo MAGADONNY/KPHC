@@ -148,10 +148,37 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         # Pretvaranje u čist ASCII (brisanje svih ostalih čudnih simbola koji nisu podržani)
         return tekst.encode('ascii', 'ignore').decode('ascii')
 
-    pdf = FPDF()
+        pdf = FPDF()
     
-    # Preuzimamo i registrujemo pravi TrueType Unicode font sa interneta za naša i strana slova
-    url_fonta = "https://github.com"
+    # --- AUTOMATSKO PREUZIMANJE ARIA FONTOVA AKO NE POSTOJE ---
+    import os, requests
+    fontovi = {
+        "Arial.ttf": "https://github.com",
+        "Arial-Bold.ttf": "https://github.com"
+    }
+    for naziv, url in fontovi.items():
+        if not os.path.exists(naziv):
+            try:
+                odgovor = requests.get(url, timeout=10)
+                if odgovor.status_code == 200:
+                    with open(naziv, "wb") as f:
+                        f.write(odgovor.content)
+            except:
+                pass
+
+    # Registracija preuzetih fontova u PDF sistem
+    if os.path.exists("Arial.ttf") and os.path.exists("Arial-Bold.ttf"):
+        pdf.add_font("Arial", "", "Arial.ttf")
+        pdf.add_font("Arial", "B", "Arial-Bold.ttf")
+        ime_fonta = "Arial"
+    else:
+        ime_fonta = "Helvetica" # Rezervna opcija ako internet zakaže
+    # --------------------------------------------------------
+    
+    pdf.add_page()
+    pdf.set_margins(15, 15, 15)
+    pdf.set_auto_page_break(auto=False, margin=0)
+
     pdf.add_font("DejaVu", "B", url_fonta)
     
     pdf.add_page()
