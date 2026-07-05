@@ -134,18 +134,31 @@ df = ucitaj_bazu()
 
 # --- FUNKCIJA ZA KREIRANJE PDF-a ---
 def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_n):
+    # POMOĆNA FUNKCIJA: Čisti tekst od naših slova i specijalnih karaktera za Helvetica font
+    def ocisti_tekst(tekst):
+        if not isinstance(tekst, str):
+            tekst = str(tekst)
+        # Zmena naših slova u obična slova
+        zamene = {
+            'č': 'c', 'ć': 'c', 'š': 's', 'ž': 'z', 'đ': 'dj',
+            'Č': 'C', 'Ć': 'C', 'Š': 'S', 'Ž': 'Z', 'Đ': 'Dj'
+        }
+        for karakter, zamena in zamene.items():
+            tekst = tekst.replace(karakter, zamena)
+        # Pretvaranje u čist ASCII (brisanje svih ostalih čudnih simbola koji nisu podržani)
+        return tekst.encode('ascii', 'ignore').decode('ascii')
+
     pdf = FPDF()
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
     pdf.set_auto_page_break(auto=False, margin=5)
 
-    # 1.  zeleno polje na vrhu
+    # 1. zeleno polje na vrhu
     pdf.set_fill_color(46, 204, 113)
     pdf.rect(0, 0, 210, 17, "F")
 
     # LOGO
     pdf.image('QRF.png', x=175, y=3, w=20)
-
     
     # Naslov unutar zelene trake
     pdf.set_text_color(100, 100, 100)
@@ -156,13 +169,13 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_text_color(44, 62, 80)
     pdf.ln(5) 
     
-       # 2. Blok sa podacima - Siva pozadina (povećana visina na 22 sa 16 zbog novog reda)
+    # 2. Blok sa podacima - Siva pozadina
     pdf.set_fill_color(205, 212, 218) 
         
-            # 1. Eksplicitno postavljamo kursor na visinu 27 (ispod zelenog zaglavlja)
+    # 1. Eksplicitno postavljamo kursor na visinu 27
     pdf.set_y(27)
     
-    # Ispis tekstova IZNAD sive trake (Normal font, crna boja)
+    # Ispis tekstova IZNAD sive trake
     pdf.set_text_color(0, 0, 0)
     pdf.set_font("Helvetica", "", 9)
     pdf.cell(120, 5, text="Ime i prezime / godina rodjenja:", border=0, ln=0)
@@ -171,28 +184,25 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     # 2. Spuštamo kursor na visinu 32 gde počinje siva traka
     pdf.set_y(32)
     
-    # Crtanje sive trake (od visine 32 do visine 44 -> ukupna visina je 12mm)
+    # Crtanje sive trake
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 32, 180, 12, "F")
     
-    # Ispis podataka UNUTAR sive trake (Bold font, visina ćelije pronalazi centar trake)
+    # Ispis podataka UNUTAR sive trake (Tekst osiguran kroz ocisti_tekst)
     pdf.set_font("Helvetica", "B", 10)
-    pdf.cell(120, 12, text=f" {ime_pacijenta.upper()} ({godina_rodjenja})", border=0, ln=0)
+    cisto_ime = ocisti_tekst(ime_pacijenta).upper()
+    pdf.cell(120, 12, text=f" {cisto_ime} ({godina_rodjenja})", border=0, ln=0)
     pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
     
     # 3. Postavljamo kursor na visinu 48 kako bi tabela počela tačno ispod sive trake
     pdf.set_y(48)
-
-
-
 
     # 3. Tabela obroka (Zeleno-sivo zaglavlje)
     pdf.set_font("Courier", "", 10)
     pdf.set_fill_color(52, 73, 94) 
     pdf.set_text_color(255, 255, 255) 
     
-    
-        # FORMAT TABELE 1 (Smanjena visina na 5 da odgovara podacima)
+    # FORMAT TABELE 1
     pdf.cell(65, 5, text=" Namirnica", border=0, fill=True)
     pdf.cell(25, 5, text="Kolicina (g)", border=0, fill=True, align="C")
     pdf.cell(30, 5, text="Kalijum (mg)", border=0, fill=True, align="C")
@@ -204,9 +214,6 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_text_color(44, 62, 80)
     pdf.set_font("Helvetica", size=10)
 
-
-    
-    
     brojac_reda = 0
     for _, red in df_podaci.iterrows():
         if brojac_reda % 2 == 0:
@@ -215,12 +222,13 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         else:
             is_fill = False
             
-        pdf.cell(65, 5, text=f" {str(red['food'])[:28]}", border="B", fill=is_fill)
+        # Hrana osigurana kroz ocisti_tekst da ne skine tabelu ako ima kvačica
+        cista_hrana = ocisti_tekst(red['food'])[:28]
+        pdf.cell(65, 5, text=f" {cista_hrana}", border="B", fill=is_fill)
         pdf.cell(25, 5, text=f"{red['amount']:.1f} g", border="B", fill=is_fill, align="C")
         pdf.cell(30, 5, text=f"{red['potassium']:.1f}", border="B", fill=is_fill, align="C")
         pdf.cell(30, 5, text=f"{red['phosphorus']:.1f}", border="B", fill=is_fill, align="C")
         pdf.cell(30, 5, text=f"{red['sodium']:.1f}", border="B", fill=is_fill, align="C")
-
 
         pdf.ln()
         brojac_reda += 1
