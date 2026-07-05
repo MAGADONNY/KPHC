@@ -156,7 +156,6 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_auto_page_break(auto=False, margin=0)
     pdf.set_margins(15, 15, 15)
 
-    pdf.add_page()
     pdf.set_margins(15, 15, 15)
     pdf.set_auto_page_break(auto=False, margin=5)
 
