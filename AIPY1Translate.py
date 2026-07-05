@@ -193,16 +193,16 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_y(32)
     
     # Crtanje sive trake
-    pdf.set_font("Helvetica", "B", 10)
-    originalno_ime = str(ime_pacijenta).upper()
+        # Crtanje sive trake
+    pdf.set_fill_color(205, 212, 218) 
+    pdf.rect(15, 32, 180, 12, "F")
+    
+    # Ispis podataka UNUTAR sive trake
+    pdf.set_font("Arial", "B", 10)
+    originalno_ime = str(ime_pacijenta).upper().encode('latin-1', 'replace').decode('latin-1')
     pdf.cell(120, 12, text=f" {originalno_ime} ({godina_rodjenja})", border=0, ln=0)
     pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
 
-    # Ispis podataka UNUTAR sive trake
-    pdf.set_font("Arial", "B", 10)
-    originalno_ime = str(ime_pacijenta).upper()
-    pdf.cell(120, 12, text=f" {originalno_ime} ({godina_rodjenja})", border=0, ln=0)
-    pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
 
 
     # 3. Postavljamo kursor na visinu 48 kako bi tabela počela tačno ispod sive trake
