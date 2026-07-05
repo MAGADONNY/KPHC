@@ -148,43 +148,10 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         # Pretvaranje u čist ASCII (brisanje svih ostalih čudnih simbola koji nisu podržani)
         return tekst.encode('ascii', 'ignore').decode('ascii')
 
-        pdf = FPDF()
-    
-    # --- AUTOMATSKO PREUZIMANJE ARIA FONTOVA AKO NE POSTOJE ---
-    import os, requests
-    fontovi = {
-        "Arial.ttf": "https://github.com",
-        "Arial-Bold.ttf": "https://github.com"
-    }
-    for naziv, url in fontovi.items():
-        if not os.path.exists(naziv):
-            try:
-                odgovor = requests.get(url, timeout=10)
-                if odgovor.status_code == 200:
-                    with open(naziv, "wb") as f:
-                        f.write(odgovor.content)
-            except:
-                pass
-
-    # Registracija preuzetih fontova u PDF sistem
-    if os.path.exists("Arial.ttf") and os.path.exists("Arial-Bold.ttf"):
-        pdf.add_font("Arial", "", "Arial.ttf")
-        pdf.add_font("Arial", "B", "Arial-Bold.ttf")
-        ime_fonta = "Arial"
-    else:
-        ime_fonta = "Helvetica" # Rezervna opcija ako internet zakaže
-    # --------------------------------------------------------
-    
+    pdf = FPDF()
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
-    pdf.set_auto_page_break(auto=False, margin=0)
-
-    pdf.add_font("DejaVu", "B", url_fonta)
-    
-    pdf.add_page()
-    pdf.set_margins(15, 15, 15)
-    pdf.set_auto_page_break(auto=False, margin=0)
-
+    pdf.set_auto_page_break(auto=False, margin=5)
 
     # 1. zeleno polje na vrhu
     pdf.set_fill_color(46, 204, 113)
@@ -210,9 +177,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     
     # Ispis tekstova IZNAD sive trake
     pdf.set_text_color(0, 0, 0)
-    
-    # IZMENA KODA ZA FONT
-    pdf.set_font("Arial", "", 9)
+    pdf.set_font("Helvetica", "", 9)
     pdf.cell(120, 5, text="Ime i prezime / godina rodjenja:", border=0, ln=0)
     pdf.cell(60, 5, text="Datum:", border=0, ln=1, align="R")
     
@@ -220,18 +185,15 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_y(32)
     
     # Crtanje sive trake
-        # Crtanje sive trake
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 32, 180, 12, "F")
     
-    # Ispis podataka UNUTAR sive trake
-    pdf.set_font("Arial", "B", 10)
-    originalno_ime = str(ime_pacijenta).upper().encode('latin-1', 'replace').decode('latin-1')
-    pdf.cell(120, 12, text=f" {originalno_ime} ({godina_rodjenja})", border=0, ln=0)
+    # Ispis podataka UNUTAR sive trake (Tekst osiguran kroz ocisti_tekst)
+    pdf.set_font("Helvetica", "B", 10)
+    cisto_ime = ocisti_tekst(ime_pacijenta).upper()
+    pdf.cell(120, 12, text=f" {cisto_ime} ({godina_rodjenja})", border=0, ln=0)
     pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
-
-
-
+    
     # 3. Postavljamo kursor na visinu 48 kako bi tabela počela tačno ispod sive trake
     pdf.set_y(48)
 
@@ -273,7 +235,8 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         
     pdf.ln(10)
 
-        #TABELA REZIME
+
+    #TABELA REZIME
     pdf.cell(180, 8, "REZIME UKUPNOG DNEVNOG UNOSA:", 0, 1)
     pdf.ln(2)
     
