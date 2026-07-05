@@ -149,8 +149,12 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         return tekst.encode('ascii', 'ignore').decode('ascii')
 
     pdf = FPDF()
-    pdf.core_fonts_encoding = "utf-8" # <--- OVO DODAJ U LINIJI 152
+    pdf.core_fonts_encoding = "utf-8"
     pdf.add_page()
+    pdf.set_margins(15, 15, 15)
+    # PROMENI OVU LINIJU (Stavljamo auto=True i marginu na 15):
+    pdf.set_auto_page_break(auto=True, margin=15)
+
 
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
