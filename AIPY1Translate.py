@@ -104,7 +104,7 @@ else:
     t_zbir_okvir = "📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:"
     t_dugme_obrisi = "🗑️ Isprazni kompletan dnevnik"
     t_dugme_pdf = "📄 Preuzmi PDF izveštaj"
-    t_placeholder_ime = "npr. Petar Petrović"
+    t_placeholder_ime = "npr. Petar Petrovic"
     t_labela_ime = "Ime i prezime:"
     t_uputstvo_brisanje = "💡 <b>Uputstvo za brisanje:</b> Čekirajte kvadrat ispred naziva namirnice, pa kliknite na kantu za smeće (gore desno iznad tabele) ili pritisnite <b>DELETE</b> na tastaturi."
     t_labela_godina = "Godina rođenja:"
