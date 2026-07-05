@@ -177,7 +177,9 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     
     # Ispis tekstova IZNAD sive trake
     pdf.set_text_color(0, 0, 0)
-    pdf.set_font("Helvetica", "", 9)
+    
+    # IZMENA KODA ZA FONT
+    pdf.set_font("Arial", "", 9)
     pdf.cell(120, 5, text="Ime i prezime / godina rodjenja:", border=0, ln=0)
     pdf.cell(60, 5, text="Datum:", border=0, ln=1, align="R")
     
@@ -188,7 +190,7 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_fill_color(205, 212, 218) 
     pdf.rect(15, 32, 180, 12, "F")
     
-    # Ispis podataka UNUTAR sive trake (Tekst osiguran kroz ocisti_tekst)
+    # Ispis podataka UNUTAR sive trake
     pdf.set_font("Arial", "B", 10)
     originalno_ime = str(ime_pacijenta).upper()
     pdf.cell(120, 12, text=f" {originalno_ime} ({godina_rodjenja})", border=0, ln=0)
