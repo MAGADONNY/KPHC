@@ -149,15 +149,15 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         return tekst.encode('ascii', 'ignore').decode('ascii')
 
     pdf = FPDF()
-    pdf.core_fonts_encoding = "utf-8"
-    pdf.add_page()
     
-    # OVO MENJAMO: Isključujemo prelom (auto=False) da zelena traka ne bi gurnula kod na 2. stranu
+    # Preuzimamo i registrujemo pravi TrueType Unicode font sa interneta za naša i strana slova
+    url_fonta = "https://github.com"
+    pdf.add_font("DejaVu", "B", url_fonta)
+    
+    pdf.add_page()
+    pdf.set_margins(15, 15, 15)
     pdf.set_auto_page_break(auto=False, margin=0)
-    pdf.set_margins(15, 15, 15)
 
-    pdf.set_margins(15, 15, 15)
-    pdf.set_auto_page_break(auto=False, margin=5)
 
     # 1. zeleno polje na vrhu
     pdf.set_fill_color(46, 204, 113)
