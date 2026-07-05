@@ -541,9 +541,6 @@ else:
     # Ako je korisnik već uračunat, samo čitamo njegov broj iz sesije
     trenutni_broj = st.session_state['poseta_uracunata']
 
-# Prikaz brojača na ekranu
-st.write(f"Broj poseta: {trenutni_broj}")
-
 
 # --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
 st.write("---")
