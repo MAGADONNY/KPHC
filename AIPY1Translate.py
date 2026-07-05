@@ -149,6 +149,9 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
         return tekst.encode('ascii', 'ignore').decode('ascii')
 
     pdf = FPDF()
+    pdf.core_fonts_encoding = "utf-8" # <--- OVO DODAJ U LINIJI 152
+    pdf.add_page()
+
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
     pdf.set_auto_page_break(auto=False, margin=5)
@@ -187,9 +190,11 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_y(32)
     
     # Crtanje sive trake
-    pdf.set_fill_color(205, 212, 218) 
-    pdf.rect(15, 32, 180, 12, "F")
-    
+    pdf.set_font("Helvetica", "B", 10)
+    originalno_ime = str(ime_pacijenta).upper()
+    pdf.cell(120, 12, text=f" {originalno_ime} ({godina_rodjenja})", border=0, ln=0)
+    pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
+
     # Ispis podataka UNUTAR sive trake
     pdf.set_font("Arial", "B", 10)
     originalno_ime = str(ime_pacijenta).upper()
