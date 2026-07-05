@@ -515,29 +515,35 @@ import streamlit as st
 ime_fajla = "brojac.txt"
 pocetni_broj = 3002
 
+# Ako poseta u ovoj sesiji još nije uračunata
 if 'poseta_uracunata' not in st.session_state:
     if not os.path.exists(ime_fajla):
-        with open(ime_fajla, "w") as f:
-            f.write(str(pocetni_broj))
+        # Prvi put ikada kreiramo fajl sa početnim brojem
         trenutni_broj = pocetni_broj
-    else:
-        with open(ime_fajla, "r") as f:
-            try:
-                trenutni_broj = int(f.read().strip()) + 1
-            except:
-                trenutni_broj = pocetni_broj
         with open(ime_fajla, "w") as f:
-            f.write(str(trenutni_broj))
-    st.session_state['poseta_uracunata'] = trenutni_broj
-else:
-    if os.path.exists(ime_fajla):
+            f.write(str(pocetni_broj + 1))  # Sledeći će videti +1
+    else:
+        # Fajl postoji: čitamo trenutno stanje za ovog korisnika
         with open(ime_fajla, "r") as f:
             try:
                 trenutni_broj = int(f.read().strip())
-            except:
+            except ValueError:
                 trenutni_broj = pocetni_broj
-    else:
-        trenutni_broj = pocetni_broj
+        
+        # Odmah upisujemo uvećanu vrednost za sledećeg posetioca
+        with open(ime_fajla, "w") as f:
+            f.write(str(trenutni_broj + 1))
+            
+    # Beležimo broj u sesiju da se ne bi uvećavao na svaki klik unutar aplikacije
+    st.session_state['poseta_uracunata'] = trenutni_broj
+
+else:
+    # Ako je korisnik već uračunat, samo čitamo njegov broj iz sesije
+    trenutni_broj = st.session_state['poseta_uracunata']
+
+# Prikaz brojača na ekranu
+st.write(f"Broj poseta: {trenutni_broj}")
+
 
 # --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
 st.write("---")
