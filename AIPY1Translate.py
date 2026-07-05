@@ -192,9 +192,8 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_font("Arial", "B", 10)
     ime_velika_slova = str(ime_pacijenta).upper()
     pdf.cell(120, 12, text=f" {ime_velika_slova} ({godina_rodjenja})", border=0, ln=0)
-    pdf.set_font("Helvetica", "B", 10)
     pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
-    
+
     # 3. Postavljamo kursor na visinu 48 kako bi tabela počela tačno ispod sive trake
     pdf.set_y(48)
 
