@@ -151,10 +151,10 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf = FPDF()
     pdf.core_fonts_encoding = "utf-8"
     pdf.add_page()
+    
+    # OVO MENJAMO: Isključujemo prelom (auto=False) da zelena traka ne bi gurnula kod na 2. stranu
+    pdf.set_auto_page_break(auto=False, margin=0)
     pdf.set_margins(15, 15, 15)
-    # PROMENI OVU LINIJU (Stavljamo auto=True i marginu na 15):
-    pdf.set_auto_page_break(auto=True, margin=15)
-
 
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
