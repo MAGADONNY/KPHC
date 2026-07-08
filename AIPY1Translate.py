@@ -480,24 +480,22 @@ if df is not None:
         st.write("---")
 
         # ==========================================
-        # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE) SA NASLOVIMA
+        # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE) SA NASLOVIMA MOB.
         # ==========================================
+              
         import plotly.graph_objects as go
 
-       # Razmak izmedju kartica i grafikona
-        st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True) # Siguran razmak za mobilne ekrane
-# Kraj cmd razmak
-
+        st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
 
         # Kreiramo tri kolone koje prate raspored vaših kartica iznad
         col_g1, col_g2, col_g3 = st.columns(3)
 
         # 1. Kolona: Kalijum Kružni sat
         with col_g1:
+            st.markdown(f"<p style='text-align: center; margin: 0px; font-weight: bold; color: #ffffff; font-size: 16px;'>{l_kalijum}</p>", unsafe_allow_html=True)
             fig_k = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_k,
-                title = {'text': f"<b>{l_kalijum}</b>", 'font': {'size': 18, 'color': '#ffffff'}},
                 number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(2000, uk_k * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
@@ -512,16 +510,16 @@ if df is not None:
             ))
             fig_k.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=40, b=10), height=170
+                margin=dict(l=20, r=20, t=10, b=10), height=130
             )
             st.plotly_chart(fig_k, use_container_width=True, config={'displayModeBar': False})
 
         # 2. Kolona: Fosfor Kružni sat
         with col_g2:
+            st.markdown(f"<p style='text-align: center; margin: 15px 0px 0px 0px; font-weight: bold; color: #ffffff; font-size: 16px;'>{l_fosfor}</p>", unsafe_allow_html=True)
             fig_f = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_f,
-                title = {'text': f"<b>{l_fosfor}</b>", 'font': {'size': 18, 'color': '#ffffff'}},
                 number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(1300, uk_f * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
@@ -536,16 +534,16 @@ if df is not None:
             ))
             fig_f.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=40, b=10), height=170
+                margin=dict(l=20, r=20, t=10, b=10), height=130
             )
             st.plotly_chart(fig_f, use_container_width=True, config={'displayModeBar': False})
 
         # 3. Kolona: Natrijum Kružni sat
         with col_g3:
+            st.markdown(f"<p style='text-align: center; margin: 15px 0px 0px 0px; font-weight: bold; color: #ffffff; font-size: 16px;'>{l_natrijum}</p>", unsafe_allow_html=True)
             fig_n = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_n,
-                title = {'text': f"<b>{l_natrijum}</b>", 'font': {'size': 18, 'color': '#ffffff'}},
                 number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(2500, uk_n * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
@@ -560,7 +558,7 @@ if df is not None:
             ))
             fig_n.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=40, b=10), height=170
+                margin=dict(l=20, r=20, t=10, b=10), height=130
             )
             st.plotly_chart(fig_n, use_container_width=True, config={'displayModeBar': False})
 
