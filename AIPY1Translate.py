@@ -477,70 +477,85 @@ if df is not None:
             </div>
             """, unsafe_allow_html=True)
 
-                # ==========================================
-        # NOVI DEO: GRAFIČKI PRIKAZ SA LIMITIMA
+        # ==========================================
+        # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE)
         # ==========================================
         import plotly.graph_objects as go
-        from plotly.subplots import make_subplots
 
         st.write("") # Razmak izmedju kartica i grafikona
 
-        # Kreiramo 3 odvojena horizontalna bara u jednom stubcu da bi svaki imao svoj unikatni limit na X osi
-        fig = make_subplots(rows=3, cols=1, shared_xaxes=False, vertical_spacing=0.15,
-                            subplot_titles=(l_kalijum, l_fosfor, l_natrijum))
+        # Kreiramo tri kolone koje prate raspored vaših kartica iznad
+        col_g1, col_g2, col_g3 = st.columns(3)
 
-        # 1. Kalijum Bar
-        fig.add_trace(go.Bar(
-            x=[uk_k], y=[l_kalijum], orientation='h',
-            marker_color=dnevna_k_boja, text=[f"{uk_k:.2f} mg"], textposition='auto',
-            showlegend=False
-        ), row=1, col=1)
-        # Linija limita za Kalijum (1500)
-        fig.add_vline(x=1500.0, line_width=2, line_dash="dash", line_color="#FF4B4B", row=1, col=1)
+        # 1. Kolona: Kalijum Kružni sat
+        with col_g1:
+            fig_k = go.Figure(go.Indicator(
+                mode = "gauge+number",
+                value = uk_k,
+                number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
+                gauge = {
+                    'axis': {'range': [None, max(2000, uk_k * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
+                    'bar': {'color': dnevna_k_boja},
+                    'bgcolor': "#1e2430",
+                    'threshold': {
+                        'line': {'color': "#FF4B4B", 'width': 3},
+                        'thickness': 0.75,
+                        'value': 1500.0
+                    }
+                }
+            ))
+            fig_k.update_layout(
+                template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+                margin=dict(l=20, r=20, t=10, b=10), height=140
+            )
+            st.plotly_chart(fig_k, use_container_width=True, config={'displayModeBar': False})
 
-        # 2. Fosfor Bar
-        fig.add_trace(go.Bar(
-            x=[uk_f], y=[l_fosfor], orientation='h',
-            marker_color=dnevna_f_boja, text=[f"{uk_f:.2f} mg"], textposition='auto',
-            showlegend=False
-        ), row=2, col=1)
-        # Linija limita za Fosfor (1000)
-        fig.add_vline(x=1000.0, line_width=2, line_dash="dash", line_color="#FF4B4B", row=2, col=1)
+        # 2. Kolona: Fosfor Kružni sat
+        with col_g2:
+            fig_f = go.Figure(go.Indicator(
+                mode = "gauge+number",
+                value = uk_f,
+                number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
+                gauge = {
+                    'axis': {'range': [None, max(1300, uk_f * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
+                    'bar': {'color': dnevna_f_boja},
+                    'bgcolor': "#1e2430",
+                    'threshold': {
+                        'line': {'color': "#FF4B4B", 'width': 3},
+                        'thickness': 0.75,
+                        'value': 1000.0
+                    }
+                }
+            ))
+            fig_f.update_layout(
+                template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+                margin=dict(l=20, r=20, t=10, b=10), height=140
+            )
+            st.plotly_chart(fig_f, use_container_width=True, config={'displayModeBar': False})
 
-        # 3. Natrijum Bar
-        fig.add_trace(go.Bar(
-            x=[uk_n], y=[l_natrijum], orientation='h',
-            marker_color=dnevna_n_boja, text=[f"{uk_n:.2f} mg"], textposition='auto',
-            showlegend=False
-        ), row=3, col=1)
-        # Linija limita za Natrijum (2000)
-        fig.add_vline(x=2000.0, line_width=2, line_dash="dash", line_color="#FF4B4B", row=3, col=1)
-
-        # Podešavanje dizajna za tamnu temu aplikacije
-        fig.update_layout(
-            template="plotly_dark",
-            plot_bgcolor="rgba(0,0,0,0)",
-            paper_bgcolor="rgba(0,0,0,0)",
-            margin=dict(l=20, r=20, t=30, b=20),
-            height=350,
-        )
-        
-        # Sakrivanje Y osa jer naslovi pod-grafikona već govore koji je mineral u pitanju
-        fig.update_yaxes(showticklabels=False)
-
-        # Prikaz grafikona u Streamlit-u
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
-
-        
-        st.write("---")
-   # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU
-        col_inp1, col_inp2 = st.columns(2)
-        with col_inp1:
-            st.markdown(f"**{t_labela_ime}**")
-            ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
-        with col_inp2:
-            st.markdown(f"**{t_labela_godina}**")
-            godina_rodjenja = st.text_input("Godina", placeholder=t_placeholder_godina, label_visibility="collapsed")
+        # 3. Kolona: Natrijum Kružni sat
+        with col_g3:
+            fig_n = go.Figure(go.Indicator(
+                mode = "gauge+number",
+                value = uk_n,
+                number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
+                gauge = {
+                    'axis': {'range': [None, max(2500, uk_n * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
+                    'bar': {'color': dnevna_n_boja},
+                    'bgcolor': "#1e2430",
+                    'threshold': {
+                        'line': {'color': "#FF4B4B", 'width': 3},
+                        'thickness': 0.75,
+                        'value': 2000.0
+                    }
+                }
+            ))
+            fig_n.update_layout(
+                template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+                margin=dict(l=20, r=20, t=10, b=10), height=140
+            )
+            st.plotly_chart(fig_n, use_container_width=True, config={'displayModeBar': False})
+        # ==========================================
 
 # KRAJ CMD ZA UNOS PODATAKA
 
