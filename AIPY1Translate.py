@@ -485,7 +485,17 @@ if df is not None:
               
         import plotly.graph_objects as go
 
-        st.markdown("<div style='margin-top: 0px;'></div>", unsafe_allow_html=True)
+                # Prisilno smanjujemo razmak direktno na kontejneru kolona koji sledi
+        st.markdown("""
+            <style>
+            [data-testid="stHorizontalBlock"] {
+                margin-top: -50px !important;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+
+        col_g1, col_g2, col_g3 = st.columns(3)
+
 
         # Kreiramo tri kolone koje prate raspored vaših kartica iznad
         col_g1, col_g2, col_g3 = st.columns(3)
