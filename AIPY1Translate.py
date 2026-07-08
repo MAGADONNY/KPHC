@@ -555,6 +555,44 @@ if df is not None:
                 margin=dict(l=20, r=20, t=10, b=10), height=140
             )
             st.plotly_chart(fig_n, use_container_width=True, config={'displayModeBar': False})
+                    # 3. Kolona: Natrijum Kružni sat
+        with col_g3:
+            fig_n = go.Figure(go.Indicator(
+                mode = "gauge+number",
+                value = uk_n,
+                number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
+                gauge = {
+                    'axis': {'range': [None, max(2500, uk_n * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
+                    'bar': {'color': daylight_n_boja if 'daylight_n_boja' in locals() else dnevna_n_boja},
+                    'bgcolor': "#1e2430",
+                    'threshold': {
+                        'line': {'color': "#FF4B4B", 'width': 3},
+                        'thickness': 0.75,
+                        'value': 2000.0
+                    }
+                }
+            ))
+            fig_n.update_layout(
+                template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+                margin=dict(l=20, r=20, t=10, b=10), height=140
+            )
+            st.plotly_chart(fig_n, use_container_width=True, config={'displayModeBar': False})
+        # ==========================================
+
+        st.write("---")
+
+        # --- OVDE VRACAMO OBRISANE LINIJE ZA UNOS PODATAKA ---
+        st.markdown(f"### # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU")
+        col_inp1, col_inp2 = st.columns(2)
+        with col_inp1:
+            st.markdown(f"**{t_tabela_ime}**")
+            ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
+        with col_inp2:
+            st.markdown(f"**{t_tabela_godina}**")
+            godina_rodjenja = st.text_input("Godina", placeholder=t_placeholder_godina, label_visibility="collapsed")
+            
+        # OBRATITE PAŽNJU: Ovdje se nastavlja vaš stari ostatak koda (npr. # KRAJ CMD ZA UNOS PODATAKA...)
+
         # ==========================================
 
 # KRAJ CMD ZA UNOS PODATAKA
