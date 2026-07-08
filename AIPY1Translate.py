@@ -500,8 +500,8 @@ if df is not None:
             </style>
             """, unsafe_allow_html=True)
 
-                color: #ffffff; 
-                font-size: 16px;
+            color: #ffffff; 
+            font-size: 16px;
             }
             </style>
             """, unsafe_allow_html=True)
