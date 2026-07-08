@@ -489,7 +489,7 @@ if df is not None:
         st.markdown("""
             <style>
             [data-testid="stHorizontalBlock"] {
-                margin-top: -50px !important;
+                margin-top: -90px !important;
             }
             </style>
             """, unsafe_allow_html=True)
