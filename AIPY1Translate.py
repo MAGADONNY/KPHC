@@ -479,30 +479,38 @@ if df is not None:
         
         st.write("---")
 
+                     
         # ==========================================
-        # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE) SA NASLOVIMA MOB.
+        # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE) - FIKSIRANO PORAVNANJE
         # ==========================================
-              
         import plotly.graph_objects as go
 
-                # Prisilno smanjujemo razmak direktno na kontejneru kolona koji sledi
+        # Koristimo jedinstven kontejner kako ne bismo pokvarili ostale kolone u aplikaciji
         st.markdown("""
             <style>
-            [data-testid="stHorizontalBlock"] {
-                margin-top: -60px !important;
+            .grafikoni-kontejner {
+                margin-top: -35px !important;
+                margin-bottom: 20px !important;
+            }
+            .naslov-minerala {
+                text-align: center; 
+                margin: 0px 0px 5px 0px !important; 
+                padding: 0px !important;
+                font-weight: bold; 
+                color: #ffffff; 
+                font-size: 16px;
             }
             </style>
             """, unsafe_allow_html=True)
 
-        col_g1, col_g2, col_g3 = st.columns(3)
-
-
-        # Kreiramo tri kolone koje prate raspored vaših kartica iznad
+        st.markdown('<div class="grafikoni-kontejner">', unsafe_allow_html=True)
+        
+        # Kreiramo tri kolone isključivo za grafikone
         col_g1, col_g2, col_g3 = st.columns(3)
 
         # 1. Kolona: Kalijum Kružni sat
         with col_g1:
-            st.markdown(f"<p style='text-align: center; margin: 0px; font-weight: bold; color: #ffffff; font-size: 16px;'>{l_kalijum}</p>", unsafe_allow_html=True)
+            st.markdown(f'<p class="naslov-minerala">{l_kalijum}</p>', unsafe_allow_html=True)
             fig_k = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_k,
@@ -520,13 +528,13 @@ if df is not None:
             ))
             fig_k.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=10, b=10), height=130
+                margin=dict(l=20, r=20, t=5, b=5), height=120
             )
             st.plotly_chart(fig_k, use_container_width=True, config={'displayModeBar': False})
 
         # 2. Kolona: Fosfor Kružni sat
         with col_g2:
-            st.markdown(f"<p style='text-align: center; margin: 15px 0px 0px 0px; font-weight: bold; color: #ffffff; font-size: 16px;'>{l_fosfor}</p>", unsafe_allow_html=True)
+            st.markdown(f'<p class="naslov-minerala">{l_fosfor}</p>', unsafe_allow_html=True)
             fig_f = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_f,
@@ -544,13 +552,13 @@ if df is not None:
             ))
             fig_f.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=10, b=10), height=130
+                margin=dict(l=20, r=20, t=5, b=5), height=120
             )
             st.plotly_chart(fig_f, use_container_width=True, config={'displayModeBar': False})
 
         # 3. Kolona: Natrijum Kružni sat
         with col_g3:
-            st.markdown(f"<p style='text-align: center; margin: 15px 0px 0px 0px; font-weight: bold; color: #ffffff; font-size: 16px;'>{l_natrijum}</p>", unsafe_allow_html=True)
+            st.markdown(f'<p class="naslov-minerala">{l_natrijum}</p>', unsafe_allow_html=True)
             fig_n = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_n,
@@ -568,9 +576,12 @@ if df is not None:
             ))
             fig_n.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=10, b=10), height=130
+                margin=dict(l=20, r=20, t=5, b=5), height=120
             )
             st.plotly_chart(fig_n, use_container_width=True, config={'displayModeBar': False})
+            
+        st.markdown('</div>', unsafe_allow_html=True)
+
 
             
 # KRAJ KODA ZA GRAFIKU 
