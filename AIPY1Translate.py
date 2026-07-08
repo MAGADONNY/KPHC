@@ -483,20 +483,23 @@ if df is not None:
         # ==========================================
         # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE) - FIKSIRANO PORAVNANJE
         # ==========================================
-        import plotly.graph_objects as go
-
-        # Koristimo jedinstven kontejner kako ne bismo pokvarili ostale kolone u aplikaciji
+                # Primenjujemo negativnu marginu direktno na elemente unutar kolona za grafikone
         st.markdown("""
             <style>
-            .grafikoni-kontejner {
-                margin-top: -35px !important;
-                margin-bottom: 20px !important;
+            [data-testid="column"] [data-testid="stVerticalBlockBorderWrapper"] {
+                margin-top: -45px !important;
             }
             .naslov-minerala {
                 text-align: center; 
                 margin: 0px 0px 5px 0px !important; 
                 padding: 0px !important;
                 font-weight: bold; 
+                color: #ffffff; 
+                font-size: 16px;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+
                 color: #ffffff; 
                 font-size: 16px;
             }
