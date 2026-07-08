@@ -484,9 +484,9 @@ if df is not None:
         # ==========================================
         import plotly.graph_objects as go
 
-        st.write("") # Razmak izmedju kartica i grafikona
-        st.write("")
-        st.write("") # Dodatni prazan prostor da mobilni ekrani ne odsecaju tekst na vrhu
+       # Razmak izmedju kartica i grafikona
+        st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True) # Siguran razmak za mobilne ekrane
+# Kraj cmd razmak
 
 
         # Kreiramo tri kolone koje prate raspored vaših kartica iznad
