@@ -482,42 +482,21 @@ if df is not None:
                      
         # ==========================================
         # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE) - FIKSIRANO PORAVNANJE
+               # ==========================================
+        # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE) - BEZ CSS GREŠAKA
         # ==========================================
-                # Primenjujemo negativnu marginu direktno na elemente unutar kolona za grafikone
-        st.markdown("""
-            <style>
-            [data-testid="column"] [data-testid="stVerticalBlockBorderWrapper"] {
-                margin-top: -45px !important;
-            }
-            .naslov-minerala {
-                text-align: center; 
-                margin: 0px 0px 5px 0px !important; 
-                padding: 0px !important;
-                font-weight: bold; 
-                color: #ffffff; 
-                font-size: 16px;
-            }
-            </style>
-            """, unsafe_allow_html=True)
+        import plotly.graph_objects as go
 
-            color: #ffffff; 
-            font-size: 16px;
-            }
-            </style>
-            """, unsafe_allow_html=True)
-
-        st.markdown('<div class="grafikoni-kontejner">', unsafe_allow_html=True)
-        
-        # Kreiramo tri kolone isključivo za grafikone
-        col_g1, col_g2, col_g3 = st.columns(3)
+        # Koristimo mali parametar gap da kolone budu zbijenije
+        col_g1, col_g2, col_g3 = st.columns(3, gap="small")
 
         # 1. Kolona: Kalijum Kružni sat
         with col_g1:
-            st.markdown(f'<p class="naslov-minerala">{l_kalijum}</p>', unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center; margin: 0px; font-weight: bold; color: white; font-size: 15px;'>{l_kalijum}</p>", unsafe_allow_html=True)
             fig_k = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_k,
-                number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
+                number = {'suffix': " mg", 'font': {'size': 15, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(2000, uk_k * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
                     'bar': {'color': dnevna_k_boja},
@@ -531,20 +510,20 @@ if df is not None:
             ))
             fig_k.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=5, b=5), height=120
+                margin=dict(l=10, r=10, t=0, b=0), height=110
             )
             st.plotly_chart(fig_k, use_container_width=True, config={'displayModeBar': False})
 
         # 2. Kolona: Fosfor Kružni sat
         with col_g2:
-            st.markdown(f'<p class="naslov-minerala">{l_fosfor}</p>', unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center; margin: 0px; font-weight: bold; color: white; font-size: 15px;'>{l_fosfor}</p>", unsafe_allow_html=True)
             fig_f = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_f,
-                number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
+                number = {'suffix': " mg", 'font': {'size': 15, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(1300, uk_f * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
-                    'bar': {'color': dnevna_f_boja},
+                    'bar': {'color': daylight_f_boja if 'daylight_f_boja' in locals() else dnevna_f_boja},
                     'bgcolor': "#1e2430",
                     'threshold': {
                         'line': {'color': "#FF4B4B", 'width': 3},
@@ -555,17 +534,17 @@ if df is not None:
             ))
             fig_f.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=5, b=5), height=120
+                margin=dict(l=10, r=10, t=0, b=0), height=110
             )
             st.plotly_chart(fig_f, use_container_width=True, config={'displayModeBar': False})
 
         # 3. Kolona: Natrijum Kružni sat
         with col_g3:
-            st.markdown(f'<p class="naslov-minerala">{l_natrijum}</p>', unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center; margin: 0px; font-weight: bold; color: white; font-size: 15px;'>{l_natrijum}</p>", unsafe_allow_html=True)
             fig_n = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_n,
-                number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
+                number = {'suffix': " mg", 'font': {'size': 15, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(2500, uk_n * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
                     'bar': {'color': dnevna_n_boja},
@@ -579,11 +558,9 @@ if df is not None:
             ))
             fig_n.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=5, b=5), height=120
+                margin=dict(l=10, r=10, t=0, b=0), height=110
             )
             st.plotly_chart(fig_n, use_container_width=True, config={'displayModeBar': False})
-            
-        st.markdown('</div>', unsafe_allow_html=True)
 
 
             
