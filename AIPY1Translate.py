@@ -442,7 +442,7 @@ if df is not None:
 
 # KRAJ Uputstvo za brisanje
             
-                # Računanje ukupnih vrednosti iz trenutnog stanja
+        # Računanje ukupnih vrednosti iz trenutnog stanja
         uk_k = df_prikaz['potassium'].sum()
         uk_f = df_prikaz['phosphorus'].sum()
         uk_n = df_prikaz['sodium'].sum()
@@ -477,63 +477,7 @@ if df is not None:
             </div>
             """, unsafe_allow_html=True)
         
-        # ==========================================
-        # NOVI DEO: GRAFIČKI PRIKAZ SA LIMITIMA
-        # ==========================================
-        import plotly.graph_objects as go
-        from plotly.subplots import make_subplots
-
-        st.write("") # Razmak izmedju kartica i grafikona
-
-        # Kreiramo 3 odvojena horizontalna bara u jednom stubcu da bi svaki imao svoj unikatni limit na X osi
-        fig = make_subplots(rows=3, cols=1, shared_xaxes=False, vertical_spacing=0.15,
-                            subplot_titles=(l_kalijum, l_fosfor, l_natrijum))
-
-        # 1. Kalijum Bar
-        fig.add_trace(go.Bar(
-            x=[uk_k], y=[l_kalijum], orientation='h',
-            marker_color=dnevna_k_boja, text=[f"{uk_k:.2f} mg"], textposition='auto',
-            showlegend=False
-        ), row=1, col=1)
-        # Linija limita za Kalijum (1500)
-        fig.add_vline(x=1500.0, line_width=2, line_dash="dash", line_color="#FF4B4B", row=1, col=1)
-
-        # 2. Fosfor Bar
-        fig.add_trace(go.Bar(
-            x=[uk_f], y=[l_fosfor], orientation='h',
-            marker_color=dnevna_f_boja, text=[f"{uk_f:.2f} mg"], textposition='auto',
-            showlegend=False
-        ), row=2, col=1)
-        # Linija limita za Fosfor (1000)
-        fig.add_vline(x=1000.0, line_width=2, line_dash="dash", line_color="#FF4B4B", row=2, col=1)
-
-        # 3. Natrijum Bar
-        fig.add_trace(go.Bar(
-            x=[uk_n], y=[l_natrijum], orientation='h',
-            marker_color=dnevna_n_boja, text=[f"{uk_n:.2f} mg"], textposition='auto',
-            showlegend=False
-        ), row=3, col=1)
-        # Linija limita za Natrijum (2000)
-        fig.add_vline(x=2000.0, line_width=2, line_dash="dash", line_color="#FF4B4B", row=3, col=1)
-
-        # Podešavanje dizajna za tamnu temu aplikacije
-        fig.update_layout(
-            template="plotly_dark",
-            plot_bgcolor="rgba(0,0,0,0)",
-            paper_bgcolor="rgba(0,0,0,0)",
-            margin=dict(l=20, r=20, t=30, b=20),
-            height=350,
-        )
-        
-        # Sakrivanje Y osa jer naslovi pod-grafikona već govore koji je mineral u pitanju
-        fig.update_yaxes(showticklabels=False)
-
-        # Prikaz grafikona u Streamlit-u
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
-        # ==========================================
-        
         st.write("---")
-
    # POLJA ZA UNOS PODATAKA DIREKTNO NA EKRANU
         col_inp1, col_inp2 = st.columns(2)
         with col_inp1:
