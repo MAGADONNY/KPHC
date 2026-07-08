@@ -485,7 +485,7 @@ if df is not None:
               
         import plotly.graph_objects as go
 
-        st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='margin-top: 0px;'></div>", unsafe_allow_html=True)
 
         # Kreiramo tri kolone koje prate raspored vaših kartica iznad
         col_g1, col_g2, col_g3 = st.columns(3)
