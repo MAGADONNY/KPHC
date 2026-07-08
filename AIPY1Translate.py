@@ -480,7 +480,7 @@ if df is not None:
         st.write("---")
 
         # ==========================================
-        # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE)
+        # NOVI DEO: 3 KRUŽNA GRAFIKONA (GAUGE) SA NASLOVIMA
         # ==========================================
         import plotly.graph_objects as go
 
@@ -494,6 +494,7 @@ if df is not None:
             fig_k = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_k,
+                title = {'text': f"<b>{l_kalijum}</b>", 'font': {'size': 18, 'color': '#ffffff'}},
                 number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(2000, uk_k * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
@@ -508,7 +509,7 @@ if df is not None:
             ))
             fig_k.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=10, b=10), height=140
+                margin=dict(l=20, r=20, t=40, b=10), height=170
             )
             st.plotly_chart(fig_k, use_container_width=True, config={'displayModeBar': False})
 
@@ -517,6 +518,7 @@ if df is not None:
             fig_f = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_f,
+                title = {'text': f"<b>{l_fosfor}</b>", 'font': {'size': 18, 'color': '#ffffff'}},
                 number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(1300, uk_f * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
@@ -531,7 +533,7 @@ if df is not None:
             ))
             fig_f.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=10, b=10), height=140
+                margin=dict(l=20, r=20, t=40, b=10), height=170
             )
             st.plotly_chart(fig_f, use_container_width=True, config={'displayModeBar': False})
 
@@ -540,6 +542,7 @@ if df is not None:
             fig_n = go.Figure(go.Indicator(
                 mode = "gauge+number",
                 value = uk_n,
+                title = {'text': f"<b>{l_natrijum}</b>", 'font': {'size': 18, 'color': '#ffffff'}},
                 number = {'suffix': " mg", 'font': {'size': 16, 'color': '#a0aec0'}},
                 gauge = {
                     'axis': {'range': [None, max(2500, uk_n * 1.2)], 'tickwidth': 1, 'tickcolor': "#a0aec0"},
@@ -554,9 +557,10 @@ if df is not None:
             ))
             fig_n.update_layout(
                 template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                margin=dict(l=20, r=20, t=10, b=10), height=140
+                margin=dict(l=20, r=20, t=40, b=10), height=170
             )
             st.plotly_chart(fig_n, use_container_width=True, config={'displayModeBar': False})
+
             
 # KRAJ KODA ZA GRAFIKU 
         
