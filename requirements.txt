@@ -3,3 +3,4 @@ openpyxl
 deep-translator
 fpdf2
 plotly
+PyGithub
