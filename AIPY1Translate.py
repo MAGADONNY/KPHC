@@ -625,9 +625,10 @@ try:
         trenutni_broj = st.session_state['poseta_uracunata']
 
 except Exception as e:
-    # Ako GitHub API zakaže, koristi se bezbedna fiksna vrednost da se aplikacija ne sruši
+    st.error(f"Greška sa brojačem: {e}")
     trenutni_broj = 3002
-# ----------------------------------------
+
+# KRAJ CMD NOVOG BROJACA----------------------------------------
 
 # --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
 st.write("---")
