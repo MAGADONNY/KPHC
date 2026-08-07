@@ -608,36 +608,8 @@ import os
 import streamlit as st
 
 # --- LOGIKA ZA INTERNI BROJAČ POSETA ---
-ime_fajla = "brojac.txt"
-pocetni_broj = 3002
-
-# Ako poseta u ovoj sesiji još nije uračunata
-if 'poseta_uracunata' not in st.session_state:
-    if not os.path.exists(ime_fajla):
-        # Prvi put ikada kreiramo fajl sa početnim brojem
-        trenutni_broj = pocetni_broj
-        with open(ime_fajla, "w") as f:
-            f.write(str(pocetni_broj + 1))  # Sledeći će videti +1
-    else:
-        # Fajl postoji: čitamo trenutno stanje za ovog korisnika
-        with open(ime_fajla, "r") as f:
-            try:
-                trenutni_broj = int(f.read().strip())
-            except ValueError:
-                trenutni_broj = pocetni_broj
-        
-        # Odmah upisujemo uvećanu vrednost za sledećeg posetioca
-        with open(ime_fajla, "w") as f:
-            f.write(str(trenutni_broj + 1))
-            
-    # Beležimo broj u sesiju da se ne bi uvećavao na svaki klik unutar aplikacije
-    st.session_state['poseta_uracunata'] = trenutni_broj
-
-else:
-    # Ako je korisnik već uračunat, samo čitamo njegov broj iz sesije
-    trenutni_broj = st.session_state['poseta_uracunata']
-
-
+brojac_url = "https://seeyoufarm.com"
+#-------------END brojac-----------
 # --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
 st.write("---")
 
