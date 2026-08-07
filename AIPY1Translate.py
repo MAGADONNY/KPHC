@@ -608,21 +608,12 @@ import os
 import streamlit as st
 
 # --- LOGIKA ZA INTERNI BROJAČ POSETA ---
-# --- EKSTERNI TEKSTUALNI BROJAČ ---
-try:
-    import urllib.request
-    url_za_brojanje = "https://seeyoufarm.com"
-    req = urllib.request.Request(url_za_brojanje, headers={'User-Agent': 'Mozilla/5.0'})
-    saobracaj = urllib.request.urlopen(req).read().decode('utf-8')
-    # Pošto brojač na novom serveru kreće od 1, dodajemo tvojih 3002 na taj broj
-    trenutni_broj = 3002 + int(saobracaj)
-except Exception:
-    trenutni_broj = 3002
-
-#-------------END brojac-----------
-# --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
-st.write("---")
-
+import urllib.request
+url_za_brojanje = "https://seeyoufarm.com"
+req = urllib.request.Request(url_za_brojanje, headers={'User-Agent': 'Mozilla/5.0'})
+saobracaj = urllib.request.urlopen(req).read().decode('utf-8')
+trenutni_broj = 3002 + int(saobracaj)
+#-----------brojac kraj----------
 st.markdown(f"""
 <div style='text-align: center; line-height: 1.2;'>
 <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <img src="{brojac_url}" alt="Hits" style="vertical-align: middle; margin-left: 5px;"></p>
