@@ -608,11 +608,12 @@ import os
 import streamlit as st
 
 # --- NOVI GITHUB BROJAČ POSETA ---
-try:
-    from github import Github
-    g = Github(st.secrets["GITHUB_TOKEN"])
+    from github import Github, Auth
+    auth = Auth.Token(st.secrets["GITHUB_TOKEN"])
+    g = Github(auth=auth)
     repo = g.get_repo("MAGADONNY/KPHC")
     file_content = repo.get_contents("brojac.txt")
+#----------Kraj Tokena-----------
     
     trenutni_broj = int(file_content.decoded_content.decode("utf-8"))
     sha = file_content.sha
