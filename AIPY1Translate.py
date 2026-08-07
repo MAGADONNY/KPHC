@@ -607,36 +607,27 @@ else:
 import os
 import streamlit as st
 
-# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
-ime_fajla = "brojac.txt"
-pocetni_broj = 3002
+# --- NOVI GITHUB BROJAČ POSETA ---
+try:
+    from github import Github
+    g = Github(st.secrets["GITHUB_TOKEN"])
+    repo = g.get_repo("MAGADONNY/KPHC")
+    file_content = repo.get_contents("brojac.txt")
+    
+    trenutni_broj = int(file_content.decoded_content.decode("utf-8"))
+    sha = file_content.sha
 
-# Ako poseta u ovoj sesiji još nije uračunata
-if 'poseta_uracunata' not in st.session_state:
-    if not os.path.exists(ime_fajla):
-        # Prvi put ikada kreiramo fajl sa početnim brojem
-        trenutni_broj = pocetni_broj
-        with open(ime_fajla, "w") as f:
-            f.write(str(pocetni_broj + 1))  # Sledeći će videti +1
+    if 'poseta_uracunata' not in st.session_state:
+        trenutni_broj += 1
+        repo.update_file("brojac.txt", f"Automatsko azuriranje: {trenutni_broj}", str(trenutni_broj), sha)
+        st.session_state['poseta_uracunata'] = trenutni_broj
     else:
-        # Fajl postoji: čitamo trenutno stanje za ovog korisnika
-        with open(ime_fajla, "r") as f:
-            try:
-                trenutni_broj = int(f.read().strip())
-            except ValueError:
-                trenutni_broj = pocetni_broj
-        
-        # Odmah upisujemo uvećanu vrednost za sledećeg posetioca
-        with open(ime_fajla, "w") as f:
-            f.write(str(trenutni_broj + 1))
-            
-    # Beležimo broj u sesiju da se ne bi uvećavao na svaki klik unutar aplikacije
-    st.session_state['poseta_uracunata'] = trenutni_broj
+        trenutni_broj = st.session_state['poseta_uracunata']
 
-else:
-    # Ako je korisnik već uračunat, samo čitamo njegov broj iz sesije
-    trenutni_broj = st.session_state['poseta_uracunata']
-
+except Exception as e:
+    # Ako GitHub API zakaže, koristi se bezbedna fiksna vrednost da se aplikacija ne sruši
+    trenutni_broj = 3002
+# ----------------------------------------
 
 # --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
 st.write("---")
