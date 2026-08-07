@@ -608,17 +608,44 @@ import os
 import streamlit as st
 
 # --- LOGIKA ZA INTERNI BROJAČ POSETA ---
-import urllib.request
-url_za_brojanje = "https://seeyoufarm.com"
-req = urllib.request.Request(url_za_brojanje, headers={'User-Agent': 'Mozilla/5.0'})
-saobracaj = urllib.request.urlopen(req).read().decode('utf-8')
-trenutni_broj = 3002 + int(saobracaj)
-#-----------brojac kraj----------
+ime_fajla = "brojac.txt"
+pocetni_broj = 3002
+
+# Ako poseta u ovoj sesiji još nije uračunata
+if 'poseta_uracunata' not in st.session_state:
+    if not os.path.exists(ime_fajla):
+        # Prvi put ikada kreiramo fajl sa početnim brojem
+        trenutni_broj = pocetni_broj
+        with open(ime_fajla, "w") as f:
+            f.write(str(pocetni_broj + 1))  # Sledeći će videti +1
+    else:
+        # Fajl postoji: čitamo trenutno stanje za ovog korisnika
+        with open(ime_fajla, "r") as f:
+            try:
+                trenutni_broj = int(f.read().strip())
+            except ValueError:
+                trenutni_broj = pocetni_broj
+        
+        # Odmah upisujemo uvećanu vrednost za sledećeg posetioca
+        with open(ime_fajla, "w") as f:
+            f.write(str(trenutni_broj + 1))
+            
+    # Beležimo broj u sesiju da se ne bi uvećavao na svaki klik unutar aplikacije
+    st.session_state['poseta_uracunata'] = trenutni_broj
+
+else:
+    # Ako je korisnik već uračunat, samo čitamo njegov broj iz sesije
+    trenutni_broj = st.session_state['poseta_uracunata']
+
+
+# --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
+st.write("---")
+
 st.markdown(f"""
 <div style='text-align: center; line-height: 1.2;'>
-<p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <img src="{brojac_url}" alt="Hits" style="vertical-align: middle; margin-left: 5px;"></p>
-<p style='margin: 5px 0px 0px 0px; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>
-<p style='margin: 0px; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
-<p style='margin: 0px;  color: #888888; font-size: 12px;'>Powered by PYTHON</p>
+    <p style='margin: 0px; color: #ffffff; font-size: 14px;'>Ukupno poseta aplikaciji: <span style='color: #2ECC71; font-weight: bold;'>{trenutni_broj}</span></p>
+    <p style='margin: 5px 0px 0px 0px; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>
+    <p style='margin: 0px; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
+    <p style='margin: 0px;  color: #888888; font-size: 12px;'>Powered by PYTHON</p>
 </div>
 """, unsafe_allow_html=True)
