@@ -607,32 +607,36 @@ else:
 import os
 import streamlit as st
 
-# --- NOVI GITHUB BROJAČ POSETA ---
-try:
-    from github import Github, Auth
-    auth = Auth.Token("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")
-    g = Github(auth=auth)
-    repo = g.get_repo("MAGADONNY/KPHC")
-    file_content = repo.get_contents("brojac.txt")
+# --- LOGIKA ZA INTERNI BROJAČ POSETA ---
+ime_fajla = "brojac.txt"
+pocetni_broj = 3002
 
-    
-    trenutni_broj = int(file_content.decoded_content.decode("utf-8"))
-    sha = file_content.sha
-
-    if 'poseta_uracunata' not in st.session_state:
-        trenutni_broj += 1
-        repo.update_file("brojac.txt", f"Automatsko azuriranje: {trenutni_broj}", str(trenutni_broj), sha)
-        st.session_state['poseta_uracunata'] = trenutni_broj
+# Ako poseta u ovoj sesiji još nije uračunata
+if 'poseta_uracunata' not in st.session_state:
+    if not os.path.exists(ime_fajla):
+        # Prvi put ikada kreiramo fajl sa početnim brojem
+        trenutni_broj = pocetni_broj
+        with open(ime_fajla, "w") as f:
+            f.write(str(pocetni_broj + 1))  # Sledeći će videti +1
     else:
-        trenutni_broj = st.session_state['poseta_uracunata']
+        # Fajl postoji: čitamo trenutno stanje za ovog korisnika
+        with open(ime_fajla, "r") as f:
+            try:
+                trenutni_broj = int(f.read().strip())
+            except ValueError:
+                trenutni_broj = pocetni_broj
+        
+        # Odmah upisujemo uvećanu vrednost za sledećeg posetioca
+        with open(ime_fajla, "w") as f:
+            f.write(str(trenutni_broj + 1))
+            
+    # Beležimo broj u sesiju da se ne bi uvećavao na svaki klik unutar aplikacije
+    st.session_state['poseta_uracunata'] = trenutni_broj
 
-except Exception as e:
-    st.error(f"Skrivena greška u pozadini: {e}")
-    trenutni_broj = 3002
+else:
+    # Ako je korisnik već uračunat, samo čitamo njegov broj iz sesije
+    trenutni_broj = st.session_state['poseta_uracunata']
 
-
-
-# KRAJ CMD NOVOG BROJACA----------------------------------------
 
 # --- FUTER SA DINAMIČKIM BROJAČEM POSETA ---
 st.write("---")
