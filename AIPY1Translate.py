@@ -626,7 +626,9 @@ try:
         trenutni_broj = st.session_state['poseta_uracunata']
 
 except Exception as e:
+    st.error(f"Skrivena greška u pozadini: {e}")
     trenutni_broj = 3002
+
 
 
 # KRAJ CMD NOVOG BROJACA----------------------------------------
