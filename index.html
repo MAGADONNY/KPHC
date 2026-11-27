@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+0<!DOCTYPE html>
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
@@ -41,10 +41,36 @@
       margin-bottom: 14px;
     }
 
-    .lang-flags {
-      font-size: 1rem;
-      margin-bottom: 6px;
+    .lang-title {
+      font-size: 0.95rem;
       font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .lang-flags {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .flag-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 2px 6px;
+      width: auto;
+      font-size: 1.15rem;
+      line-height: 1.2;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .flag-btn:hover,
+    .flag-btn.active {
+      background: var(--card);
+      border-color: var(--green);
+      opacity: 1;
     }
 
     select, input, button {
@@ -110,6 +136,7 @@
       border-radius: 8px;
       margin-bottom: 18px;
       display: none;
+      white-space: pre-line;
     }
 
     .field label {
@@ -142,21 +169,22 @@
     .val-ok { color: var(--green); }
     .val-high { color: var(--red); }
 
-    button {
+    button.action-btn {
       font-weight: 900;
       cursor: pointer;
       border: none;
       width: 100%;
       padding: 12px 14px;
       font-size: 1.05rem;
+      border-radius: 6px;
       transition: opacity 0.15s ease;
     }
 
-    button:hover:not(:disabled) {
+    button.action-btn:hover:not(:disabled) {
       opacity: 0.92;
     }
 
-    button:disabled {
+    button.action-btn:disabled {
       opacity: 0.45;
       cursor: not-allowed;
     }
@@ -174,10 +202,12 @@
     .btn-danger {
       background: var(--red);
       color: #ffffff;
-      width: auto;
+      border: none;
       padding: 6px 10px;
       font-size: 0.85rem;
+      font-weight: 700;
       border-radius: 6px;
+      cursor: pointer;
     }
 
     .totals-heading {
@@ -331,13 +361,24 @@
 <body>
   <div class="container">
     <div class="lang-top no-print">
-      <div class="lang-flags" id="langFlags">🌐 Jezik / Language / Idioma / Sprache<br>🇷🇸 | 🇬🇧 | 🇪🇸 | 🇩🇪</div>
-      <select id="langSelect" aria-label="Izbor jezika">
-        <option value="sr">Srpski</option>
-        <option value="en">English</option>
-        <option value="es">Español</option>
-        <option value="de">Deutsch</option>
-      </select>
+      <div class="lang-title">🌐 Jezik / Language / Idioma / Sprache</div>
+      <div class="lang-flags">
+        <button type="button" class="flag-btn active" data-lang="sr" title="Srpski">🇷🇸</button>
+        <span>|</span>
+        <button type="button" class="flag-btn" data-lang="en" title="English">🇬🇧</button>
+        <span>|</span>
+        <button type="button" class="flag-btn" data-lang="es" title="Español">🇪🇸</button>
+        <span>|</span>
+        <button type="button" class="flag-btn" data-lang="de" title="Deutsch">🇩🇪</button>
+      </div>
+      <div>
+        <select id="langSelect" aria-label="Izbor jezika">
+          <option value="sr">Srpski</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </div>
     </div>
 
     <header class="hero">
@@ -370,7 +411,7 @@
       <div class="field" style="margin-bottom: 14px;">
         <input id="gramsInput" type="number" min="1" max="5000" step="10" value="100" aria-label="Količina u gramima" />
       </div>
-      <button id="addBtn" class="btn-green" type="button">➕ Dodaj obrok u moj dnevnik</button>
+      <button id="addBtn" class="action-btn btn-green" type="button">➕ Dodaj obrok u moj dnevnik</button>
     </section>
 
     <section id="diarySection">
@@ -411,10 +452,10 @@
       </div>
 
       <div class="actions-stack no-print">
-        <button id="undoBtn" class="btn-secondary" type="button">↩️ Obriši poslednji</button>
+        <button id="undoBtn" class="action-btn btn-secondary" type="button">↩️ Obriši poslednji</button>
         <div class="actions-row">
-          <button id="printBtn" class="btn-green" type="button">📄 Preuzmi / Štampaj PDF izveštaj</button>
-          <button id="clearBtn" class="btn-secondary" type="button">🗑️ Isprazni kompletan dnevnik</button>
+          <button id="printBtn" class="action-btn btn-green" type="button">📄 Preuzmi / Štampaj PDF izveštaj</button>
+          <button id="clearBtn" class="action-btn btn-secondary" type="button">🗑️ Isprazni kompletan dnevnik</button>
         </div>
       </div>
     </section>
@@ -455,7 +496,7 @@
         printBtn: "📄 Preuzmi / Štampaj PDF izveštaj",
         loading: "Učitavanje baze...",
         loaded: (n) => `Učitano namirnica: ${n}`,
-        loadError: "Nije moguće učitati foods.json. Proveri da li se foods.json nalazi u istom folderu kao index.html i da je GitHub Pages uključen.",
+        loadError: "Nije moguće učitati foods.json (ili food.json).\nProveri da li se fajl nalazi u istom folderu kao index.html, da je ispravan JSON i da stranica radi preko HTTP/HTTPS (GitHub Pages), a ne direktno preko file://.",
         emptyRow: "Još nema dodatih namirnica.",
         previewPrefix: "Vrednosti na 100g -> "
       },
@@ -481,7 +522,7 @@
         printBtn: "📄 Download / Print PDF report",
         loading: "Loading database...",
         loaded: (n) => `Foods loaded: ${n}`,
-        loadError: "Failed to load foods.json. Make sure foods.json is in the same folder as index.html and GitHub Pages is enabled.",
+        loadError: "Failed to load foods.json (or food.json).\nMake sure the file is in the same folder as index.html, contains valid JSON, and is served over HTTP/HTTPS (GitHub Pages), not file://.",
         emptyRow: "No foods added yet.",
         previewPrefix: "Values per 100g -> "
       },
@@ -507,7 +548,7 @@
         printBtn: "📄 Descargar / Imprimir informe PDF",
         loading: "Cargando base de datos...",
         loaded: (n) => `Alimentos cargados: ${n}`,
-        loadError: "No se pudo cargar foods.json. Verifica que foods.json esté en la misma carpeta que index.html y que GitHub Pages esté activo.",
+        loadError: "No se pudo cargar foods.json (o food.json).\nVerifica que el archivo esté en la misma carpeta que index.html, tenga JSON válido y se abra por HTTP/HTTPS (GitHub Pages), no file://.",
         emptyRow: "Aún no hay alimentos añadidos.",
         previewPrefix: "Valores por 100g -> "
       },
@@ -533,7 +574,7 @@
         printBtn: "📄 PDF-Bericht herunterladen / drucken",
         loading: "Datenbank wird geladen...",
         loaded: (n) => `Lebensmittel geladen: ${n}`,
-        loadError: "foods.json konnte nicht geladen werden. Stelle sicher, dass foods.json im selben Ordner wie index.html liegt und GitHub Pages aktiviert ist.",
+        loadError: "foods.json (oder food.json) konnte nicht geladen werden.\nStelle sicher, dass die Datei im selben Ordner wie index.html liegt, gültiges JSON enthält und über HTTP/HTTPS (GitHub Pages) läuft.",
         emptyRow: "Noch keine Lebensmittel hinzugefügt.",
         previewPrefix: "Werte pro 100g -> "
       }
@@ -546,251 +587,17 @@
 
     const el = (id) => document.getElementById(id);
 
-    function getFoodName(item, lang = currentLang) {
-      return item[lang] || item.sr || item.en || item.es || item.de || "";
-    }
-
-    function format2(val) {
-      return (Number(val) || 0).toFixed(2);
-    }
-
-    function format0(val) {
-      return Math.round(Number(val) || 0);
-    }
-
-    function showError(msg) {
-      const box = el("errorBox");
-      box.textContent = msg;
-      box.style.display = msg ? "block" : "none";
-    }
-
-    function updateFoodPreview() {
-      const t = I18N[currentLang] || I18N.sr;
-      const preview = el("foodPreview");
-      const idx = Number(el("foodSelect").value);
-      const item = sortedFoods[idx];
-
-      if (!item) {
-        preview.style.display = "none";
-        el("addBtn").disabled = true;
-        return;
+    function toNum(v) {
+      if (typeof v === "number") return Number.isFinite(v) ? v : 0;
+      if (typeof v === "string") {
+        const cleaned = v.replace(",", ".").trim();
+        const parsed = Number(cleaned);
+        return Number.isFinite(parsed) ? parsed : 0;
       }
-
-      const k = Number(item.k) || 0;
-      const p = Number(item.p) || 0;
-      const na = Number(item.na) || 0;
-
-      const kCls = k > WARN_100G.k ? "val-high" : "val-ok";
-      const pCls = p > WARN_100G.p ? "val-high" : "val-ok";
-      const naCls = na > WARN_100G.na ? "val-high" : "val-ok";
-
-      preview.innerHTML =
-        `${t.previewPrefix}` +
-        `<span class="${kCls}">${t.kLabel}: ${format0(k)} mg</span> | ` +
-        `<span class="${pCls}">${t.pLabel}: ${format0(p)} mg</span> | ` +
-        `<span class="${naCls}">${t.naLabel}: ${format0(na)} mg</span>`;
-      preview.style.display = "block";
-      el("addBtn").disabled = false;
+      return 0;
     }
 
-    function populateFoodSelect() {
-      const select = el("foodSelect");
-      const t = I18N[currentLang] || I18N.sr;
-
-      sortedFoods = [...foods].sort((a, b) =>
-        getFoodName(a, currentLang).localeCompare(getFoodName(b, currentLang), currentLang, {
-          sensitivity: "base"
-        })
-      );
-
-      select.innerHTML = "";
-      sortedFoods.forEach((item, index) => {
-        const opt = document.createElement("option");
-        opt.value = String(index);
-        opt.textContent = getFoodName(item, currentLang);
-        select.appendChild(opt);
-      });
-
-      if (foods.length > 0) {
-        el("dbStatus").textContent = t.loaded(foods.length);
-      }
-
-      updateFoodPreview();
-    }
-
-    function renderDiary() {
-      const t = I18N[currentLang] || I18N.sr;
-      const tbody = el("diaryBody");
-      tbody.innerHTML = "";
-
-      let sumK = 0;
-      let sumP = 0;
-      let sumNa = 0;
-
-      if (diary.length === 0) {
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = 6;
-        td.style.textAlign = "center";
-        td.style.color = "var(--muted)";
-        td.textContent = t.emptyRow;
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-      } else {
-        diary.forEach((entry, i) => {
-          const factor = entry.grams / 100;
-          const kVal = (Number(entry.food.k) || 0) * factor;
-          const pVal = (Number(entry.food.p) || 0) * factor;
-          const naVal = (Number(entry.food.na) || 0) * factor;
-
-          sumK += kVal;
-          sumP += pVal;
-          sumNa += naVal;
-
-          const tr = document.createElement("tr");
-
-          const tdName = document.createElement("td");
-          tdName.textContent = getFoodName(entry.food, currentLang);
-
-          const tdGrams = document.createElement("td");
-          tdGrams.className = "num";
-          tdGrams.textContent = format2(entry.grams);
-
-          const tdK = document.createElement("td");
-          tdK.className = "num";
-          tdK.textContent = format2(kVal);
-
-          const tdP = document.createElement("td");
-          tdP.className = "num";
-          tdP.textContent = format2(pVal);
-
-          const tdNa = document.createElement("td");
-          tdNa.className = "num";
-          tdNa.textContent = format2(naVal);
-
-          const tdAct = document.createElement("td");
-          tdAct.className = "num no-print";
-          const delBtn = document.createElement("button");
-          delBtn.type = "button";
-          delBtn.className = "btn-danger";
-          delBtn.textContent = t.removeBtn;
-          delBtn.addEventListener("click", () => {
-            diary.splice(i, 1);
-            renderDiary();
-          });
-          tdAct.appendChild(delBtn);
-
-          tr.append(tdName, tdGrams, tdK, tdP, tdNa, tdAct);
-          tbody.appendChild(tr);
-        });
-      }
-
-      el("totalK").textContent = `${format2(sumK)} mg`;
-      el("totalP").textContent = `${format2(sumP)} mg`;
-      el("totalNa").textContent = `${format2(sumNa)} mg`;
-
-      el("cardK").classList.toggle("over", sumK > LIMITS.k);
-      el("cardP").classList.toggle("over", sumP > LIMITS.p);
-      el("cardNa").classList.toggle("over", sumNa > LIMITS.na);
-
-      el("undoBtn").disabled = diary.length === 0;
-      el("clearBtn").disabled = diary.length === 0;
-    }
-
-    function applyTranslations() {
-      const t = I18N[currentLang] || I18N.sr;
-      document.documentElement.lang = currentLang;
-      el("appTitle").textContent = t.title;
-      el("appSubtitle").textContent = t.subtitle;
-      el("unitNote").textContent = t.unitNote;
-      el("dailyNote").textContent = t.dailyNote;
-      el("step1Title").textContent = t.step1Title;
-      el("step2Title").textContent = t.step2Title;
-      el("tableTitle").textContent = t.tableTitle;
-      el("totalsHeading").textContent = t.totalsHeading;
-      el("addBtn").textContent = t.addBtn;
-      el("kLabel").textContent = t.kLabel;
-      el("pLabel").textContent = t.pLabel;
-      el("naLabel").textContent = t.naLabel;
-      el("thK").textContent = t.kLabel;
-      el("thP").textContent = t.pLabel;
-      el("thNa").textContent = t.naLabel;
-      el("thFood").textContent = t.thFood;
-      el("thGrams").textContent = t.thGrams;
-      el("thAction").textContent = t.thAction;
-      el("undoBtn").textContent = t.undoBtn;
-      el("clearBtn").textContent = t.clearBtn;
-      el("printBtn").textContent = t.printBtn;
-
-      if (foods.length > 0) {
-        populateFoodSelect();
-      } else {
-        el("dbStatus").textContent = t.loading;
-      }
-
-      renderDiary();
-    }
-
-    async function loadFoods() {
-      const t = I18N[currentLang] || I18N.sr;
-      el("addBtn").disabled = true;
-      el("dbStatus").textContent = t.loading;
-      showError("");
-
-      try {
-        const res = await fetch("./foods.json", { cache: "no-store" });
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        const data = await res.json();
-        if (!Array.isArray(data)) {
-          throw new Error("Invalid JSON array");
-        }
-        foods = data;
-        populateFoodSelect();
-      } catch (err) {
-        el("dbStatus").textContent = "";
-        showError(I18N[currentLang].loadError);
-      }
-    }
-
-    el("langSelect").addEventListener("change", (e) => {
-      currentLang = e.target.value;
-      applyTranslations();
-    });
-
-    el("foodSelect").addEventListener("change", () => {
-      updateFoodPreview();
-    });
-
-    el("addBtn").addEventListener("click", () => {
-      const idx = Number(el("foodSelect").value);
-      const item = sortedFoods[idx];
-      const grams = Number(el("gramsInput").value);
-      if (!item || !Number.isFinite(grams) || grams <= 0) return;
-
-      diary.push({ food: item, grams });
-      renderDiary();
-    });
-
-    el("undoBtn").addEventListener("click", () => {
-      if (diary.length > 0) {
-        diary.pop();
-        renderDiary();
-      }
-    });
-
-    el("clearBtn").addEventListener("click", () => {
-      diary = [];
-      renderDiary();
-    });
-
-    el("printBtn").addEventListener("click", () => {
-      window.print();
-    });
-
-    applyTranslations();
-    loadFoods();
-  </script>
-</body>
-</html>
+    function normalizeFoodItem(raw) {
+      if (!raw || typeof raw !== "object") return null;
+      const sr = raw.sr ?? raw.Namirnica ?? raw.namirnica ?? raw.name_sr ?? "";
+      const en = raw.en ?? raw.Namirnica_EN ?? raw.nam
