@@ -565,4 +565,232 @@
     }
 
     function updateFoodPreview() {
-      const t = I18N[currentLang]
+      const t = I18N[currentLang] || I18N.sr;
+      const preview = el("foodPreview");
+      const idx = Number(el("foodSelect").value);
+      const item = sortedFoods[idx];
+
+      if (!item) {
+        preview.style.display = "none";
+        el("addBtn").disabled = true;
+        return;
+      }
+
+      const k = Number(item.k) || 0;
+      const p = Number(item.p) || 0;
+      const na = Number(item.na) || 0;
+
+      const kCls = k > WARN_100G.k ? "val-high" : "val-ok";
+      const pCls = p > WARN_100G.p ? "val-high" : "val-ok";
+      const naCls = na > WARN_100G.na ? "val-high" : "val-ok";
+
+      preview.innerHTML =
+        `${t.previewPrefix}` +
+        `<span class="${kCls}">${t.kLabel}: ${format0(k)} mg</span> | ` +
+        `<span class="${pCls}">${t.pLabel}: ${format0(p)} mg</span> | ` +
+        `<span class="${naCls}">${t.naLabel}: ${format0(na)} mg</span>`;
+      preview.style.display = "block";
+      el("addBtn").disabled = false;
+    }
+
+    function populateFoodSelect() {
+      const select = el("foodSelect");
+      const t = I18N[currentLang] || I18N.sr;
+
+      sortedFoods = [...foods].sort((a, b) =>
+        getFoodName(a, currentLang).localeCompare(getFoodName(b, currentLang), currentLang, {
+          sensitivity: "base"
+        })
+      );
+
+      select.innerHTML = "";
+      sortedFoods.forEach((item, index) => {
+        const opt = document.createElement("option");
+        opt.value = String(index);
+        opt.textContent = getFoodName(item, currentLang);
+        select.appendChild(opt);
+      });
+
+      if (foods.length > 0) {
+        el("dbStatus").textContent = t.loaded(foods.length);
+      }
+
+      updateFoodPreview();
+    }
+
+    function renderDiary() {
+      const t = I18N[currentLang] || I18N.sr;
+      const tbody = el("diaryBody");
+      tbody.innerHTML = "";
+
+      let sumK = 0;
+      let sumP = 0;
+      let sumNa = 0;
+
+      if (diary.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 6;
+        td.style.textAlign = "center";
+        td.style.color = "var(--muted)";
+        td.textContent = t.emptyRow;
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      } else {
+        diary.forEach((entry, i) => {
+          const factor = entry.grams / 100;
+          const kVal = (Number(entry.food.k) || 0) * factor;
+          const pVal = (Number(entry.food.p) || 0) * factor;
+          const naVal = (Number(entry.food.na) || 0) * factor;
+
+          sumK += kVal;
+          sumP += pVal;
+          sumNa += naVal;
+
+          const tr = document.createElement("tr");
+
+          const tdName = document.createElement("td");
+          tdName.textContent = getFoodName(entry.food, currentLang);
+
+          const tdGrams = document.createElement("td");
+          tdGrams.className = "num";
+          tdGrams.textContent = format2(entry.grams);
+
+          const tdK = document.createElement("td");
+          tdK.className = "num";
+          tdK.textContent = format2(kVal);
+
+          const tdP = document.createElement("td");
+          tdP.className = "num";
+          tdP.textContent = format2(pVal);
+
+          const tdNa = document.createElement("td");
+          tdNa.className = "num";
+          tdNa.textContent = format2(naVal);
+
+          const tdAct = document.createElement("td");
+          tdAct.className = "num no-print";
+          const delBtn = document.createElement("button");
+          delBtn.type = "button";
+          delBtn.className = "btn-danger";
+          delBtn.textContent = t.removeBtn;
+          delBtn.addEventListener("click", () => {
+            diary.splice(i, 1);
+            renderDiary();
+          });
+          tdAct.appendChild(delBtn);
+
+          tr.append(tdName, tdGrams, tdK, tdP, tdNa, tdAct);
+          tbody.appendChild(tr);
+        });
+      }
+
+      el("totalK").textContent = `${format2(sumK)} mg`;
+      el("totalP").textContent = `${format2(sumP)} mg`;
+      el("totalNa").textContent = `${format2(sumNa)} mg`;
+
+      el("cardK").classList.toggle("over", sumK > LIMITS.k);
+      el("cardP").classList.toggle("over", sumP > LIMITS.p);
+      el("cardNa").classList.toggle("over", sumNa > LIMITS.na);
+
+      el("undoBtn").disabled = diary.length === 0;
+      el("clearBtn").disabled = diary.length === 0;
+    }
+
+    function applyTranslations() {
+      const t = I18N[currentLang] || I18N.sr;
+      document.documentElement.lang = currentLang;
+      el("appTitle").textContent = t.title;
+      el("appSubtitle").textContent = t.subtitle;
+      el("unitNote").textContent = t.unitNote;
+      el("dailyNote").textContent = t.dailyNote;
+      el("step1Title").textContent = t.step1Title;
+      el("step2Title").textContent = t.step2Title;
+      el("tableTitle").textContent = t.tableTitle;
+      el("totalsHeading").textContent = t.totalsHeading;
+      el("addBtn").textContent = t.addBtn;
+      el("kLabel").textContent = t.kLabel;
+      el("pLabel").textContent = t.pLabel;
+      el("naLabel").textContent = t.naLabel;
+      el("thK").textContent = t.kLabel;
+      el("thP").textContent = t.pLabel;
+      el("thNa").textContent = t.naLabel;
+      el("thFood").textContent = t.thFood;
+      el("thGrams").textContent = t.thGrams;
+      el("thAction").textContent = t.thAction;
+      el("undoBtn").textContent = t.undoBtn;
+      el("clearBtn").textContent = t.clearBtn;
+      el("printBtn").textContent = t.printBtn;
+
+      if (foods.length > 0) {
+        populateFoodSelect();
+      } else {
+        el("dbStatus").textContent = t.loading;
+      }
+
+      renderDiary();
+    }
+
+    async function loadFoods() {
+      const t = I18N[currentLang] || I18N.sr;
+      el("addBtn").disabled = true;
+      el("dbStatus").textContent = t.loading;
+      showError("");
+
+      try {
+        const res = await fetch("./foods.json", { cache: "no-store" });
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        if (!Array.isArray(data)) {
+          throw new Error("Invalid JSON array");
+        }
+        foods = data;
+        populateFoodSelect();
+      } catch (err) {
+        el("dbStatus").textContent = "";
+        showError(I18N[currentLang].loadError);
+      }
+    }
+
+    el("langSelect").addEventListener("change", (e) => {
+      currentLang = e.target.value;
+      applyTranslations();
+    });
+
+    el("foodSelect").addEventListener("change", () => {
+      updateFoodPreview();
+    });
+
+    el("addBtn").addEventListener("click", () => {
+      const idx = Number(el("foodSelect").value);
+      const item = sortedFoods[idx];
+      const grams = Number(el("gramsInput").value);
+      if (!item || !Number.isFinite(grams) || grams <= 0) return;
+
+      diary.push({ food: item, grams });
+      renderDiary();
+    });
+
+    el("undoBtn").addEventListener("click", () => {
+      if (diary.length > 0) {
+        diary.pop();
+        renderDiary();
+      }
+    });
+
+    el("clearBtn").addEventListener("click", () => {
+      diary = [];
+      renderDiary();
+    });
+
+    el("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+
+    applyTranslations();
+    loadFoods();
+  </script>
+</body>
+</html>
