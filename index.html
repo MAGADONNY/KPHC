@@ -6,22 +6,19 @@
   <title>Diet Diary / Dnevnik Ishrane</title>
   <style>
     :root {
-      --bg: #f4f6f9;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --border: #e5e7eb;
-      --info-bg: #eff6ff;
-      --info-border: #bfdbfe;
-      --info-text: #1e3a8a;
-      --preview-bg: #f0fdf4;
-      --preview-border: #86efac;
-      --preview-text: #166534;
-      --danger-bg: #fef2f2;
-      --danger-border: #fca5a5;
-      --danger-text: #991b1b;
+      --bg: #0e1117;
+      --card: #1e2430;
+      --card-alt: #161b24;
+      --text: #ffffff;
+      --muted: #a0aec0;
+      --green: #2ECC71;
+      --green-dark: #25a25a;
+      --red: #FF4B4B;
+      --blue-link: #279FF5;
+      --border: #2d3748;
+      --danger-bg: #2b1316;
+      --danger-border: #991b1b;
+      --danger-text: #fca5a5;
     }
 
     * { box-sizing: border-box; }
@@ -32,108 +29,86 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
+      padding-bottom: 120px;
     }
 
     .container {
-      max-width: 960px;
+      max-width: 760px;
       margin: 0 auto;
       padding: 20px 16px 48px;
     }
 
-    header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+    .lang-top {
       margin-bottom: 14px;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
-    .subtitle {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .lang-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .lang-flags {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      font-weight: 700;
     }
 
     select, input, button {
       font: inherit;
-      padding: 10px 12px;
-      border-radius: 8px;
+      padding: 11px 12px;
+      border-radius: 6px;
       border: 1px solid var(--border);
-      background: #fff;
+      background: var(--card);
       color: var(--text);
     }
 
-    button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
+    select:focus, input:focus {
+      outline: none;
+      border-color: var(--green);
     }
 
-    button:hover { background: var(--primary-hover); }
-    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .hero {
+      text-align: center;
+      margin: 10px 0 18px;
+    }
 
-    button.secondary {
-      background: #e5e7eb;
+    h1 {
+      margin: 0;
+      font-size: 2.1rem;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--text);
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+
+    .notes-box {
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    }
+
+    .notes-box p {
+      margin: 6px 0;
+    }
+
+    .divider {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    .step-title {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+      font-weight: 700;
       color: var(--text);
     }
-
-    button.secondary:hover { background: #d1d5db; }
-
-    button.danger {
-      background: #dc2626;
-      padding: 6px 10px;
-      font-size: 0.875rem;
-    }
-
-    button.danger:hover { background: #b91c1c; }
 
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 18px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-
-    .guidelines-box {
-      background: var(--info-bg);
-      border: 1px solid var(--info-border);
-      color: var(--info-text);
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 18px;
-      font-size: 0.9rem;
-    }
-
-    .guidelines-box p {
-      margin: 4px 0;
-    }
-
-    .preview-box {
-      margin-top: 12px;
-      padding: 10px 12px;
       border-radius: 8px;
-      background: var(--preview-bg);
-      border: 1px solid var(--preview-border);
-      color: var(--preview-text);
-      font-size: 0.9rem;
-      font-weight: 500;
-      display: none;
+      padding: 16px;
+      margin-bottom: 18px;
     }
 
     .error-box {
@@ -141,67 +116,138 @@
       border: 1px solid var(--danger-border);
       color: var(--danger-text);
       padding: 14px 16px;
-      border-radius: 10px;
+      border-radius: 8px;
       margin-bottom: 18px;
       display: none;
     }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr 120px auto;
-      gap: 10px;
-      align-items: end;
-    }
-
-    @media (max-width: 760px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+    .form-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .field label {
       display: block;
-      font-size: 0.875rem;
+      font-size: 0.9rem;
+      font-weight: 700;
       color: var(--muted);
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
 
     .field input, .field select {
       width: 100%;
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: var(--card-alt);
+    }
+
+    .preview-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 6px;
+      background: var(--card);
+      border-left: 4px solid var(--green);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: none;
+    }
+
+    .val-ok { color: var(--green); }
+    .val-high { color: var(--red); }
+
+    button {
+      font-weight: 900;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1.05rem;
+      transition: opacity 0.15s ease;
+    }
+
+    button:hover:not(:disabled) {
+      opacity: 0.92;
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: #000000;
+    }
+
+    .btn-secondary {
+      background: #2d3748;
+      color: #ffffff;
+    }
+
+    .btn-danger {
+      background: var(--red);
+      color: #ffffff;
+      width: auto;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+    }
+
+    .totals-heading {
+      margin: 18px 0 12px;
+      font-size: 1.15rem;
+      font-weight: 800;
     }
 
     .totals-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 620px) {
       .totals-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.65rem; }
+      .subtitle { font-size: 1rem; }
     }
 
     .total-item {
-      background: #f9fafb;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
+      background: var(--card);
+      border-radius: 6px;
+      border-top: 3px solid var(--green);
+      padding: 12px;
       text-align: center;
     }
 
+    .total-item.over {
+      border-top-color: var(--red);
+    }
+
     .total-label {
-      font-size: 0.875rem;
+      font-size: 0.9rem;
       color: var(--muted);
+      font-weight: 700;
     }
 
     .total-val {
-      font-size: 1.4rem;
-      font-weight: 700;
+      font-size: 1.35rem;
+      font-weight: 900;
       margin-top: 4px;
+      color: var(--green);
+    }
+
+    .total-item.over .total-val {
+      color: var(--red);
     }
 
     .table-wrap {
       overflow-x: auto;
+      background: var(--card);
+      border-radius: 8px;
+      border: 1px solid var(--border);
     }
 
     table {
@@ -211,15 +257,16 @@
 
     th, td {
       text-align: left;
-      padding: 10px 8px;
+      padding: 10px 10px;
       border-bottom: 1px solid var(--border);
       font-size: 0.95rem;
     }
 
     th {
       color: var(--muted);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.85rem;
+      background: var(--card-alt);
     }
 
     .num {
@@ -227,89 +274,137 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .actions-bar {
+    .actions-stack {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      flex-direction: column;
       gap: 10px;
       margin-top: 14px;
+    }
+
+    .actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 620px) {
+      .actions-row { grid-template-columns: 1fr; }
     }
 
     .status-note {
       font-size: 0.85rem;
       color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .footer-box {
+      text-align: center;
+      line-height: 1.4;
+      margin-top: 24px;
+    }
+
+    .footer-box p {
+      margin: 4px 0;
+    }
+
+    .footer-title {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .footer-contact {
+      color: var(--blue-link);
+      font-size: 0.95rem;
+    }
+
+    .footer-powered {
+      color: #888888;
+      font-size: 0.78rem;
     }
 
     @media print {
-      body { background: #fff; }
+      body {
+        background: #ffffff;
+        color: #000000;
+        padding-bottom: 0;
+      }
       .no-print { display: none !important; }
-      .card { box-shadow: none; border: 1px solid #ccc; }
+      .card, .table-wrap, .total-item {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #cbd5e1;
+      }
+      th {
+        background: #f1f5f9;
+        color: #0f172a;
+      }
+      .total-val, .val-ok { color: #15803d; }
+      .total-item.over .total-val, .val-high { color: #b91c1c; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <div>
-        <h1 id="appTitle">Dnevnik ishrane — K, P, Na</h1>
-        <p class="subtitle" id="appSubtitle">Provera nivoa minerala u namirnicama sa zbirom dnevnog unosa (A–Z)</p>
-      </div>
-      <div class="lang-box no-print">
-        <label for="langSelect" id="langLabel">Jezik:</label>
-        <select id="langSelect">
-          <option value="sr">Srpski</option>
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="de">Deutsch</option>
-        </select>
-      </div>
+    <div class="lang-top no-print">
+      <div class="lang-flags" id="langFlags">🌐 Jezik / Language / Idioma / Sprache<br>🇷🇸 | 🇬🇧 | 🇪🇸 | 🇩🇪</div>
+      <select id="langSelect" aria-label="Izbor jezika">
+        <option value="sr">Srpski</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
+      </select>
+    </div>
+
+    <header class="hero">
+      <h1 id="appTitle">♠️♥️Dnevnik Ishrane♦️♣️</h1>
+      <p class="subtitle" id="appSubtitle">provera nivoa minerala u namirnicama sa zbirom dnevnog unosa</p>
     </header>
 
-    <div class="guidelines-box no-print">
-      <p id="unitNote">⚠️ Vrednosti minerala su izražene u miligramima (mg) na 100 grama namirnice.</p>
-      <p id="dailyNote">ℹ️ Preporučeni dnevni unos: Kalijum 1200–1500 mg | Fosfor 800–1000 mg | Natrijum max 1500–2000 mg</p>
+    <div class="notes-box no-print">
+      <p id="unitNote">⚠️ Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama namirnice.</p>
+      <p id="dailyNote">ℹ️ Preporučeni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg | Natrijum max 1500-2000mg</p>
     </div>
 
     <div id="errorBox" class="error-box"></div>
 
-    <section class="card no-print">
-      <div class="form-grid">
-        <div class="field">
-          <label for="searchInput" id="searchLabel">Pretraga</label>
-          <input id="searchInput" type="text" placeholder="Unesi naziv namirnice..." autocomplete="off" />
-        </div>
-        <div class="field">
-          <label for="foodSelect" id="foodLabel">Namirnica (vrednosti na 100 g)</label>
-          <select id="foodSelect"></select>
-        </div>
-        <div class="field">
-          <label for="gramsInput" id="gramsLabel">Količina (g)</label>
-          <input id="gramsInput" type="number" min="1" step="any" value="100" />
-        </div>
-        <div class="field">
-          <button id="addBtn" type="button">Dodaj</button>
-        </div>
-      </div>
+    <hr class="divider no-print" />
 
-      <div id="foodPreview" class="preview-box"></div>
-      <div class="status-note" id="dbStatus" style="margin-top: 10px;">Učitavanje baze...</div>
+    <section class="no-print">
+      <h2 class="step-title" id="step1Title">🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)</h2>
+      <div class="card">
+        <div class="form-stack">
+          <div class="field">
+            <label for="searchInput" id="searchLabel">Pretraga</label>
+            <input id="searchInput" type="text" placeholder="Unesi naziv namirnice..." autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="foodSelect" id="foodLabel">Namirnica</label>
+            <select id="foodSelect"></select>
+          </div>
+        </div>
+        <div id="foodPreview" class="preview-box"></div>
+        <div class="status-note" id="dbStatus">Učitavanje baze...</div>
+      </div>
     </section>
 
-    <section class="card">
-      <div class="totals-grid">
-        <div class="total-item">
-          <div class="total-label" id="kLabel">Kalijum (K)</div>
-          <div class="total-val" id="totalK">0 mg</div>
-        </div>
-        <div class="total-item">
-          <div class="total-label" id="pLabel">Fosfor (P)</div>
-          <div class="total-val" id="totalP">0 mg</div>
-        </div>
-        <div class="total-item">
-          <div class="total-label" id="naLabel">Natrijum (Na)</div>
-          <div class="total-val" id="totalNa">0 mg</div>
+    <hr class="divider no-print" />
+
+    <section class="no-print">
+      <h2 class="step-title" id="step2Title">⚖️ Korak 2: Upišite količinu namirnice u gramima</h2>
+      <div class="card">
+        <div class="form-stack">
+          <div class="field">
+            <label for="gramsInput" id="gramsLabel">Količina u gramima</label>
+            <input id="gramsInput" type="number" min="1" max="5000" step="10" value="100" />
+          </div>
+          <button id="addBtn" class="btn-green" type="button">➕ Dodaj obrok u moj dnevnik</button>
         </div>
       </div>
+    </section>
+
+    <section id="diarySection">
+      <hr class="divider" />
+      <h2 class="step-title" id="tableTitle">📋 Vaš današnji dnevnik ishrane i uneti obroci</h2>
 
       <div class="table-wrap">
         <table>
@@ -317,9 +412,9 @@
             <tr>
               <th id="thFood">Namirnica</th>
               <th class="num" id="thGrams">Količina (g)</th>
-              <th class="num">K (mg)</th>
-              <th class="num">P (mg)</th>
-              <th class="num">Na (mg)</th>
+              <th class="num" id="thK">Kalijum (mg)</th>
+              <th class="num" id="thP">Fosfor (mg)</th>
+              <th class="num" id="thNa">Natrijum (mg)</th>
               <th class="num no-print" id="thAction">Ukloni</th>
             </tr>
           </thead>
@@ -327,122 +422,169 @@
         </table>
       </div>
 
-      <div class="actions-bar no-print">
-        <button id="clearBtn" class="secondary" type="button">Isprazni listu</button>
-        <button id="printBtn" type="button">Sačuvaj / Štampaj PDF</button>
+      <h3 class="totals-heading" id="totalsHeading">📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:</h3>
+
+      <div class="totals-grid">
+        <div class="total-item" id="cardK">
+          <div class="total-label" id="kLabel">Kalijum (mg)</div>
+          <div class="total-val" id="totalK">0.00 mg</div>
+        </div>
+        <div class="total-item" id="cardP">
+          <div class="total-label" id="pLabel">Fosfor (mg)</div>
+          <div class="total-val" id="totalP">0.00 mg</div>
+        </div>
+        <div class="total-item" id="cardNa">
+          <div class="total-label" id="naLabel">Natrijum (mg)</div>
+          <div class="total-val" id="totalNa">0.00 mg</div>
+        </div>
+      </div>
+
+      <div class="actions-stack no-print">
+        <button id="undoBtn" class="btn-secondary" type="button">↩️ Obriši poslednji</button>
+        <div class="actions-row">
+          <button id="printBtn" class="btn-green" type="button">📄 Preuzmi / Štampaj PDF izveštaj</button>
+          <button id="clearBtn" class="btn-secondary" type="button">🗑️ Isprazni kompletan dnevnik</button>
+        </div>
       </div>
     </section>
+
+    <hr class="divider" />
+
+    <footer class="footer-box">
+      <p class="footer-title">♣️♦️♥️♠️ MAGICOMP &amp; AI Gemini</p>
+      <p class="footer-contact">magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
+      <p class="footer-powered">Powered by HTML &amp; PYTHON</p>
+    </footer>
   </div>
 
   <script>
+    const LIMITS = { k: 1500, p: 1000, na: 2000 };
+    const WARN_100G = { k: 200, p: 150, na: 400 };
+
     const I18N = {
       sr: {
-        title: "Dnevnik ishrane — K, P, Na",
-        subtitle: "Provera nivoa minerala u namirnicama sa zbirom dnevnog unosa (A–Z)",
-        unitNote: "⚠️ Vrednosti minerala su izražene u miligramima (mg) na 100 grama namirnice.",
-        dailyNote: "ℹ️ Preporučeni dnevni unos: Kalijum 1200–1500 mg | Fosfor 800–1000 mg | Natrijum max 1500–2000 mg",
-        langLabel: "Jezik:",
+        title: "♠️♥️Dnevnik Ishrane♦️♣️",
+        subtitle: "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa",
+        unitNote: "⚠️ Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama namirnice.",
+        dailyNote: "ℹ️ Preporučeni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg | Natrijum max 1500-2000mg",
+        step1Title: "🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)",
+        step2Title: "⚖️ Korak 2: Upišite količinu namirnice u gramima",
+        tableTitle: "📋 Vaš današnji dnevnik ishrane i uneti obroci",
+        totalsHeading: "📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:",
         searchLabel: "Pretraga",
         searchPlaceholder: "Unesi naziv namirnice...",
-        foodLabel: "Namirnica (vrednosti na 100 g)",
-        gramsLabel: "Količina (g)",
-        addBtn: "Dodaj",
-        kLabel: "Kalijum (K)",
-        pLabel: "Fosfor (P)",
-        naLabel: "Natrijum (Na)",
+        foodLabel: "Namirnica",
+        gramsLabel: "Količina u gramima",
+        addBtn: "➕ Dodaj obrok u moj dnevnik",
+        kLabel: "Kalijum (mg)",
+        pLabel: "Fosfor (mg)",
+        naLabel: "Natrijum (mg)",
         thFood: "Namirnica",
         thGrams: "Količina (g)",
         thAction: "Ukloni",
         removeBtn: "Obriši",
-        clearBtn: "Isprazni listu",
-        printBtn: "Sačuvaj / Štampaj PDF",
+        undoBtn: "↩️ Obriši poslednji",
+        clearBtn: "🗑️ Isprazni kompletan dnevnik",
+        printBtn: "📄 Preuzmi / Štampaj PDF izveštaj",
         loading: "Učitavanje baze...",
         loaded: (n) => `Učitano namirnica: ${n}`,
         filtered: (shown, total) => `Prikazano: ${shown} od ${total}`,
         loadError: "Nije moguće učitati foods.json. Proveri da li se foods.json nalazi u istom folderu kao index.html i da je GitHub Pages uključen.",
         emptyRow: "Još nema dodatih namirnica.",
-        preview: (k, p, na) => `Vrednosti na 100 g → Kalijum (K): ${k} mg | Fosfor (P): ${p} mg | Natrijum (Na): ${na} mg`
+        previewPrefix: "Vrednosti na 100g → "
       },
       en: {
-        title: "Diet Diary — K, P, Na",
-        subtitle: "Mineral intake check per food with daily total (A–Z)",
-        unitNote: "⚠️ Mineral values are expressed in milligrams (mg) per 100 grams of food.",
-        dailyNote: "ℹ️ Recommended daily intake: Potassium 1200–1500 mg | Phosphorus 800–1000 mg | Sodium max 1500–2000 mg",
-        langLabel: "Language:",
+        title: "♠️♥️Diet Diary♦️♣️",
+        subtitle: "mineral levels tracking with daily intake sum",
+        unitNote: "⚠️ Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food.",
+        dailyNote: "ℹ️ Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg | Sodium max 1500-2000mg",
+        step1Title: "🔍 Step 1: Click and type a letter to find food (A-Z sorted):",
+        step2Title: "⚖️ Step 2: Enter the amount of food consumed (in grams):",
+        tableTitle: "📋 Your daily diet log and entered meals",
+        totalsHeading: "📊 TOTAL DAILY SUM OF ALL ENTERED MEALS:",
         searchLabel: "Search",
         searchPlaceholder: "Type food name...",
-        foodLabel: "Food (values per 100 g)",
-        gramsLabel: "Amount (g)",
-        addBtn: "Add",
-        kLabel: "Potassium (K)",
-        pLabel: "Phosphorus (P)",
-        naLabel: "Sodium (Na)",
-        thFood: "Food",
+        foodLabel: "Food Item",
+        gramsLabel: "Amount in grams",
+        addBtn: "➕ Add meal to my diary",
+        kLabel: "Potassium (mg)",
+        pLabel: "Phosphorus (mg)",
+        naLabel: "Sodium (mg)",
+        thFood: "Food Item",
         thGrams: "Amount (g)",
         thAction: "Remove",
         removeBtn: "Delete",
-        clearBtn: "Clear list",
-        printBtn: "Save / Print PDF",
+        undoBtn: "↩️ Remove last item",
+        clearBtn: "🗑️ Clear complete diary",
+        printBtn: "📄 Download / Print PDF report",
         loading: "Loading database...",
         loaded: (n) => `Foods loaded: ${n}`,
         filtered: (shown, total) => `Showing: ${shown} of ${total}`,
         loadError: "Failed to load foods.json. Make sure foods.json is in the same folder as index.html and GitHub Pages is enabled.",
         emptyRow: "No foods added yet.",
-        preview: (k, p, na) => `Values per 100 g → Potassium (K): ${k} mg | Phosphorus (P): ${p} mg | Sodium (Na): ${na} mg`
+        previewPrefix: "Values per 100g → "
       },
       es: {
-        title: "Diario de dieta — K, P, Na",
-        subtitle: "Revisión de minerales por alimento con total diario (A–Z)",
-        unitNote: "⚠️ Los valores de minerales se expresan en miligramos (mg) por 100 gramos de alimento.",
-        dailyNote: "ℹ️ Ingesta diaria recomendada: Potasio 1200–1500 mg | Fósforo 800–1000 mg | Sodio máx. 1500–2000 mg",
-        langLabel: "Idioma:",
+        title: "♠️♥️Diario de Alimentación♦️♣️",
+        subtitle: "seguimiento de minerales con suma de ingesta diaria",
+        unitNote: "⚠️ Los valores de minerales se expresan en miligramos (mg) por cada 100 gramos de alimento limpio y crudo.",
+        dailyNote: "ℹ️ Ingesta diaria recomendada: Potasio 1200-1500mg | Fósforo 800-1000mg | Sodio máx 1500-2000mg",
+        step1Title: "🔍 Paso 1: Busque un alimento en la lista (Ordenado A-Z):",
+        step2Title: "⚖️ Paso 2: Ingrese la cantidad de alimento (en gramos):",
+        tableTitle: "📋 Su registro diario de dieta y comidas ingresadas",
+        totalsHeading: "📊 SUMA TOTAL DIARIA DE TODAS LAS COMIDAS INGRESADAS:",
         searchLabel: "Buscar",
         searchPlaceholder: "Escribe el nombre...",
-        foodLabel: "Alimento (valores por 100 g)",
-        gramsLabel: "Cantidad (g)",
-        addBtn: "Añadir",
-        kLabel: "Potasio (K)",
-        pLabel: "Fósforo (P)",
-        naLabel: "Sodio (Na)",
+        foodLabel: "Alimento",
+        gramsLabel: "Cantidad en gramos",
+        addBtn: "➕ Añadir comida a mi diario",
+        kLabel: "Potasio (mg)",
+        pLabel: "Fósforo (mg)",
+        naLabel: "Sodio (mg)",
         thFood: "Alimento",
         thGrams: "Cantidad (g)",
         thAction: "Quitar",
         removeBtn: "Borrar",
-        clearBtn: "Vaciar lista",
-        printBtn: "Guardar / Imprimir PDF",
+        undoBtn: "↩️ Quitar último",
+        clearBtn: "🗑️ Vaciar diario completo",
+        printBtn: "📄 Descargar / Imprimir informe PDF",
         loading: "Cargando base de datos...",
         loaded: (n) => `Alimentos cargados: ${n}`,
         filtered: (shown, total) => `Mostrando: ${shown} de ${total}`,
         loadError: "No se pudo cargar foods.json. Verifica que foods.json esté en la misma carpeta que index.html y que GitHub Pages esté activo.",
         emptyRow: "Aún no hay alimentos añadidos.",
-        preview: (k, p, na) => `Valores por 100 g → Potasio (K): ${k} mg | Fósforo (P): ${p} mg | Sodio (Na): ${na} mg`
+        previewPrefix: "Valores por 100g → "
       },
       de: {
-        title: "Ernährungstagebuch — K, P, Na",
-        subtitle: "Mineralstoffprüfung pro Lebensmittel mit Tagessumme (A–Z)",
-        unitNote: "⚠️ Mineralstoffwerte sind in Milligramm (mg) pro 100 Gramm Lebensmittel angegeben.",
-        dailyNote: "ℹ️ Empfohlene Tageszufuhr: Kalium 1200–1500 mg | Phosphor 800–1000 mg | Natrium max. 1500–2000 mg",
-        langLabel: "Sprache:",
+        title: "♠️♥️Ernährungstagebuch♦️♣️",
+        subtitle: "Überwachung des Mineralstoffgehalts mit täglicher Gesamtaufnahme",
+        unitNote: "⚠️ Die Mineralstoffwerte sind in Milligramm (mg) pro 100 Gramm gereinigter, roher Lebensmittel angegeben.",
+        dailyNote: "ℹ️ Empfohlene tägliche Aufnahme: Kalium 1200-1500mg | Phosphor 800-1000mg | Natrium max 1500-2000mg",
+        step1Title: "🔍 Schritt 1: Lebensmittel aus der Liste auswählen (A-Z sortiert):",
+        step2Title: "⚖️ Schritt 2: Verzehrte Menge in Gramm eingeben:",
+        tableTitle: "📋 Ihr tägliches Ernährungsprotokoll und eingegebene Mahlzeiten",
+        totalsHeading: "📊 TÄGLICHE GESAMTSUMME ALLER EINGEGEBENEN MAHLZEITEN:",
         searchLabel: "Suche",
         searchPlaceholder: "Lebensmittel eingeben...",
-        foodLabel: "Lebensmittel (Werte pro 100 g)",
-        gramsLabel: "Menge (g)",
-        addBtn: "Hinzufügen",
-        kLabel: "Kalium (K)",
-        pLabel: "Phosphor (P)",
-        naLabel: "Natrium (Na)",
+        foodLabel: "Lebensmittel",
+        gramsLabel: "Menge in Gramm",
+        addBtn: "➕ Mahlzeit hinzufügen",
+        kLabel: "Kalium (mg)",
+        pLabel: "Phosphor (mg)",
+        naLabel: "Natrium (mg)",
         thFood: "Lebensmittel",
         thGrams: "Menge (g)",
         thAction: "Entfernen",
         removeBtn: "Löschen",
-        clearBtn: "Liste leeren",
-        printBtn: "Als PDF speichern / drucken",
+        undoBtn: "↩️ Letzten entfernen",
+        clearBtn: "🗑️ Tagebuch leeren",
+        printBtn: "📄 PDF-Bericht herunterladen / drucken",
         loading: "Datenbank wird geladen...",
         loaded: (n) => `Lebensmittel geladen: ${n}`,
         filtered: (shown, total) => `Angezeigt: ${shown} von ${total}`,
         loadError: "foods.json konnte nicht geladen werden. Stelle sicher, dass foods.json im selben Ordner wie index.html liegt und GitHub Pages aktiviert ist.",
         emptyRow: "Noch keine Lebensmittel hinzugefügt.",
-        preview: (k, p, na) => `Werte pro 100 g → Kalium (K): ${k} mg | Phosphor (P): ${p} mg | Natrium (Na): ${na} mg`
+        previewPrefix: "Werte pro 100g → "
       }
     };
 
@@ -457,9 +599,12 @@
       return item[lang] || item.sr || item.en || item.es || item.de || "";
     }
 
-    function formatNum(val) {
-      const n = Number(val) || 0;
-      return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(".", ",");
+    function format2(val) {
+      return (Number(val) || 0).toFixed(2);
+    }
+
+    function format0(val) {
+      return Math.round(Number(val) || 0);
     }
 
     function showError(msg) {
@@ -484,7 +629,15 @@
       const p = Number(item.p) || 0;
       const na = Number(item.na) || 0;
 
-      preview.textContent = t.preview(formatNum(k), formatNum(p), formatNum(na));
+      const kCls = k > WARN_100G.k ? "val-high" : "val-ok";
+      const pCls = p > WARN_100G.p ? "val-high" : "val-ok";
+      const naCls = na > WARN_100G.na ? "val-high" : "val-ok";
+
+      preview.innerHTML =
+        `${t.previewPrefix}` +
+        `<span class="${kCls}">${t.kLabel}: ${format0(k)} mg</span> | ` +
+        `<span class="${pCls}">${t.pLabel}: ${format0(p)} mg</span> | ` +
+        `<span class="${naCls}">${t.naLabel}: ${format0(na)} mg</span>`;
       preview.style.display = "block";
       el("addBtn").disabled = false;
     }
@@ -560,25 +713,25 @@
 
           const tdGrams = document.createElement("td");
           tdGrams.className = "num";
-          tdGrams.textContent = formatNum(entry.grams);
+          tdGrams.textContent = format2(entry.grams);
 
           const tdK = document.createElement("td");
           tdK.className = "num";
-          tdK.textContent = formatNum(kVal);
+          tdK.textContent = format2(kVal);
 
           const tdP = document.createElement("td");
           tdP.className = "num";
-          tdP.textContent = formatNum(pVal);
+          tdP.textContent = format2(pVal);
 
           const tdNa = document.createElement("td");
           tdNa.className = "num";
-          tdNa.textContent = formatNum(naVal);
+          tdNa.textContent = format2(naVal);
 
           const tdAct = document.createElement("td");
           tdAct.className = "num no-print";
           const delBtn = document.createElement("button");
           delBtn.type = "button";
-          delBtn.className = "danger";
+          delBtn.className = "btn-danger";
           delBtn.textContent = t.removeBtn;
           delBtn.addEventListener("click", () => {
             diary.splice(i, 1);
@@ -591,9 +744,16 @@
         });
       }
 
-      el("totalK").textContent = `${formatNum(sumK)} mg`;
-      el("totalP").textContent = `${formatNum(sumP)} mg`;
-      el("totalNa").textContent = `${formatNum(sumNa)} mg`;
+      el("totalK").textContent = `${format2(sumK)} mg`;
+      el("totalP").textContent = `${format2(sumP)} mg`;
+      el("totalNa").textContent = `${format2(sumNa)} mg`;
+
+      el("cardK").classList.toggle("over", sumK > LIMITS.k);
+      el("cardP").classList.toggle("over", sumP > LIMITS.p);
+      el("cardNa").classList.toggle("over", sumNa > LIMITS.na);
+
+      el("undoBtn").disabled = diary.length === 0;
+      el("clearBtn").disabled = diary.length === 0;
     }
 
     function applyTranslations() {
@@ -603,7 +763,10 @@
       el("appSubtitle").textContent = t.subtitle;
       el("unitNote").textContent = t.unitNote;
       el("dailyNote").textContent = t.dailyNote;
-      el("langLabel").textContent = t.langLabel;
+      el("step1Title").textContent = t.step1Title;
+      el("step2Title").textContent = t.step2Title;
+      el("tableTitle").textContent = t.tableTitle;
+      el("totalsHeading").textContent = t.totalsHeading;
       el("searchLabel").textContent = t.searchLabel;
       el("searchInput").placeholder = t.searchPlaceholder;
       el("foodLabel").textContent = t.foodLabel;
@@ -612,9 +775,13 @@
       el("kLabel").textContent = t.kLabel;
       el("pLabel").textContent = t.pLabel;
       el("naLabel").textContent = t.naLabel;
+      el("thK").textContent = t.kLabel;
+      el("thP").textContent = t.pLabel;
+      el("thNa").textContent = t.naLabel;
       el("thFood").textContent = t.thFood;
       el("thGrams").textContent = t.thGrams;
       el("thAction").textContent = t.thAction;
+      el("undoBtn").textContent = t.undoBtn;
       el("clearBtn").textContent = t.clearBtn;
       el("printBtn").textContent = t.printBtn;
 
@@ -671,6 +838,13 @@
 
       diary.push({ food: item, grams });
       renderDiary();
+    });
+
+    el("undoBtn").addEventListener("click", () => {
+      if (diary.length > 0) {
+        diary.pop();
+        renderDiary();
+      }
     });
 
     el("clearBtn").addEventListener("click", () => {
