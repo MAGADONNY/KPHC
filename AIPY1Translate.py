@@ -39,20 +39,27 @@ st.markdown(
         font-size: 18px !important;
         font-weight: bold !important;
     }
-    div.stButton > button {
+    div.stButton > button,
+    div.stDownloadButton > button {
         font-weight: 900 !important;
         font-family: sans-serif !important;
         color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
         background-color: #2ECC71 !important;
         border: none !important;
         width: 100% !important;
         text-shadow: none !important;
-        padding: 12px 0px !important;
+        padding: 12px 10px !important;
         font-size: 18px !important;
     }
     div.stButton > button:focus,
-    div.stButton > button:active {
+    div.stButton > button:active,
+    div.stButton > button:hover,
+    div.stDownloadButton > button:focus,
+    div.stDownloadButton > button:active,
+    div.stDownloadButton > button:hover {
         color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
         background-color: #2ECC71 !important;
         font-weight: 900 !important;
     }
@@ -379,7 +386,7 @@ if df is not None:
 
     st.write("")
 
-    if st.button(t_dugme_dodaj):
+    if st.button(t_dugme_dodaj, use_container_width=True):
         red_dodaj = df[df[ime_kolone_baza] == izbor]
         if not red_dodaj.empty:
             k_d = float(red_dodaj["Kalijum"].iloc[0])
@@ -436,7 +443,7 @@ if df is not None:
             ]
             st.rerun()
 
-        if st.button(t_dugme_obrisi_zadnji):
+        if st.button(t_dugme_obrisi_zadnji, use_container_width=True):
             st.session_state["dnevnik_obroka"].pop()
             st.rerun()
 
