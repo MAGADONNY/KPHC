@@ -1,0 +1,3521 @@
+[
+  {
+    "sr": "Meso But Svinjetina",
+    "en": "Pork leg meat",
+    "es": "carne de pierna de cerdo",
+    "de": "Schweinekeulenfleisch",
+    "k": 300.0,
+    "p": 169.0,
+    "na": 68.0
+  },
+  {
+    "sr": "Meso Svinjsko Leda (kotlet) Svinjetina",
+    "en": "Pork meat (cutlet) pork",
+    "es": "Carne de cerdo (chuleta) de cerdo",
+    "de": "Schweinefleisch (Kotelett) Schweinefleisch",
+    "k": 245.0,
+    "p": 200.0,
+    "na": 62.0
+  },
+  {
+    "sr": "Meso Biftek  Svinjetina",
+    "en": "Pork steak meat",
+    "es": "carne de filete de cerdo",
+    "de": "Schweinesteakfleisch",
+    "k": 360.0,
+    "p": 230.0,
+    "na": 69.0
+  },
+  {
+    "sr": "Mleveno meso svinjetina",
+    "en": "Minced pork meat",
+    "es": "carne de cerdo picada",
+    "de": "Gehacktes Schweinefleisch",
+    "k": 330.0,
+    "p": 200.0,
+    "na": 60.0
+  },
+  {
+    "sr": "Meso Plecka Svinjetina",
+    "en": "Pork shoulder meat",
+    "es": "Carne de paleta de cerdo",
+    "de": "Schweineschulterfleisch",
+    "k": 240.0,
+    "p": 165.0,
+    "na": 69.0
+  },
+  {
+    "sr": "Meso Plecka Svinjetina",
+    "en": "Pork shoulder meat",
+    "es": "Carne de paleta de cerdo",
+    "de": "Schweineschulterfleisch",
+    "k": 340.0,
+    "p": 180.0,
+    "na": 61.0
+  },
+  {
+    "sr": "Meso Slabinski deo Svinjetina",
+    "en": "Pork loin meat",
+    "es": "carne de lomo de cerdo",
+    "de": "Schweinelendenfleisch",
+    "k": 340.0,
+    "p": 230.0,
+    "na": 61.0
+  },
+  {
+    "sr": "Meso Vrat Svinjetina",
+    "en": "Pork neck meat",
+    "es": "carne de cuello de cerdo",
+    "de": "Schweinenackenfleisch",
+    "k": 320.0,
+    "p": 169.0,
+    "na": 61.0
+  },
+  {
+    "sr": "Skembici Juneci",
+    "en": "Beef dumplings",
+    "es": "Albóndigas de ternera",
+    "de": "Rinderknödel",
+    "k": 150.0,
+    "p": 66.0,
+    "na": 70.0
+  },
+  {
+    "sr": "Skembici Svinjski",
+    "en": "Pork dumplings",
+    "es": "albóndigas de cerdo",
+    "de": "Schweinefleischknödel",
+    "k": 125.0,
+    "p": 87.0,
+    "na": 90.0
+  },
+  {
+    "sr": "Sataras - becar paprikas",
+    "en": "Sataras - bell peppers",
+    "es": "Sataras - pimientos morrones",
+    "de": "Sataras – Paprika",
+    "k": 290.0,
+    "p": 35.0,
+    "na": 10.0
+  },
+  {
+    "sr": "Meso But Junetina",
+    "en": "Beef leg meat",
+    "es": "Carne de pierna de res",
+    "de": "Rinderkeulenfleisch",
+    "k": 370.0,
+    "p": 215.0,
+    "na": 100.0
+  },
+  {
+    "sr": "Meso Posna teletina",
+    "en": "Lean veal meat",
+    "es": "carne magra de ternera",
+    "de": "Mageres Kalbfleisch",
+    "k": 331.0,
+    "p": 189.0,
+    "na": 95.0
+  },
+  {
+    "sr": "Meso Kotlet  Junetina",
+    "en": "Beef cutlet meat",
+    "es": "Carne de chuleta de ternera",
+    "de": "Rinderkotelettfleisch",
+    "k": 220.0,
+    "p": 180.0,
+    "na": 66.0
+  },
+  {
+    "sr": "Mleveno meso  Junetina",
+    "en": "Ground beef",
+    "es": "Carne molida",
+    "de": "Hackfleisch",
+    "k": 289.0,
+    "p": 180.0,
+    "na": 67.0
+  },
+  {
+    "sr": "Meso Prsa Piletina",
+    "en": "Chicken breast meat",
+    "es": "carne de pechuga de pollo",
+    "de": "Hähnchenbrustfleisch",
+    "k": 220.0,
+    "p": 169.0,
+    "na": 66.0
+  },
+  {
+    "sr": "Pile celo prosek  Piletina",
+    "en": "Chicken whole average chicken",
+    "es": "Pollo entero pollo promedio",
+    "de": "Hähnchen, ganzes durchschnittliches Hähnchen",
+    "k": 230.0,
+    "p": 173.0,
+    "na": 77.0
+  },
+  {
+    "sr": "Pileci batak, karabatak  Piletina",
+    "en": "Drumstick chickens, thigh chicken",
+    "es": "Muslo de pollo, muslo de pollo",
+    "de": "Hähnchenkeulen, Hähnchenschenkel",
+    "k": 210.0,
+    "p": 154.0,
+    "na": 83.0
+  },
+  {
+    "sr": "Meso belo piletina",
+    "en": "White chicken meat",
+    "es": "carne de pollo blanco",
+    "de": "Weißes Hühnerfleisch",
+    "k": 220.0,
+    "p": 198.0,
+    "na": 63.0
+  },
+  {
+    "sr": "Curetina",
+    "en": "Turkey",
+    "es": "Pavo",
+    "de": "Truthahn",
+    "k": 300.0,
+    "p": 226.0,
+    "na": 63.0
+  },
+  {
+    "sr": "Batak, karabatak curetina",
+    "en": "Drumstick, turkey thigh",
+    "es": "Muslo, muslo de pavo",
+    "de": "Unterschenkel, Truthahnkeule",
+    "k": 289.0,
+    "p": 257.0,
+    "na": 86.0
+  },
+  {
+    "sr": "Prsa bez kostiju curetina",
+    "en": "Boneless turkey breast",
+    "es": "Pechuga de pavo deshuesada",
+    "de": "Putenbrust ohne Knochen",
+    "k": 333.0,
+    "p": 290.0,
+    "na": 46.0
+  },
+  {
+    "sr": "Guska meso",
+    "en": "Goose meat",
+    "es": "carne de ganso",
+    "de": "Gänsefleisch",
+    "k": 315.0,
+    "p": 235.0,
+    "na": 69.0
+  },
+  {
+    "sr": "Meso kokosije prosek",
+    "en": "Coconut meat average",
+    "es": "Promedio de carne de coco",
+    "de": "Kokosnussfleisch durchschnittlich",
+    "k": 220.0,
+    "p": 192.0,
+    "na": 52.0
+  },
+  {
+    "sr": "Konjsko meso",
+    "en": "Horse meat",
+    "es": "Carne de caballo",
+    "de": "Pferdefleisch",
+    "k": 332.0,
+    "p": 185.0,
+    "na": 44.0
+  },
+  {
+    "sr": "Kozje meso",
+    "en": "Goat meat",
+    "es": "carne de cabra",
+    "de": "Ziegenfleisch",
+    "k": 300.0,
+    "p": 202.0,
+    "na": 70.0
+  },
+  {
+    "sr": "Zecetina meso",
+    "en": "Rabbit meat",
+    "es": "carne de conejo",
+    "de": "Kaninchenfleisch",
+    "k": 310.0,
+    "p": 210.0,
+    "na": 56.0
+  },
+  {
+    "sr": "Ovcje meso",
+    "en": "Sheep meat",
+    "es": "carne de oveja",
+    "de": "Schaffleisch",
+    "k": 301.0,
+    "p": 194.0,
+    "na": 84.0
+  },
+  {
+    "sr": "Bubrezi svinjski",
+    "en": "Pork kidneys",
+    "es": "riñones de cerdo",
+    "de": "Schweinenieren",
+    "k": 220.0,
+    "p": 270.0,
+    "na": 158.0
+  },
+  {
+    "sr": "Jetra pileca",
+    "en": "Chicken liver",
+    "es": "Hígado de pollo",
+    "de": "Hühnerleber",
+    "k": 218.0,
+    "p": 240.0,
+    "na": 68.0
+  },
+  {
+    "sr": "Jetra goveda",
+    "en": "Beef liver",
+    "es": "hígado de res",
+    "de": "Rinderleber",
+    "k": 292.0,
+    "p": 358.0,
+    "na": 116.0
+  },
+  {
+    "sr": "Jetra jagnjeca",
+    "en": "Lamb's liver",
+    "es": "hígado de cordero",
+    "de": "Lammleber",
+    "k": 290.0,
+    "p": 435.0,
+    "na": 76.0
+  },
+  {
+    "sr": "Jetra svinjska",
+    "en": "Pork liver",
+    "es": "hígado de cerdo",
+    "de": "Schweineleber",
+    "k": 350.0,
+    "p": 362.0,
+    "na": 77.0
+  },
+  {
+    "sr": "Jetra teleca",
+    "en": "Calf liver",
+    "es": "hígado de ternera",
+    "de": "Kalbsleber",
+    "k": 310.0,
+    "p": 340.0,
+    "na": 76.0
+  },
+  {
+    "sr": "Jezik govedi",
+    "en": "Bovine tongue",
+    "es": "lengua bovina",
+    "de": "Rinderzunge",
+    "k": 255.0,
+    "p": 229.0,
+    "na": 100.0
+  },
+  {
+    "sr": "Jezik svinjski",
+    "en": "Pork tongue",
+    "es": "lengua de cerdo",
+    "de": "Schweinezunge",
+    "k": 234.0,
+    "p": 187.0,
+    "na": 93.0
+  },
+  {
+    "sr": "Mozak svinjski",
+    "en": "Pig brain",
+    "es": "Cerebro de cerdo",
+    "de": "Schweinehirn",
+    "k": 312.0,
+    "p": 400.0,
+    "na": 153.0
+  },
+  {
+    "sr": "Mozak junece",
+    "en": "Beef brain",
+    "es": "cerebro de res",
+    "de": "Rinderhirn",
+    "k": 281.0,
+    "p": 366.0,
+    "na": 167.0
+  },
+  {
+    "sr": "Srce junece",
+    "en": "Heart of a calf",
+    "es": "corazón de ternero",
+    "de": "Herz eines Kalbes",
+    "k": 320.0,
+    "p": 230.0,
+    "na": 95.0
+  },
+  {
+    "sr": "Srce jagnjece",
+    "en": "Heart of the lamb",
+    "es": "corazón de cordero",
+    "de": "Herz des Lammes",
+    "k": 248.0,
+    "p": 160.0,
+    "na": 118.0
+  },
+  {
+    "sr": "Srce pilece",
+    "en": "Chicken heart",
+    "es": "corazon de pollo",
+    "de": "Hühnerherz",
+    "k": 262.0,
+    "p": 164.0,
+    "na": 111.0
+  },
+  {
+    "sr": "Srce svinjsko",
+    "en": "Pork heart",
+    "es": "corazón de cerdo",
+    "de": "Schweineherz",
+    "k": 300.0,
+    "p": 195.0,
+    "na": 107.0
+  },
+  {
+    "sr": "Srce telece",
+    "en": "Calf's heart",
+    "es": "corazón de ternero",
+    "de": "Kalbsherz",
+    "k": 265.0,
+    "p": 180.0,
+    "na": 104.0
+  },
+  {
+    "sr": "zeluci pileci",
+    "en": "Stomach chickens",
+    "es": "Pollos estomacales",
+    "de": "Magenhühner",
+    "k": 177.0,
+    "p": 182.0,
+    "na": 71.0
+  },
+  {
+    "sr": "Jetrena pasteta",
+    "en": "Liver paste",
+    "es": "Pasta de hígado",
+    "de": "Leberpaste Phosphor",
+    "k": 173.0,
+    "p": 300.0,
+    "na": 738.0
+  },
+  {
+    "sr": "Kulen domaci",
+    "en": "Cool locals",
+    "es": "lugareños geniales",
+    "de": "Coole Einheimische",
+    "k": 263.0,
+    "p": 190.0,
+    "na": 745.0
+  },
+  {
+    "sr": "Lovacka kobasica",
+    "en": "Hunting sausage",
+    "es": "Salchicha de caza",
+    "de": "Jagdwurst",
+    "k": 200.0,
+    "p": 144.0,
+    "na": 820.0
+  },
+  {
+    "sr": "Mortadela salama",
+    "en": "Mortadella salami",
+    "es": "Salami de mortadela",
+    "de": "Mortadella-Salami",
+    "k": 207.0,
+    "p": 143.0,
+    "na": 668.0
+  },
+  {
+    "sr": "Salama milanska",
+    "en": "Milanese salami",
+    "es": "salami milanés",
+    "de": "Mailänder Salami",
+    "k": 220.0,
+    "p": 246.0,
+    "na": 1500.0
+  },
+  {
+    "sr": "Salama Pariska - Prizer",
+    "en": "Paris Salami - Pariser",
+    "es": "Paris Salami - Parisino",
+    "de": "Paris Salami - Pariser",
+    "k": 230.0,
+    "p": 185.0,
+    "na": 560.0
+  },
+  {
+    "sr": "Slanina masna",
+    "en": "Bacon fatty",
+    "es": "tocino graso",
+    "de": "Speckfett",
+    "k": 300.0,
+    "p": 40.0,
+    "na": 820.0
+  },
+  {
+    "sr": "Slanina mesnata",
+    "en": "Meaty bacon",
+    "es": "tocino carnoso",
+    "de": "Fleischiger Speck",
+    "k": 190.0,
+    "p": 113.0,
+    "na": 820.0
+  },
+  {
+    "sr": "Slanina przena",
+    "en": "Bacon przena",
+    "es": "Przena de tocino",
+    "de": "Speck-Przena",
+    "k": 400.0,
+    "p": 108.0,
+    "na": 1600.0
+  },
+  {
+    "sr": "Sunka suva dimljena domaca",
+    "en": "Homemade dry smoked sundae",
+    "es": "Helado casero ahumado en seco",
+    "de": "Hausgemachter, trocken geräucherter Eisbecher",
+    "k": 285.0,
+    "p": 172.0,
+    "na": 1440.0
+  },
+  {
+    "sr": "Sunka kuvana domaca",
+    "en": "Homemade cooked ham",
+    "es": "Jamón cocido casero",
+    "de": "Hausgemachter Kochschinken",
+    "k": 310.0,
+    "p": 196.0,
+    "na": 1130.0
+  },
+  {
+    "sr": "Trajna kobasica",
+    "en": "Permanent sausage",
+    "es": "Salchicha permanente",
+    "de": "Dauerwurst",
+    "k": 377.0,
+    "p": 204.0,
+    "na": 2240.0
+  },
+  {
+    "sr": "Becka kobasica",
+    "en": "Beck's sausage",
+    "es": "salchicha de beck",
+    "de": "Becks Wurst",
+    "k": 204.0,
+    "p": 170.0,
+    "na": 941.0
+  },
+  {
+    "sr": "Dimljena kobasica industrijska",
+    "en": "Industrial smoked sausage",
+    "es": "Salchicha ahumada industrial",
+    "de": "Industriegeräucherte Wurst",
+    "k": 377.0,
+    "p": 204.0,
+    "na": 2240.0
+  },
+  {
+    "sr": "Cvarci presovani",
+    "en": "Pressed chicks",
+    "es": "pollitos prensados",
+    "de": "Gepresste Küken",
+    "k": 800.0,
+    "p": 235.0,
+    "na": 400.0
+  },
+  {
+    "sr": "Hot-dog - uz proveru aditiva",
+    "en": "Hot dog - with additives checked",
+    "es": "Hot dog - con aditivos controlados",
+    "de": "Hot Dog - mit geprüften Zusatzstoffen",
+    "k": 115.0,
+    "p": 83.0,
+    "na": 400.0
+  },
+  {
+    "sr": "Virsle",
+    "en": "Hot dogs",
+    "es": "perritos calientes",
+    "de": "Hot Dogs",
+    "k": 180.0,
+    "p": 107.0,
+    "na": 778.0
+  },
+  {
+    "sr": "Kobasice za pecenje",
+    "en": "Sausages for baking",
+    "es": "Salchichas para hornear",
+    "de": "Würstchen zum Backen",
+    "k": 300.0,
+    "p": 483.0,
+    "na": 930.0
+  },
+  {
+    "sr": "Kobasice za rostilj",
+    "en": "Grilled sausages",
+    "es": "Salchichas a la parrilla",
+    "de": "Gegrillte Würstchen",
+    "k": 190.0,
+    "p": 129.0,
+    "na": 770.0
+  },
+  {
+    "sr": "Krvavica",
+    "en": "Blood clot",
+    "es": "Coágulo sanguíneo",
+    "de": "Blutgerinnsel",
+    "k": 170.0,
+    "p": 84.0,
+    "na": 350.0
+  },
+  {
+    "sr": "Mesna kobasica svinjska sirova",
+    "en": "Raw pork sausage",
+    "es": "Salchicha de cerdo cruda",
+    "de": "Rohwurst aus Schweinefleisch",
+    "k": 200.0,
+    "p": 130.0,
+    "na": 830.0
+  },
+  {
+    "sr": "Divljac srna pecena",
+    "en": "Roe deer roast",
+    "es": "Asado de corzo",
+    "de": "Rehbraten",
+    "k": 335.0,
+    "p": 226.0,
+    "na": 54.0
+  },
+  {
+    "sr": "Govedi gulas",
+    "en": "Beef goulash",
+    "es": "gulash de ternera",
+    "de": "Rindergulasch",
+    "k": 210.0,
+    "p": 178.0,
+    "na": 575.0
+  },
+  {
+    "sr": "Guska pecena",
+    "en": "Roast goose",
+    "es": "Ganso asado",
+    "de": "Gänsebraten",
+    "k": 329.0,
+    "p": 270.0,
+    "na": 70.0
+  },
+  {
+    "sr": "Hamburger npr. Big Mack Mc.Donalds",
+    "en": "Hamburger for example big mac mc.donalds",
+    "es": "Hamburguesa por ejemplo big mac mc.donalds",
+    "de": "Hamburger zum Beispiel Big Mac Mc.Donalds",
+    "k": 192.0,
+    "p": 130.0,
+    "na": 460.0
+  },
+  {
+    "sr": "Hamburger klasicni sa prilozima meso pola-pola jun-svinj.",
+    "en": "Hamburger classic with side dishes meat half-half June-pork.",
+    "es": "Hamburguesa clásica con guarniciones de carne, mitad de junio y cerdo.",
+    "de": "Hamburger-Klassiker mit Beilagen Fleisch halb halb Juni-Schweinefleisch.",
+    "k": 260.0,
+    "p": 180.0,
+    "na": 380.0
+  },
+  {
+    "sr": "Jagnjece pecenje",
+    "en": "Roast lamb",
+    "es": "Cordero asado",
+    "de": "Lammbraten",
+    "k": 313.0,
+    "p": 191.0,
+    "na": 66.0
+  },
+  {
+    "sr": "Jetra cureca dinstana",
+    "en": "Liver stewed",
+    "es": "hígado guisado",
+    "de": "Leber gedünstet",
+    "k": 194.0,
+    "p": 272.0,
+    "na": 64.0
+  },
+  {
+    "sr": "Fasirana snicla svinjsko meso",
+    "en": "Sliced ​​pork schnitzel",
+    "es": "Escalope de cerdo en rodajas",
+    "de": "Aufgeschnittenes Schweineschnitzel",
+    "k": 275.0,
+    "p": 210.0,
+    "na": 350.0
+  },
+  {
+    "sr": "Kozije meso peceno",
+    "en": "Roasted goat meat",
+    "es": "Carne de cabra asada",
+    "de": "Gebratenes Ziegenfleisch",
+    "k": 405.0,
+    "p": 201.0,
+    "na": 86.0
+  },
+  {
+    "sr": "Paprika punjena svinjsko meso",
+    "en": "Paprika stuffed with pork",
+    "es": "Pimentón relleno de cerdo",
+    "de": "Paprika gefüllt mit Schweinefleisch",
+    "k": 133.0,
+    "p": 51.0,
+    "na": 117.0
+  },
+  {
+    "sr": "Patka pecena",
+    "en": "Roast duck",
+    "es": "Pato asado",
+    "de": "Entenbraten",
+    "k": 204.0,
+    "p": 156.0,
+    "na": 59.0
+  },
+  {
+    "sr": "Piletina kuvana",
+    "en": "Boiled chicken",
+    "es": "pollo hervido",
+    "de": "Gekochtes Huhn",
+    "k": 285.0,
+    "p": 190.0,
+    "na": 550.0
+  },
+  {
+    "sr": "Piletina pecena",
+    "en": "Roast chicken",
+    "es": "Pollo asado",
+    "de": "Brathähnchen",
+    "k": 280.0,
+    "p": 220.0,
+    "na": 670.0
+  },
+  {
+    "sr": "Curetina kuvana",
+    "en": "Cooked turkey",
+    "es": "pavo cocido",
+    "de": "Gekochter Truthahn",
+    "k": 245.0,
+    "p": 199.0,
+    "na": 560.0
+  },
+  {
+    "sr": "Curetina pecena",
+    "en": "Roast turkey",
+    "es": "Pavo asado",
+    "de": "Truthahnbraten",
+    "k": 280.0,
+    "p": 203.0,
+    "na": 682.0
+  },
+  {
+    "sr": "Sarma juneca",
+    "en": "Sarma beef",
+    "es": "carne de res",
+    "de": "Sarma-Rindfleisch",
+    "k": 300.0,
+    "p": 140.0,
+    "na": 350.0
+  },
+  {
+    "sr": "Sarma svinjska",
+    "en": "Pork sarma",
+    "es": "sarma de cerdo",
+    "de": "Schweinefleisch-Sarma",
+    "k": 345.0,
+    "p": 130.0,
+    "na": 350.0
+  },
+  {
+    "sr": "Svinjski peceni but",
+    "en": "Roast pork leg",
+    "es": "pierna de cerdo asada",
+    "de": "Gebratene Schweinekeule",
+    "k": 330.0,
+    "p": 290.0,
+    "na": 475.0
+  },
+  {
+    "sr": "Prasetina pecenje",
+    "en": "Roast pig",
+    "es": "cerdo asado",
+    "de": "Schweinebraten",
+    "k": 362.0,
+    "p": 219.0,
+    "na": 66.0
+  },
+  {
+    "sr": "Telece pecenje",
+    "en": "Veal roast",
+    "es": "Asado de ternera",
+    "de": "Kalbsbraten",
+    "k": 340.0,
+    "p": 222.0,
+    "na": 96.0
+  },
+  {
+    "sr": "Teleci dinstani kotiet",
+    "en": "Stewed veal cutlets",
+    "es": "Chuletas de ternera guisadas",
+    "de": "Geschmorte Kalbsschnitzel",
+    "k": 250.0,
+    "p": 220.0,
+    "na": 80.0
+  },
+  {
+    "sr": "Teleci pohovani kotlet",
+    "en": "Veal fried cutlet",
+    "es": "Chuleta de ternera frita",
+    "de": "Gebratenes Kalbsschnitzel",
+    "k": 371.0,
+    "p": 250.0,
+    "na": 454.0
+  },
+  {
+    "sr": "Teletina kuvana",
+    "en": "Boiled veal",
+    "es": "ternera hervida",
+    "de": "Gekochtes Kalbfleisch",
+    "k": 338.0,
+    "p": 250.0,
+    "na": 89.0
+  },
+  {
+    "sr": "Fazan",
+    "en": "Pheasant",
+    "es": "Faisán",
+    "de": "Fasan",
+    "k": 260.0,
+    "p": 230.0,
+    "na": 37.0
+  },
+  {
+    "sr": "Patka divlja",
+    "en": "Wild duck",
+    "es": "pato salvaje",
+    "de": "Wildente",
+    "k": 270.0,
+    "p": 186.0,
+    "na": 57.0
+  },
+  {
+    "sr": "Prepelica",
+    "en": "Quail",
+    "es": "Codorniz",
+    "de": "Wachtel",
+    "k": 280.0,
+    "p": 179.0,
+    "na": 46.0
+  },
+  {
+    "sr": "Srnece meso",
+    "en": "Venison meat",
+    "es": "carne de venado",
+    "de": "Wildfleisch",
+    "k": 310.0,
+    "p": 250.0,
+    "na": 50.0
+  },
+  {
+    "sr": "Zec divlji",
+    "en": "Wild rabbit",
+    "es": "Conejo salvaje",
+    "de": "Wildkaninchen",
+    "k": 310.0,
+    "p": 210.0,
+    "na": 56.0
+  },
+  {
+    "sr": "Riba Bakalar na leso (bareni)",
+    "en": "Cod fish on leso (bareni)",
+    "es": "Bacalao al leso (bareni)",
+    "de": "Kabeljau auf Leso (Bareni)",
+    "k": 439.0,
+    "p": 200.0,
+    "na": 60.0
+  },
+  {
+    "sr": "Riba Brancin",
+    "en": "Sea bass fish",
+    "es": "pescado de lubina",
+    "de": "Wolfsbarsch",
+    "k": 328.0,
+    "p": 248.0,
+    "na": 87.0
+  },
+  {
+    "sr": "Riba Smudj",
+    "en": "Perch fish",
+    "es": "pez perca",
+    "de": "Barschfisch",
+    "k": 400.0,
+    "p": 220.0,
+    "na": 60.0
+  },
+  {
+    "sr": "Riba Oslic",
+    "en": "Hake fish",
+    "es": "Merluza",
+    "de": "Seehechtfisch",
+    "k": 294.0,
+    "p": 142.0,
+    "na": 101.0
+  },
+  {
+    "sr": "Riba Skusa",
+    "en": "Mackerel fish",
+    "es": "pescado caballa",
+    "de": "Makrelenfisch",
+    "k": 396.0,
+    "p": 244.0,
+    "na": 95.0
+  },
+  {
+    "sr": "Riba Srdela",
+    "en": "Sardine fish",
+    "es": "pescado sardina",
+    "de": "Sardinenfisch",
+    "k": 324.0,
+    "p": 238.0,
+    "na": 100.0
+  },
+  {
+    "sr": "Riba Grgec",
+    "en": "Perch fish",
+    "es": "pez perca",
+    "de": "Barschfisch",
+    "k": 330.0,
+    "p": 198.0,
+    "na": 47.0
+  },
+  {
+    "sr": "Riba Pastrmka",
+    "en": "Trout fish",
+    "es": "Pescado trucha",
+    "de": "Forellenfisch",
+    "k": 441.0,
+    "p": 242.0,
+    "na": 40.0
+  },
+  {
+    "sr": "Riba Losos",
+    "en": "Salmon fish",
+    "es": "pescado salmón",
+    "de": "Lachsfisch",
+    "k": 630.0,
+    "p": 300.0,
+    "na": 51.0
+  },
+  {
+    "sr": "Riba Stuka",
+    "en": "Stuka fish",
+    "es": "pez stuka",
+    "de": "Stuka-Fisch",
+    "k": 400.0,
+    "p": 300.0,
+    "na": 60.0
+  },
+  {
+    "sr": "Riba Som",
+    "en": "Catfish",
+    "es": "Bagre",
+    "de": "Wels",
+    "k": 299.0,
+    "p": 202.0,
+    "na": 53.0
+  },
+  {
+    "sr": "Riba saran",
+    "en": "Saran fish",
+    "es": "pez sarán",
+    "de": "Saran-Fisch",
+    "k": 306.0,
+    "p": 216.0,
+    "na": 46.0
+  },
+  {
+    "sr": "Riba Jegulja pecena",
+    "en": "Baked eel fish",
+    "es": "Pescado con anguila al horno",
+    "de": "Gebackener Aalfisch",
+    "k": 349.0,
+    "p": 277.0,
+    "na": 65.0
+  },
+  {
+    "sr": "Riba Som paniran",
+    "en": "Breaded catfish",
+    "es": "Bagre empanizado",
+    "de": "Panierter Wels",
+    "k": 340.0,
+    "p": 216.0,
+    "na": 80.0
+  },
+  {
+    "sr": "Riba saran pecen",
+    "en": "Baked saran fish",
+    "es": "Pescado sarán al horno",
+    "de": "Gebackener Saran-Fisch",
+    "k": 427.0,
+    "p": 231.0,
+    "na": 63.0
+  },
+  {
+    "sr": "Dagnje kuvane morska riba",
+    "en": "Mussels boiled sea fish",
+    "es": "Mejillones pescado de mar hervido",
+    "de": "Muscheln gekochter Seefisch",
+    "k": 268.0,
+    "p": 285.0,
+    "na": 369.0
+  },
+  {
+    "sr": "Jastog kuvan morska riba",
+    "en": "Lobster boiled sea fish",
+    "es": "Pescado de mar hervido con langosta",
+    "de": "Hummer gekochter Seefisch",
+    "k": 352.0,
+    "p": 185.0,
+    "na": 380.0
+  },
+  {
+    "sr": "Kamenice kuvane morska riba",
+    "en": "Oysters boiled sea fish",
+    "es": "Ostras pescado de mar hervido",
+    "de": "Austern gekochter Seefisch",
+    "k": 168.0,
+    "p": 136.0,
+    "na": 244.0
+  },
+  {
+    "sr": "Kozice przene morska riba",
+    "en": "Prawns fried by sea fish",
+    "es": "Gambas fritas con pescado de mar",
+    "de": "Von Seefisch gebratene Garnelen",
+    "k": 182.0,
+    "p": 137.0,
+    "na": 224.0
+  },
+  {
+    "sr": "Lignje przene morska riba",
+    "en": "Squid eaten by sea fish",
+    "es": "Calamares comidos por peces de mar",
+    "de": "Tintenfisch, der von Meeresfischen gefressen wird",
+    "k": 637.0,
+    "p": 580.0,
+    "na": 744.0
+  },
+  {
+    "sr": "Hobotnica  morska ribavisok nivo Purina",
+    "en": "Octopus marine fish (high purine content)",
+    "es": "Pulpo de pescado marino (alto contenido en purinas)",
+    "de": "Oktopus-Meeresfisch (hoher Puringehalt)",
+    "k": 351.0,
+    "p": 120.0,
+    "na": 600.0
+  },
+  {
+    "sr": "Sipa",
+    "en": "Cuttlefish",
+    "es": "Calamar",
+    "de": "Tintenfisch",
+    "k": 216.0,
+    "p": 580.0,
+    "na": 110.0
+  },
+  {
+    "sr": "Srdele konzervirane morska riba",
+    "en": "Sardines canned sea fish",
+    "es": "Pescado de mar en conserva de sardinas",
+    "de": "Sardinen aus Seefischkonserven",
+    "k": 430.0,
+    "p": 520.0,
+    "na": 650.0
+  },
+  {
+    "sr": "skampi morska riba",
+    "en": "Scampi sea fish",
+    "es": "Pescado de mar con gambas",
+    "de": "Scampi-Seefisch",
+    "k": 267.0,
+    "p": 210.0,
+    "na": 380.0
+  },
+  {
+    "sr": "Tuna konzerv. u ulju morska riba",
+    "en": "Canned tuna. in sea fish oil",
+    "es": "Atún enlatado. en aceite de pescado de mar",
+    "de": "Thunfisch aus der Dose. in Meeresfischöl",
+    "k": 280.0,
+    "p": 190.0,
+    "na": 420.0
+  },
+  {
+    "sr": "Kravlje Mleko 3 % masti",
+    "en": "Cow's milk 3% fat",
+    "es": "Leche de vaca 3% grasa",
+    "de": "Kuhmilch 3 % Fett",
+    "k": 149.0,
+    "p": 92.0,
+    "na": 16.0
+  },
+  {
+    "sr": "Kravlje Mleko 1,5 % masti",
+    "en": "Cow's milk 1.5% fat",
+    "es": "Leche de vaca 1,5% de grasa",
+    "de": "Kuhmilch 1,5 % Fett",
+    "k": 158.0,
+    "p": 93.0,
+    "na": 18.0
+  },
+  {
+    "sr": "Kozje mleko",
+    "en": "Goat's milk",
+    "es": "leche de cabra",
+    "de": "Ziegenmilch",
+    "k": 205.0,
+    "p": 111.0,
+    "na": 50.0
+  },
+  {
+    "sr": "Obrano mleko",
+    "en": "Skimmed milk",
+    "es": "Leche desnatada",
+    "de": "Magermilch",
+    "k": 158.0,
+    "p": 93.0,
+    "na": 18.0
+  },
+  {
+    "sr": "Ovcje mleko",
+    "en": "Sheep's milk",
+    "es": "leche de oveja",
+    "de": "Schafsmilch",
+    "k": 136.0,
+    "p": 158.0,
+    "na": 44.0
+  },
+  {
+    "sr": "Jogurt 0,3% masti",
+    "en": "Yogurt 0.3% fat",
+    "es": "Yogur 0,3% de grasa",
+    "de": "Joghurt 0,3 % Fett",
+    "k": 187.0,
+    "p": 109.0,
+    "na": 57.0
+  },
+  {
+    "sr": "Jogurt 1,5% masti",
+    "en": "Yogurt 1.5% fat",
+    "es": "Yogur 1,5% de grasa",
+    "de": "Joghurt 1,5 % Fett",
+    "k": 149.0,
+    "p": 87.0,
+    "na": 45.0
+  },
+  {
+    "sr": "Jogurt 3,5% masti",
+    "en": "Yogurt 3.5% fat",
+    "es": "Yogur 3,5% de grasa",
+    "de": "Joghurt 3,5 % Fett",
+    "k": 157.0,
+    "p": 92.0,
+    "na": 48.0
+  },
+  {
+    "sr": "Jogurt vocni",
+    "en": "Fruit yogurt",
+    "es": "yogur de frutas",
+    "de": "Fruchtjoghurt",
+    "k": 167.0,
+    "p": 84.0,
+    "na": 39.0
+  },
+  {
+    "sr": "Surutka",
+    "en": "Whey",
+    "es": "Suero",
+    "de": "Molke",
+    "k": 147.0,
+    "p": 90.0,
+    "na": 50.0
+  },
+  {
+    "sr": "Mleko cokoladno",
+    "en": "Milk chocolate",
+    "es": "Chocolate con leche",
+    "de": "Vollmilchschokolade",
+    "k": 170.0,
+    "p": 95.0,
+    "na": 70.0
+  },
+  {
+    "sr": "Mleko kiselo",
+    "en": "Sour milk",
+    "es": "Leche agria",
+    "de": "Sauermilch",
+    "k": 149.0,
+    "p": 92.0,
+    "na": 36.0
+  },
+  {
+    "sr": "Pavlaka kisela 10% masti",
+    "en": "Sour cream 10% fat",
+    "es": "Crema agria 10% de grasa",
+    "de": "Sauerrahm 10 % Fett",
+    "k": 144.0,
+    "p": 80.0,
+    "na": 54.0
+  },
+  {
+    "sr": "Pavlaka 20 % masti",
+    "en": "Sour cream 20% fat",
+    "es": "Crema agria 20% de grasa",
+    "de": "Sauerrahm 20 % Fett",
+    "k": 112.0,
+    "p": 63.0,
+    "na": 41.0
+  },
+  {
+    "sr": "Pavlaka 30% masti",
+    "en": "Sour cream 30% fat",
+    "es": "Crema agria 30% de grasa",
+    "de": "Sauerrahm 30 % Fett",
+    "k": 132.0,
+    "p": 85.0,
+    "na": 40.0
+  },
+  {
+    "sr": "Palacinke",
+    "en": "Pancakes",
+    "es": "Panqueques",
+    "de": "Pfannkuchen",
+    "k": 250.0,
+    "p": 200.0,
+    "na": 166.0
+  },
+  {
+    "sr": "Bel-paese sir",
+    "en": "Bel-paese",
+    "es": "bel-paese",
+    "de": "Bel-paese",
+    "k": 156.0,
+    "p": 480.0,
+    "na": 987.0
+  },
+  {
+    "sr": "Brie sir",
+    "en": "Brie cheese",
+    "es": "queso brie",
+    "de": "Brie-Käse",
+    "k": 132.0,
+    "p": 188.0,
+    "na": 1170.0
+  },
+  {
+    "sr": "Camembert sir 30% masti",
+    "en": "Camembert cheese 30% fat",
+    "es": "Queso camembert 30% grasa",
+    "de": "Camembertkäse 30 % Fett",
+    "k": 120.0,
+    "p": 540.0,
+    "na": 900.0
+  },
+  {
+    "sr": "Cheddar sir 33 % masti",
+    "en": "Cheddar cheese 33% fat",
+    "es": "Queso cheddar 33% grasa",
+    "de": "Cheddar-Käse 33 % Fett",
+    "k": 102.0,
+    "p": 530.0,
+    "na": 675.0
+  },
+  {
+    "sr": "Edamer sir 30% masti",
+    "en": "Edam cheese 30% fat",
+    "es": "Queso edam 30% grasa",
+    "de": "Edamerkäse 30 % Fett",
+    "k": 95.0,
+    "p": 570.0,
+    "na": 800.0
+  },
+  {
+    "sr": "Edamer sir 45% masti",
+    "en": "Edam cheese 45% fat",
+    "es": "Queso edam 45% grasa",
+    "de": "Edamerkäse 45 % Fett",
+    "k": 87.0,
+    "p": 403.0,
+    "na": 654.0
+  },
+  {
+    "sr": "Ementaler sir",
+    "en": "Emmentaler cheese",
+    "es": "queso emmental",
+    "de": "Emmentaler-Käse",
+    "k": 107.0,
+    "p": 636.0,
+    "na": 450.0
+  },
+  {
+    "sr": "Feta sir 45% masti",
+    "en": "Feta cheese 45% fat",
+    "es": "Queso feta 45% grasa",
+    "de": "Feta-Käse 45 % Fett",
+    "k": 62.0,
+    "p": 360.0,
+    "na": 1100.0
+  },
+  {
+    "sr": "Trapist sir",
+    "en": "Trapist cheese",
+    "es": "Queso Trapist",
+    "de": "Trapist-Käse",
+    "k": 130.0,
+    "p": 550.0,
+    "na": 700.0
+  },
+  {
+    "sr": "Gauda sir",
+    "en": "Gouda cheese",
+    "es": "queso gouda",
+    "de": "Gouda-Käse",
+    "k": 76.0,
+    "p": 443.0,
+    "na": 869.0
+  },
+  {
+    "sr": "Gorgonzola sir",
+    "en": "Gorgonzola cheese",
+    "es": "queso gorgonzola",
+    "de": "Gorgonzola-Käse",
+    "k": 123.0,
+    "p": 356.0,
+    "na": 398.0
+  },
+  {
+    "sr": "Gruyere sir",
+    "en": "Gruyere cheese",
+    "es": "queso gruyère",
+    "de": "Gruyère-Käse",
+    "k": 81.0,
+    "p": 605.0,
+    "na": 336.0
+  },
+  {
+    "sr": "Limburger sir",
+    "en": "Limburger cheese",
+    "es": "Queso Limburger",
+    "de": "Limburger Käse",
+    "k": 128.0,
+    "p": 256.0,
+    "na": 1300.0
+  },
+  {
+    "sr": "Mozzarella sir",
+    "en": "Mozzarella cheese",
+    "es": "queso mozzarella",
+    "de": "Mozzarella-Käse",
+    "k": 38.0,
+    "p": 239.0,
+    "na": 137.0
+  },
+  {
+    "sr": "Sirni namaz 20% masti",
+    "en": "Cheese spread 20% fat",
+    "es": "Queso untable 20% grasa",
+    "de": "Käseaufstrich 20 % Fett",
+    "k": 55.0,
+    "p": 1200.0,
+    "na": 1250.0
+  },
+  {
+    "sr": "Svezi kravlji sir",
+    "en": "Fresh cow's cheese",
+    "es": "Queso de vaca fresco",
+    "de": "Frischer Kuhkäse",
+    "k": 95.0,
+    "p": 160.0,
+    "na": 40.0
+  },
+  {
+    "sr": "Sladoled sa 8% masti",
+    "en": "Ice cream with 8% fat",
+    "es": "Helado con 8% de grasa",
+    "de": "Eiscreme mit 8 % Fett",
+    "k": 190.0,
+    "p": 100.0,
+    "na": 62.0
+  },
+  {
+    "sr": "Sladoled sa 12% masti",
+    "en": "Ice cream with 12% fat",
+    "es": "Helado con 12% de grasa",
+    "de": "Eiscreme mit 12 % Fett",
+    "k": 190.0,
+    "p": 116.0,
+    "na": 44.0
+  },
+  {
+    "sr": "Sladoled  sa 17% masti",
+    "en": "Ice cream with 17% fat",
+    "es": "Helado con 17% de grasa",
+    "de": "Eiscreme mit 17 % Fett",
+    "k": 149.0,
+    "p": 86.0,
+    "na": 62.0
+  },
+  {
+    "sr": "Sladoled  sa cokoladom",
+    "en": "Ice cream with chocolate",
+    "es": "Helado con chocolate",
+    "de": "Eis mit Schokolade",
+    "k": 147.0,
+    "p": 86.0,
+    "na": 62.0
+  },
+  {
+    "sr": "Kokosje jaje",
+    "en": "Coconut egg",
+    "es": "huevo de coco",
+    "de": "Kokos-Ei",
+    "k": 130.0,
+    "p": 202.0,
+    "na": 133.0
+  },
+  {
+    "sr": "Guscje jaje",
+    "en": "Goose egg",
+    "es": "huevo de ganso",
+    "de": "Gänseei",
+    "k": 210.0,
+    "p": 208.0,
+    "na": 138.0
+  },
+  {
+    "sr": "Pacje jaje",
+    "en": "Duck egg",
+    "es": "huevo de pato",
+    "de": "Entenei",
+    "k": 233.0,
+    "p": 220.0,
+    "na": 146.0
+  },
+  {
+    "sr": "Prepelicje jaje",
+    "en": "Quail egg",
+    "es": "huevo de codorniz",
+    "de": "Wachtelei",
+    "k": 132.0,
+    "p": 226.0,
+    "na": 141.0
+  },
+  {
+    "sr": "Curece jaje",
+    "en": "The egg will leak",
+    "es": "El huevo se escapará",
+    "de": "Das Ei wird auslaufen",
+    "k": 142.0,
+    "p": 170.0,
+    "na": 151.0
+  },
+  {
+    "sr": "Margarin 70% masti",
+    "en": "Margarine 70% fat",
+    "es": "Margarina 70% grasa",
+    "de": "Margarine 70 % Fett",
+    "k": 42.0,
+    "p": 23.0,
+    "na": 943.0
+  },
+  {
+    "sr": "Margarin 60% masti",
+    "en": "Margarine 60% fat",
+    "es": "Margarina 60% grasa",
+    "de": "Margarine 60 % Fett",
+    "k": 30.0,
+    "p": 16.0,
+    "na": 994.0
+  },
+  {
+    "sr": "Maslac 80 % masti",
+    "en": "Butter 80% fat",
+    "es": "Mantequilla 80% grasa",
+    "de": "Butter 80 % Fett",
+    "k": 26.0,
+    "p": 23.0,
+    "na": 827.0
+  },
+  {
+    "sr": "Ulje suncokret",
+    "en": "Sunflower oil",
+    "es": "Aceite de girasol",
+    "de": "Sonnenblumenöl",
+    "k": 0.0,
+    "p": 0.0,
+    "na": 0.0
+  },
+  {
+    "sr": "Ulje maslinovo",
+    "en": "Olive oil",
+    "es": "Aceite de oliva",
+    "de": "Olivenöl",
+    "k": 0.0,
+    "p": 0.0,
+    "na": 0.0
+  },
+  {
+    "sr": "Majonez  +Na",
+    "en": "Mayonnaise + on",
+    "es": "Mayonesa + activado",
+    "de": "Mayonnaise + an",
+    "k": 0.0,
+    "p": 28.0,
+    "na": 568.0
+  },
+  {
+    "sr": "Senf zuti  +++Na",
+    "en": "Mustard yellow +++na",
+    "es": "Amarillo mostaza +++na",
+    "de": "Senfgelb +++na",
+    "k": 130.0,
+    "p": 73.0,
+    "na": 1252.0
+  },
+  {
+    "sr": "Krompir Zreli sirov",
+    "en": "Ripe raw potatoes",
+    "es": "Patatas crudas maduras",
+    "de": "Reife rohe Kartoffeln",
+    "k": 570.0,
+    "p": 54.0,
+    "na": 27.0
+  },
+  {
+    "sr": "krompir Mladi sirov",
+    "en": "Young raw potatoes",
+    "es": "Patatas tiernas crudas",
+    "de": "Junge rohe Kartoffeln",
+    "k": 310.0,
+    "p": 40.0,
+    "na": 7.0
+  },
+  {
+    "sr": "Krompir kuvan ceo",
+    "en": "Potatoes cooked whole",
+    "es": "patatas cocidas enteras",
+    "de": "Kartoffeln im Ganzen gekocht",
+    "k": 455.0,
+    "p": 33.0,
+    "na": 12.0
+  },
+  {
+    "sr": "Krompir pire",
+    "en": "Mashed potatoes",
+    "es": "Puré de papas",
+    "de": "Kartoffelpüree",
+    "k": 350.0,
+    "p": 61.0,
+    "na": 300.0
+  },
+  {
+    "sr": "Krompir Pecen bez soli",
+    "en": "Baked potatoes without salt",
+    "es": "Patatas al horno sin sal",
+    "de": "Ofenkartoffeln ohne Salz",
+    "k": 500.0,
+    "p": 46.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Pomfrit McDonalds npr.",
+    "en": "French fries mcdonalds e.g.",
+    "es": "Papas fritas mcdonalds, p.",
+    "de": "Pommes frites McDonalds z.B.",
+    "k": 460.0,
+    "p": 33.0,
+    "na": 400.0
+  },
+  {
+    "sr": "Cips",
+    "en": "Chips",
+    "es": "Papas fritas",
+    "de": "Chips",
+    "k": 1275.0,
+    "p": 93.0,
+    "na": 594.0
+  },
+  {
+    "sr": "Articoka mlada, cvet",
+    "en": "Young artichoke, flower",
+    "es": "Alcachofa joven, flor",
+    "de": "Junge Artischocke, Blume",
+    "k": 376.0,
+    "p": 67.0,
+    "na": 133.0
+  },
+  {
+    "sr": "Karfiol",
+    "en": "Cauliflower",
+    "es": "Coliflor",
+    "de": "Blumenkohl",
+    "k": 328.0,
+    "p": 54.0,
+    "na": 16.0
+  },
+  {
+    "sr": "Brokoli",
+    "en": "Broccoli",
+    "es": "Brócoli",
+    "de": "Brokkoli",
+    "k": 340.0,
+    "p": 66.0,
+    "na": 12.0
+  },
+  {
+    "sr": "Blitva",
+    "en": "Swiss chard",
+    "es": "acelgas",
+    "de": "Mangold",
+    "k": 550.0,
+    "p": 29.0,
+    "na": 31.0
+  },
+  {
+    "sr": "Kelj",
+    "en": "Kale",
+    "es": "Col rizada",
+    "de": "Grünkohl",
+    "k": 490.0,
+    "p": 87.0,
+    "na": 42.0
+  },
+  {
+    "sr": "Prokelj",
+    "en": "Broccoli",
+    "es": "Brócoli",
+    "de": "Brokkoli",
+    "k": 464.0,
+    "p": 82.0,
+    "na": 13.0
+  },
+  {
+    "sr": "Kupus beli",
+    "en": "White cabbage",
+    "es": "repollo blanco",
+    "de": "Weißkohl",
+    "k": 227.0,
+    "p": 27.0,
+    "na": 13.0
+  },
+  {
+    "sr": "Kupus crveni",
+    "en": "Red cabbage",
+    "es": "Col lombarda",
+    "de": "Rotkohl",
+    "k": 266.0,
+    "p": 30.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Kupus kiseli oceden",
+    "en": "Sauerkraut drained",
+    "es": "Chucrut escurrido",
+    "de": "Sauerkraut abgetropft",
+    "k": 288.0,
+    "p": 43.0,
+    "na": 355.0
+  },
+  {
+    "sr": "Matovilac salata",
+    "en": "Salad mat",
+    "es": "estera de ensalada",
+    "de": "Salatmatte",
+    "k": 300.0,
+    "p": 50.0,
+    "na": 15.0
+  },
+  {
+    "sr": "Persun koren",
+    "en": "Parsley root",
+    "es": "raíz de perejil",
+    "de": "Petersilienwurzel",
+    "k": 399.0,
+    "p": 56.0,
+    "na": 12.0
+  },
+  {
+    "sr": "Persun zeleni deo",
+    "en": "Persun green part",
+    "es": "Parte verde persun",
+    "de": "Persungrüner Teil",
+    "k": 1000.0,
+    "p": 128.0,
+    "na": 33.0
+  },
+  {
+    "sr": "Rabarbara",
+    "en": "Rhubarb",
+    "es": "Ruibarbo",
+    "de": "Rhabarber",
+    "k": 270.0,
+    "p": 24.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Radic (cikorija)",
+    "en": "Radish (chicory)",
+    "es": "Rábano (achicoria)",
+    "de": "Rettich (Zichorie)",
+    "k": 322.0,
+    "p": 29.0,
+    "na": 18.0
+  },
+  {
+    "sr": "Salata endivija",
+    "en": "Endive salad",
+    "es": "Ensalada de escarola",
+    "de": "Endiviensalat",
+    "k": 346.0,
+    "p": 54.0,
+    "na": 53.0
+  },
+  {
+    "sr": "Salata glavatica",
+    "en": "Head salad",
+    "es": "ensalada de cabeza",
+    "de": "Kopfsalat",
+    "k": 360.0,
+    "p": 12.0,
+    "na": 6.0
+  },
+  {
+    "sr": "Salata kristalka",
+    "en": "Crystal salad",
+    "es": "ensalada de cristal",
+    "de": "Kristallsalat",
+    "k": 215.0,
+    "p": 20.0,
+    "na": 16.0
+  },
+  {
+    "sr": "Spanac svezi",
+    "en": "Spanish binds",
+    "es": "encuadernaciones españolas",
+    "de": "Spanisch bindet",
+    "k": 633.0,
+    "p": 55.0,
+    "na": 65.0
+  },
+  {
+    "sr": "Celer",
+    "en": "Celery",
+    "es": "Apio",
+    "de": "Sellerie",
+    "k": 291.0,
+    "p": 90.0,
+    "na": 98.0
+  },
+  {
+    "sr": "Cvekla",
+    "en": "Beetroot",
+    "es": "Remolacha",
+    "de": "Rote Bete",
+    "k": 325.0,
+    "p": 44.0,
+    "na": 30.0
+  },
+  {
+    "sr": "Cvekla sok",
+    "en": "Beet juice",
+    "es": "Jugo de remolacha",
+    "de": "Rübensaft",
+    "k": 265.0,
+    "p": 29.0,
+    "na": 45.0
+  },
+  {
+    "sr": "Ren",
+    "en": "Ren",
+    "es": "ren",
+    "de": "Ren",
+    "k": 554.0,
+    "p": 65.0,
+    "na": 9.0
+  },
+  {
+    "sr": "Keleraba",
+    "en": "Kohlrabi",
+    "es": "Colinabo",
+    "de": "Kohlrabi",
+    "k": 380.0,
+    "p": 50.0,
+    "na": 32.0
+  },
+  {
+    "sr": "sargarepa sveza",
+    "en": "Sargarepa bundle",
+    "es": "paquete sargarepa",
+    "de": "Sargarepa-Paket",
+    "k": 315.0,
+    "p": 31.0,
+    "na": 42.0
+  },
+  {
+    "sr": "Crna rotkva",
+    "en": "Black radish",
+    "es": "Rábano negro",
+    "de": "Schwarzer Rettich",
+    "k": 400.0,
+    "p": 70.0,
+    "na": 50.0
+  },
+  {
+    "sr": "Repa bela",
+    "en": "Turnip white",
+    "es": "nabo blanco",
+    "de": "Rübe weiß",
+    "k": 240.0,
+    "p": 28.0,
+    "na": 58.0
+  },
+  {
+    "sr": "Rotkvica",
+    "en": "Radish",
+    "es": "Rábano",
+    "de": "Rettich",
+    "k": 255.0,
+    "p": 26.0,
+    "na": 17.0
+  },
+  {
+    "sr": "Bob mladi kuvan",
+    "en": "Bob young cooked",
+    "es": "Bob joven cocinado",
+    "de": "Bob Young hat gekocht",
+    "k": 230.0,
+    "p": 95.0,
+    "na": 288.0
+  },
+  {
+    "sr": "Supa koksija",
+    "en": "Coke soup",
+    "es": "Sopa de coca cola",
+    "de": "Cola-Suppe",
+    "k": 84.0,
+    "p": 20.0,
+    "na": 140.0
+  },
+  {
+    "sr": "Supa govedja",
+    "en": "Beef soup",
+    "es": "Sopa de ternera",
+    "de": "Rindersuppe",
+    "k": 72.0,
+    "p": 60.0,
+    "na": 131.0
+  },
+  {
+    "sr": "Supa kocka",
+    "en": "Soup cube plate portion 250ml",
+    "es": "cubo de sopa",
+    "de": "Suppenwürfel",
+    "k": 8.0,
+    "p": 4.0,
+    "na": 180.0
+  },
+  {
+    "sr": "Pasulj kuvani",
+    "en": "Boiled beans",
+    "es": "frijoles hervidos",
+    "de": "Gekochte Bohnen",
+    "k": 400.0,
+    "p": 83.0,
+    "na": 235.0
+  },
+  {
+    "sr": "Pasulj zapeceni",
+    "en": "Baked beans",
+    "es": "frijoles horneados",
+    "de": "Gebackene Bohnen",
+    "k": 550.0,
+    "p": 101.0,
+    "na": 455.0
+  },
+  {
+    "sr": "Grasak zeleni u zrnu",
+    "en": "Green peas in the grain",
+    "es": "Guisantes verdes en grano",
+    "de": "Grüne Erbsen im Korn",
+    "k": 340.0,
+    "p": 100.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Socivo kuvano",
+    "en": "Juicy cooked",
+    "es": "Jugoso cocido",
+    "de": "Saftig zubereitet",
+    "k": 250.0,
+    "p": 119.0,
+    "na": 212.0
+  },
+  {
+    "sr": "Boranija zelena",
+    "en": "Green beans",
+    "es": "Judías verdes",
+    "de": "Grüne Bohnen",
+    "k": 248.0,
+    "p": 37.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Soja fermentirana",
+    "en": "Fermented soy",
+    "es": "soja fermentada",
+    "de": "Fermentiertes Soja",
+    "k": 550.0,
+    "p": 230.0,
+    "na": 0.0
+  },
+  {
+    "sr": "Soja suva u zrnu",
+    "en": "Dry soybeans in grain",
+    "es": "Soja seca en grano",
+    "de": "Trockene Sojabohnen im Getreide",
+    "k": 1680.0,
+    "p": 555.0,
+    "na": 5.0
+  },
+  {
+    "sr": "Sojin sir",
+    "en": "Soy cheese",
+    "es": "queso de soja",
+    "de": "Sojakäse",
+    "k": 121.0,
+    "p": 97.0,
+    "na": 7.0
+  },
+  {
+    "sr": "Sojino brasno",
+    "en": "Soya flour",
+    "es": "Harina de soja",
+    "de": "Sojamehl",
+    "k": 1660.0,
+    "p": 600.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Sojino mleko",
+    "en": "Soy milk",
+    "es": "leche de soja",
+    "de": "Sojamilch",
+    "k": 137.0,
+    "p": 57.0,
+    "na": 0.0
+  },
+  {
+    "sr": "Krastavac svezi",
+    "en": "Fresh cucumber",
+    "es": "pepino fresco",
+    "de": "Frische Gurke",
+    "k": 140.0,
+    "p": 17.0,
+    "na": 13.0
+  },
+  {
+    "sr": "Kukuruz slatki",
+    "en": "Sweet corn",
+    "es": "maíz dulce",
+    "de": "Zuckermais",
+    "k": 300.0,
+    "p": 114.0,
+    "na": 0.3
+  },
+  {
+    "sr": "Ajvar",
+    "en": "Ajvar",
+    "es": "Ajvar",
+    "de": "Ajvar",
+    "k": 320.0,
+    "p": 45.0,
+    "na": 400.0
+  },
+  {
+    "sr": "Paprika crvena ljuta",
+    "en": "Hot red pepper",
+    "es": "Pimiento rojo picante",
+    "de": "Scharfer roter Pfeffer",
+    "k": 340.0,
+    "p": 46.0,
+    "na": 7.0
+  },
+  {
+    "sr": "Paprika zacinska suva",
+    "en": "Paprika dry spice",
+    "es": "Especia seca de pimentón",
+    "de": "Paprika-Trockengewürz",
+    "k": 3170.0,
+    "p": 327.0,
+    "na": 193.0
+  },
+  {
+    "sr": "Paprika zelena sveza",
+    "en": "Green pepper",
+    "es": "Pimiento verde",
+    "de": "Grüner Pfeffer",
+    "k": 129.0,
+    "p": 25.0,
+    "na": 8.0
+  },
+  {
+    "sr": "Paprika zuta mesnata sveza",
+    "en": "Paprika yellow fleshy",
+    "es": "Pimentón amarillo carnoso",
+    "de": "Paprika gelbfleischig",
+    "k": 176.0,
+    "p": 23.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Patlidzan",
+    "en": "Aubergine",
+    "es": "Berenjena",
+    "de": "Aubergine",
+    "k": 305.0,
+    "p": 33.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Paradajz svezi",
+    "en": "Fresh tomatoes",
+    "es": "tomates frescos",
+    "de": "Frische Tomaten",
+    "k": 275.0,
+    "p": 25.0,
+    "na": 5.0
+  },
+  {
+    "sr": "Spargla",
+    "en": "Asparagus",
+    "es": "Espárragos",
+    "de": "Spargel",
+    "k": 207.0,
+    "p": 46.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Tikva (bundeva)",
+    "en": "pumpkin",
+    "es": "calabaza",
+    "de": "Kürbis",
+    "k": 310.0,
+    "p": 19.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Luk crveni",
+    "en": "Red onion",
+    "es": "cebolla morada",
+    "de": "Rote Zwiebel",
+    "k": 192.0,
+    "p": 36.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Luk beli",
+    "en": "White onion",
+    "es": "cebolla blanca",
+    "de": "Weiße Zwiebel",
+    "k": 400.0,
+    "p": 153.0,
+    "na": 17.0
+  },
+  {
+    "sr": "Praziluk",
+    "en": "Leeks",
+    "es": "puerros",
+    "de": "Lauch",
+    "k": 234.0,
+    "p": 49.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Cvekla kuvana",
+    "en": "Boiled beets",
+    "es": "remolacha hervida",
+    "de": "Gekochte Rüben",
+    "k": 148.0,
+    "p": 17.0,
+    "na": 274.0
+  },
+  {
+    "sr": "Feferoni kiseli",
+    "en": "Pickled pepperoni",
+    "es": "pepperoni en escabeche",
+    "de": "Eingelegte Peperoni",
+    "k": 269.0,
+    "p": 37.0,
+    "na": 759.0
+  },
+  {
+    "sr": "Krastavci kiseli  +++Natrium",
+    "en": "Pickled cucumbers +++ sodium",
+    "es": "Pepinos encurtidos +++ sodio",
+    "de": "Eingelegte Gurken +++ Natrium",
+    "k": 50.0,
+    "p": 15.0,
+    "na": 1353.0
+  },
+  {
+    "sr": "Kiseli kupus - ocedjeno",
+    "en": "Sauerkraut - drained",
+    "es": "Chucrut - escurrido",
+    "de": "Sauerkraut – abgetropft",
+    "k": 140.0,
+    "p": 30.0,
+    "na": 650.0
+  },
+  {
+    "sr": "Masline zel. Marinirane - +++Natrium",
+    "en": "Olive green. marinated - +++sodium",
+    "es": "Verde oliva. marinado - +++sodio",
+    "de": "Olivgrün. mariniert - +++Natrium",
+    "k": 43.0,
+    "p": 17.0,
+    "na": 2100.0
+  },
+  {
+    "sr": "Paprika kisela  +++Natrium",
+    "en": "Pickled paprika +++ sodium",
+    "es": "Pimentón encurtido +++ sodio",
+    "de": "Eingelegter Paprika +++ Natrium",
+    "k": 131.0,
+    "p": 20.0,
+    "na": 1248.0
+  },
+  {
+    "sr": "Paradajz ketchup",
+    "en": "Tomato ketchup",
+    "es": "salsa de tomate",
+    "de": "Tomatenketchup",
+    "k": 800.0,
+    "p": 20.0,
+    "na": 1200.0
+  },
+  {
+    "sr": "Paradajz sok",
+    "en": "Tomato juice",
+    "es": "Jugo de tomate",
+    "de": "Tomatensaft",
+    "k": 220.0,
+    "p": 19.0,
+    "na": 360.0
+  },
+  {
+    "sr": "Paradajz koncentr. 30%",
+    "en": "Tomato concentrate. 30%",
+    "es": "Concentrado de tomate. 30%",
+    "de": "Tomatenkonzentrat. 30 %",
+    "k": 1000.0,
+    "p": 70.0,
+    "na": 450.0
+  },
+  {
+    "sr": "Lisicarke gljive",
+    "en": "Chanterelle mushrooms",
+    "es": "Hongos rebozuelos",
+    "de": "Pfifferlinge",
+    "k": 450.0,
+    "p": 50.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Sampinjoni gljive gajeni",
+    "en": "Cultivated champignon mushrooms",
+    "es": "Champiñones cultivados",
+    "de": "Zuchtchampignons",
+    "k": 422.0,
+    "p": 123.0,
+    "na": 8.0
+  },
+  {
+    "sr": "Vrganji gljive",
+    "en": "Boletus mushrooms",
+    "es": "Hongos boletus",
+    "de": "Steinpilze",
+    "k": 346.0,
+    "p": 115.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Grejpfrut",
+    "en": "Grapefruit",
+    "es": "Pomelo",
+    "de": "Grapefruit",
+    "k": 277.0,
+    "p": 18.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Limun",
+    "en": "Lemon",
+    "es": "Limón",
+    "de": "Zitrone",
+    "k": 149.0,
+    "p": 16.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Limeta",
+    "en": "Lime",
+    "es": "Kalk",
+    "de": "cal",
+    "k": 102.0,
+    "p": 15.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Mandarina",
+    "en": "Tangerine",
+    "es": "Mandarina",
+    "de": "Mandarine",
+    "k": 210.0,
+    "p": 20.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Nar – sipak",
+    "en": "Pomegranate",
+    "es": "Granada",
+    "de": "Granatapfel",
+    "k": 260.0,
+    "p": 8.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Narandza",
+    "en": "Orange",
+    "es": "Naranja",
+    "de": "Orange",
+    "k": 177.0,
+    "p": 23.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Borovnica sveza",
+    "en": "Blueberry",
+    "es": "Arándano",
+    "de": "Blaubeere",
+    "k": 81.0,
+    "p": 13.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Grozde suvo",
+    "en": "Grapes dry",
+    "es": "Uvas secas",
+    "de": "Trauben trocken",
+    "k": 782.0,
+    "p": 110.0,
+    "na": 21.0
+  },
+  {
+    "sr": "Grozde sveze",
+    "en": "Bunches of grapes",
+    "es": "racimos de uvas",
+    "de": "Weintrauben",
+    "k": 192.0,
+    "p": 20.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Jagoda sveza",
+    "en": "Strawberry jam",
+    "es": "Mermelada de fresa",
+    "de": "Erdbeermarmelade",
+    "k": 147.0,
+    "p": 29.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Malina sveza",
+    "en": "Raspberry connection",
+    "es": "Conexión frambuesa",
+    "de": "Raspberry-Verbindung",
+    "k": 170.0,
+    "p": 22.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Ribizla crna",
+    "en": "Currant black",
+    "es": "grosella negra",
+    "de": "Schwarze Johannisbeere",
+    "k": 310.0,
+    "p": 40.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Ribizla crvena",
+    "en": "Currant red",
+    "es": "grosella roja",
+    "de": "Johannisbeerrot",
+    "k": 238.0,
+    "p": 27.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Jabuka pire",
+    "en": "Apple puree",
+    "es": "puré de manzana",
+    "de": "Apfelmus",
+    "k": 114.0,
+    "p": 0.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Jabuka zrela",
+    "en": "The apple is ripe",
+    "es": "la manzana esta madura",
+    "de": "Der Apfel ist reif",
+    "k": 144.0,
+    "p": 12.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Kruska sveza",
+    "en": "Krusa connection",
+    "es": "conexión krusa",
+    "de": "Krusa-Verbindung",
+    "k": 126.0,
+    "p": 15.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Breskva susena",
+    "en": "Dried peach",
+    "es": "durazno seco",
+    "de": "Getrockneter Pfirsich",
+    "k": 1340.0,
+    "p": 126.0,
+    "na": 9.0
+  },
+  {
+    "sr": "Breskva sveza",
+    "en": "Peach blossom",
+    "es": "flor de durazno",
+    "de": "Pfirsichblüte",
+    "k": 205.0,
+    "p": 23.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kajsija Marelica sveza",
+    "en": "Fresh apricot",
+    "es": "Frische Aprikose",
+    "de": "Albaricoque fresco",
+    "k": 250.0,
+    "p": 23.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kajsija marelica susena",
+    "en": "Dried apricot",
+    "es": "albaricoque seco",
+    "de": "Getrocknete Aprikose",
+    "k": 1370.0,
+    "p": 114.0,
+    "na": 11.0
+  },
+  {
+    "sr": "Sljiva suva",
+    "en": "Dry plum",
+    "es": "ciruela seca",
+    "de": "Trockene Pflaume",
+    "k": 860.0,
+    "p": 83.0,
+    "na": 12.0
+  },
+  {
+    "sr": "Sljiva sveza",
+    "en": "Plum connection",
+    "es": "Conexión de ciruela",
+    "de": "Pflaumenanschluss",
+    "k": 221.0,
+    "p": 18.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Tresnja sveza",
+    "en": "The cherry blossoms",
+    "es": "las flores de cerezo",
+    "de": "Die Kirschblüten",
+    "k": 229.0,
+    "p": 20.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Visnja sveza",
+    "en": "Cherry blossom",
+    "es": "flor de cerezo",
+    "de": "Kirschblüte",
+    "k": 191.0,
+    "p": 19.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Ananas",
+    "en": "Pineapple",
+    "es": "Piña",
+    "de": "Ananas",
+    "k": 173.0,
+    "p": 9.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Avokado",
+    "en": "Avocado",
+    "es": "Palta",
+    "de": "Avocado",
+    "k": 503.0,
+    "p": 38.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Banana",
+    "en": "Banana",
+    "es": "Banana",
+    "de": "Banane",
+    "k": 393.0,
+    "p": 28.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kivi",
+    "en": "Kiwi",
+    "es": "Kiwi",
+    "de": "Kiwi",
+    "k": 295.0,
+    "p": 31.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Mango",
+    "en": "Mango",
+    "es": "mango",
+    "de": "Mango",
+    "k": 190.0,
+    "p": 13.0,
+    "na": 7.0
+  },
+  {
+    "sr": "Dinja",
+    "en": "Melon",
+    "es": "Melón",
+    "de": "Melone",
+    "k": 330.0,
+    "p": 21.0,
+    "na": 20.0
+  },
+  {
+    "sr": "Lubenica",
+    "en": "Watermelon",
+    "es": "Sandía",
+    "de": "Wassermelone",
+    "k": 158.0,
+    "p": 11.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Smokve sveze",
+    "en": "Fresh figs",
+    "es": "higos frescos",
+    "de": "Frische Feigen",
+    "k": 240.0,
+    "p": 32.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Smokve suve",
+    "en": "Dry figs",
+    "es": "higos secos",
+    "de": "Trockene Feigen",
+    "k": 850.0,
+    "p": 108.0,
+    "na": 40.0
+  },
+  {
+    "sr": "Ananas sok –konzerva",
+    "en": "Canned pineapple juice",
+    "es": "Jugo de piña enlatado",
+    "de": "Ananassaft aus der Dose",
+    "k": 140.0,
+    "p": 10.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Cedjeni limun",
+    "en": "Squeezed lemon",
+    "es": "limón exprimido",
+    "de": "Ausgepresste Zitrone",
+    "k": 124.0,
+    "p": 20.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Sok Grozde",
+    "en": "Grape juice",
+    "es": "jugo de uva",
+    "de": "Traubensaft",
+    "k": 132.0,
+    "p": 11.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Sok Malina sirup razreden",
+    "en": "Raspberry juice graded syrup",
+    "es": "Almíbar graduado de jugo de frambuesa",
+    "de": "Himbeersaft-Sirup",
+    "k": 105.0,
+    "p": 14.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Sok od jabuke 50%",
+    "en": "Apple juice 50%",
+    "es": "Jugo de manzana 50%",
+    "de": "Apfelsaft 50 %",
+    "k": 100.0,
+    "p": 12.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Sok od Narandze Orange juice 100% / cedjena",
+    "en": "Orange juice 100% / squeezed",
+    "es": "Zumo de naranja 100% / exprimido",
+    "de": "Orangensaft 100 % / gepresst",
+    "k": 200.0,
+    "p": 25.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Kruska sok",
+    "en": "Pear juice",
+    "es": "jugo de pera",
+    "de": "Birnensaft",
+    "k": 33.0,
+    "p": 3.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Breskva sok",
+    "en": "Peach juice",
+    "es": "Jugo de durazno",
+    "de": "Pfirsichsaft",
+    "k": 78.0,
+    "p": 11.0,
+    "na": 7.0
+  },
+  {
+    "sr": "Kajsija Marelica sok",
+    "en": "Apricot juice",
+    "es": "jugo de albaricoque",
+    "de": "Aprikosensaft",
+    "k": 362.0,
+    "p": 23.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Sok Brusnica",
+    "en": "Cranberry juice",
+    "es": "jugo de arándano",
+    "de": "Cranberrysaft",
+    "k": 50.0,
+    "p": 5.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Sok Borovnica",
+    "en": "Blueberry juice",
+    "es": "Jugo de arándanos",
+    "de": "Blaubeersaft",
+    "k": 80.0,
+    "p": 10.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Sok Ananas",
+    "en": "Pineapple juice",
+    "es": "jugo de piña",
+    "de": "Ananassaft",
+    "k": 100.0,
+    "p": 10.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Sok Jagoda",
+    "en": "Strawberry juice",
+    "es": "Jugo de fresa",
+    "de": "Erdbeersaft",
+    "k": 60.0,
+    "p": 8.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Sok Visnja",
+    "en": "Cherry juice",
+    "es": "jugo de cereza",
+    "de": "Kirschsaft",
+    "k": 130.0,
+    "p": 17.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kompot Ananas",
+    "en": "Pineapple compote",
+    "es": "Compota de piña",
+    "de": "Ananaskompott",
+    "k": 94.0,
+    "p": 5.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kompot Breskva",
+    "en": "Peach compote",
+    "es": "Compota de melocotón",
+    "de": "Pfirsichkompott",
+    "k": 150.0,
+    "p": 10.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kompot Kruska",
+    "en": "Pear compote",
+    "es": "Compota de pera",
+    "de": "Birnenkompott",
+    "k": 90.0,
+    "p": 5.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kompot kajsija Marelica",
+    "en": "Apricot compote",
+    "es": "Compota de albaricoque",
+    "de": "Aprikosenkompott",
+    "k": 260.0,
+    "p": 13.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kompot  sljiva",
+    "en": "Plum compote",
+    "es": "Compota de ciruela",
+    "de": "Pflaumenkompott",
+    "k": 80.0,
+    "p": 8.0,
+    "na": 5.0
+  },
+  {
+    "sr": "Kompot  Tresnja ili visnja",
+    "en": "Cherry or cherry compote",
+    "es": "Compota de cerezas o cerezas",
+    "de": "Kirsche oder Kirschkompott",
+    "k": 125.0,
+    "p": 15.0,
+    "na": 4.0
+  },
+  {
+    "sr": "NUTELLA krem",
+    "en": "Nutella cream",
+    "es": "crema de nutella",
+    "de": "Nutella-Creme",
+    "k": 407.0,
+    "p": 152.0,
+    "na": 107.0
+  },
+  {
+    "sr": "Borovnica dzem",
+    "en": "Blueberry jam",
+    "es": "Mermelada de arándanos",
+    "de": "Blaubeermarmelade",
+    "k": 45.0,
+    "p": 7.0,
+    "na": 50.0
+  },
+  {
+    "sr": "Jagoda dzem",
+    "en": "Strawberry jam",
+    "es": "Mermelada de fresa",
+    "de": "Erdbeermarmelade",
+    "k": 80.0,
+    "p": 16.0,
+    "na": 50.0
+  },
+  {
+    "sr": "Malina dzem",
+    "en": "Raspberry jam",
+    "es": "Mermelada de frambuesa",
+    "de": "Himbeermarmelade",
+    "k": 65.0,
+    "p": 15.0,
+    "na": 15.0
+  },
+  {
+    "sr": "Marelica dzem",
+    "en": "Apricot jam",
+    "es": "mermelada de albaricoque",
+    "de": "Aprikosenmarmelade",
+    "k": 104.0,
+    "p": 11.0,
+    "na": 12.0
+  },
+  {
+    "sr": "Tresnja dzem",
+    "en": "Cherry jam",
+    "es": "Mermelada de cerezas",
+    "de": "Kirschmarmelade",
+    "k": 130.0,
+    "p": 10.0,
+    "na": 10.0
+  },
+  {
+    "sr": "Mesana marmelada dzem",
+    "en": "Meat marmalade jam",
+    "es": "Mermelada de carne",
+    "de": "Fleischmarmeladenmarmelade",
+    "k": 44.0,
+    "p": 13.0,
+    "na": 18.0
+  },
+  {
+    "sr": "Badem ne pecen",
+    "en": "Unroasted almonds",
+    "es": "almendras sin tostar",
+    "de": "Ungeröstete Mandeln",
+    "k": 705.0,
+    "p": 481.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Kesten pecen",
+    "en": "Roasted chestnut",
+    "es": "castaña asada",
+    "de": "Geröstete Kastanie",
+    "k": 592.0,
+    "p": 107.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Kesten pire (kuvan)",
+    "en": "Chestnut puree (cooked)",
+    "es": "Puré de castañas (cocido)",
+    "de": "Kastanienpüree (gekocht)",
+    "k": 500.0,
+    "p": 80.0,
+    "na": 5.0
+  },
+  {
+    "sr": "Kikiriki przen",
+    "en": "Peanuts przen",
+    "es": "Przen de maní",
+    "de": "Erdnussbrötchen",
+    "k": 777.0,
+    "p": 409.0,
+    "na": 6.0
+  },
+  {
+    "sr": "Kikiriki przen, soljen",
+    "en": "Salted peanuts",
+    "es": "maní salado",
+    "de": "Gesalzene Erdnüsse",
+    "k": 786.0,
+    "p": 410.0,
+    "na": 420.0
+  },
+  {
+    "sr": "Kokosov orah",
+    "en": "Coconut",
+    "es": "Coco",
+    "de": "Kokosnuss",
+    "k": 379.0,
+    "p": 94.0,
+    "na": 35.0
+  },
+  {
+    "sr": "Lesnik suvi",
+    "en": "Lesnik is dry",
+    "es": "Lesnik está seco",
+    "de": "Lesnik ist trocken",
+    "k": 704.0,
+    "p": 333.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Orah suvi",
+    "en": "Walnut dry",
+    "es": "nuez seca",
+    "de": "Walnuss trocken",
+    "k": 544.0,
+    "p": 409.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Semenke bundeve suve",
+    "en": "Pumpkin seeds dry",
+    "es": "Semillas de calabaza secas",
+    "de": "Kürbiskerne trocknen",
+    "k": 818.0,
+    "p": 1144.0,
+    "na": 18.0
+  },
+  {
+    "sr": "Semenke maka suve",
+    "en": "Dry poppy seeds",
+    "es": "Semillas de amapola secas",
+    "de": "Trockener Mohn",
+    "k": 705.0,
+    "p": 854.0,
+    "na": 21.0
+  },
+  {
+    "sr": "Semenke susama suve",
+    "en": "Dry sesame seeds",
+    "es": "Semillas de sésamo secas",
+    "de": "Trockene Sesamkörner",
+    "k": 458.0,
+    "p": 607.0,
+    "na": 45.0
+  },
+  {
+    "sr": "Semenke suncokreta suve",
+    "en": "Sunflower seeds dry",
+    "es": "Semillas de girasol secas",
+    "de": "Sonnenblumenkerne trocknen",
+    "k": 690.0,
+    "p": 100.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Biskvit ne slani",
+    "en": "The biscuit is not salty",
+    "es": "La galleta no es salada.",
+    "de": "Der Keks ist nicht salzig",
+    "k": 100.0,
+    "p": 100.0,
+    "na": 40.0
+  },
+  {
+    "sr": "Piskote",
+    "en": "Piscotte",
+    "es": "Piscotte",
+    "de": "Piscotte",
+    "k": 250.0,
+    "p": 150.0,
+    "na": 250.0
+  },
+  {
+    "sr": "Keks „Petit Beurre“",
+    "en": "Biscuits \"petit beurre\"",
+    "es": "Galletas \"petit beurre\"",
+    "de": "Kekse „Petit Beurre“",
+    "k": 100.0,
+    "p": 145.0,
+    "na": 360.0
+  },
+  {
+    "sr": "Krekeri slani (TUC)",
+    "en": "saltine crackers (tuc)",
+    "es": "galletas saladas (tuc)",
+    "de": "Salzcracker (Tuc)",
+    "k": 130.0,
+    "p": 130.0,
+    "na": 1000.0
+  },
+  {
+    "sr": "Med",
+    "en": "Med",
+    "es": "Medicina",
+    "de": "Med",
+    "k": 50.0,
+    "p": 20.0,
+    "na": 10.0
+  },
+  {
+    "sr": "Secer kristal",
+    "en": "Sugar crystal",
+    "es": "cristal de azucar",
+    "de": "Zuckerkristall",
+    "k": 0.0,
+    "p": 0.0,
+    "na": 0.0
+  },
+  {
+    "sr": "Bombone razne, tvrde",
+    "en": "All kinds of candies, they claim",
+    "es": "Todo tipo de dulces, afirman",
+    "de": "Alle Arten von Süßigkeiten, behaupten sie",
+    "k": 3.0,
+    "p": 7.0,
+    "na": 32.0
+  },
+  {
+    "sr": "Gumene bombone Haribo",
+    "en": "Gummy candies Haribo",
+    "es": "caramelos de goma Haribo",
+    "de": "Gummibonbons Haribo",
+    "k": 50.0,
+    "p": 20.0,
+    "na": 35.0
+  },
+  {
+    "sr": "Cokolada mlecna",
+    "en": "Milk chocolate",
+    "es": "Chocolate con leche",
+    "de": "Vollmilchschokolade",
+    "k": 400.0,
+    "p": 200.0,
+    "na": 100.0
+  },
+  {
+    "sr": "Puding razni kuvan",
+    "en": "Various cooked puddings",
+    "es": "Varios pudines cocidos",
+    "de": "Verschiedene gekochte Puddings",
+    "k": 151.0,
+    "p": 117.0,
+    "na": 90.0
+  },
+  {
+    "sr": "Zito Celo zrno",
+    "en": "Whole wheat grain",
+    "es": "grano de trigo integral",
+    "de": "Vollkornkorn",
+    "k": 452.0,
+    "p": 264.0,
+    "na": 12.0
+  },
+  {
+    "sr": "Griz (Krupica)",
+    "en": "semolina",
+    "es": "sémola",
+    "de": "Grieß",
+    "k": 160.0,
+    "p": 189.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Kuvano zito",
+    "en": "Boiled wheat",
+    "es": "trigo hervido",
+    "de": "Gekochter Weizen",
+    "k": 90.0,
+    "p": 115.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Brasno kukuruzno",
+    "en": "Corn flour",
+    "es": "harina de maiz",
+    "de": "Maismehl",
+    "k": 120.0,
+    "p": 256.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Pahuljice-corn flakes",
+    "en": "Corn flakes",
+    "es": "copos de maíz",
+    "de": "Cornflakes",
+    "k": 139.0,
+    "p": 59.0,
+    "na": 910.0
+  },
+  {
+    "sr": "Griz (Krupica) kukuruzni",
+    "en": "Corn semolina",
+    "es": "sémola de maíz",
+    "de": "Maisgrieß",
+    "k": 157.0,
+    "p": 73.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Kokice bez dodatka",
+    "en": "Popcorn without additives",
+    "es": "Palomitas de maíz sin aditivos",
+    "de": "Popcorn ohne Zusatzstoffe",
+    "k": 274.0,
+    "p": 300.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Kokice sa uljem-slane",
+    "en": "Popcorn with oil-salted",
+    "es": "Palomitas de maíz con aceite salado",
+    "de": "Popcorn mit Öl gesalzen",
+    "k": 225.0,
+    "p": 250.0,
+    "na": 600.0
+  },
+  {
+    "sr": "Kuvani kukuruz",
+    "en": "Boiled corn",
+    "es": "maíz hervido",
+    "de": "Gekochter Mais",
+    "k": 249.0,
+    "p": 103.0,
+    "na": 17.0
+  },
+  {
+    "sr": "Kukuruz Celo zrno",
+    "en": "Corn whole grain",
+    "es": "Maíz integral",
+    "de": "Mais-Vollkorn",
+    "k": 502.0,
+    "p": 344.0,
+    "na": 8.0
+  },
+  {
+    "sr": "Griz (Krupica)",
+    "en": "semolina",
+    "es": "sémola",
+    "de": "Grieß",
+    "k": 112.0,
+    "p": 75.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Brasno T 450",
+    "en": "Brasno t 450",
+    "es": "brasno t 450",
+    "de": "Brasno t 450",
+    "k": 108.0,
+    "p": 74.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Brasno T 550",
+    "en": "Brasno t 550",
+    "es": "brasnot 550",
+    "de": "Brasno t 550",
+    "k": 126.0,
+    "p": 113.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Mekinje",
+    "en": "Bran",
+    "es": "Salvado",
+    "de": "Kleie",
+    "k": 1390.0,
+    "p": 1280.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Brasno graham",
+    "en": "Floury graham",
+    "es": "graham harinoso",
+    "de": "Mehliger Graham",
+    "k": 380.0,
+    "p": 350.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Pirinac Nepoliran",
+    "en": "Unpolished rice",
+    "es": "arroz sin pulir",
+    "de": "Unpolierter Reis",
+    "k": 130.0,
+    "p": 325.0,
+    "na": 10.0
+  },
+  {
+    "sr": "Pirinac Poliran",
+    "en": "Polished rice",
+    "es": "arroz pulido",
+    "de": "Polierter Reis",
+    "k": 103.0,
+    "p": 120.0,
+    "na": 6.0
+  },
+  {
+    "sr": "Pirinac Kuvan bez soli",
+    "en": "Rice cooked without salt",
+    "es": "Arroz cocido sin sal",
+    "de": "Reis ohne Salz gekocht",
+    "k": 31.0,
+    "p": 36.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Pirinac Smedi",
+    "en": "Brown rice",
+    "es": "arroz integral",
+    "de": "Brauner Reis",
+    "k": 260.0,
+    "p": 250.0,
+    "na": 10.0
+  },
+  {
+    "sr": "Celo zrno zob",
+    "en": "Whole grain oats",
+    "es": "Avena integral",
+    "de": "Vollkornhafer",
+    "k": 355.0,
+    "p": 342.0,
+    "na": 8.0
+  },
+  {
+    "sr": "Pahuljice – corn flakes zob",
+    "en": "Flakes - corn flakes oat",
+    "es": "Copos - copos de maíz y avena",
+    "de": "Flocken - Cornflakes Hafer",
+    "k": 335.0,
+    "p": 391.0,
+    "na": 5.0
+  },
+  {
+    "sr": "Mesane zitarice",
+    "en": "Meat cereals",
+    "es": "Cereales de carne",
+    "de": "Fleischgetreide",
+    "k": 300.0,
+    "p": 98.0,
+    "na": 390.0
+  },
+  {
+    "sr": "Zitarice s vocem i orasima",
+    "en": "Cereals with fruit and nuts",
+    "es": "Cereales con frutas y frutos secos.",
+    "de": "Cerealien mit Früchten und Nüssen",
+    "k": 348.0,
+    "p": 298.0,
+    "na": 564.0
+  },
+  {
+    "sr": "Palenta sa mlekom",
+    "en": "Polenta with milk",
+    "es": "polenta con leche",
+    "de": "Polenta mit Milch",
+    "k": 219.0,
+    "p": 140.0,
+    "na": 281.0
+  },
+  {
+    "sr": "Palenta",
+    "en": "Polenta",
+    "es": "Polenta",
+    "de": "Polenta",
+    "k": 32.0,
+    "p": 15.0,
+    "na": 400.0
+  },
+  {
+    "sr": "Makarone",
+    "en": "Macaroni",
+    "es": "Macarrones",
+    "de": "Makkaroni",
+    "k": 70.0,
+    "p": 58.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Spagete",
+    "en": "Spaghetti",
+    "es": "Espaguetis",
+    "de": "Spaghetti",
+    "k": 70.0,
+    "p": 58.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Burek sa sirom",
+    "en": "Burek with cheese",
+    "es": "burek con queso",
+    "de": "Burek mit Käse",
+    "k": 160.0,
+    "p": 150.0,
+    "na": 400.0
+  },
+  {
+    "sr": "Burek sa jabukama",
+    "en": "Burek with apples",
+    "es": "Burek con manzanas",
+    "de": "Burek mit Äpfeln",
+    "k": 120.0,
+    "p": 50.0,
+    "na": 150.0
+  },
+  {
+    "sr": "Burek prazan",
+    "en": "Burek without anything",
+    "es": "burek sin nada",
+    "de": "Burek ohne irgendetwas",
+    "k": 100.0,
+    "p": 90.0,
+    "na": 180.0
+  },
+  {
+    "sr": "Burek sa mesom",
+    "en": "Burek with meat",
+    "es": "burek con carne",
+    "de": "Burek mit Fleisch",
+    "k": 220.0,
+    "p": 170.0,
+    "na": 450.0
+  },
+  {
+    "sr": "Pita sa visnjama",
+    "en": "Pie with cherries",
+    "es": "pastel con cerezas",
+    "de": "Kuchen mit Kirschen",
+    "k": 100.0,
+    "p": 40.0,
+    "na": 100.0
+  },
+  {
+    "sr": "Pita sa spanacem",
+    "en": "Pie with spinach",
+    "es": "pastel con espinacas",
+    "de": "Kuchen mit Spinat",
+    "k": 200.0,
+    "p": 150.0,
+    "na": 350.0
+  },
+  {
+    "sr": "Hleb Psenicni crni",
+    "en": "Black wheat bread",
+    "es": "pan de trigo negro",
+    "de": "Schwarzes Weizenbrot",
+    "k": 150.0,
+    "p": 110.0,
+    "na": 500.0
+  },
+  {
+    "sr": "Hleb Psenicni polubeli",
+    "en": "Semi-white wheat bread",
+    "es": "Pan de trigo semiblanco",
+    "de": "Halbweißes Weizenbrot",
+    "k": 100.0,
+    "p": 95.0,
+    "na": 500.0
+  },
+  {
+    "sr": "Hleb Psenicni beli",
+    "en": "White wheat bread",
+    "es": "pan de trigo blanco",
+    "de": "Weißes Weizenbrot",
+    "k": 100.0,
+    "p": 95.0,
+    "na": 500.0
+  },
+  {
+    "sr": "Hleb mesani Psenica + raz",
+    "en": "Wheat meat bread + div",
+    "es": "Pan de carne de trigo + div",
+    "de": "Weizenfleischbrot + div",
+    "k": 145.0,
+    "p": 135.0,
+    "na": 500.0
+  },
+  {
+    "sr": "Hleb Razani",
+    "en": "Crumbed bread",
+    "es": "pan rallado",
+    "de": "Zerkrümeltes Brot",
+    "k": 338.0,
+    "p": 347.0,
+    "na": 370.0
+  },
+  {
+    "sr": "Hleb Graham",
+    "en": "Graham bread",
+    "es": "pan graham",
+    "de": "Grahambrot",
+    "k": 209.0,
+    "p": 244.0,
+    "na": 370.0
+  },
+  {
+    "sr": "Hleb Dvopek psenicni",
+    "en": "Double-baked wheat bread",
+    "es": "Pan de trigo cocido dos veces",
+    "de": "Doppelt gebackenes Weizenbrot",
+    "k": 131.0,
+    "p": 120.0,
+    "na": 635.0
+  },
+  {
+    "sr": "Hleb sa marmeladom namaz snita",
+    "en": "Bread with marmalade spread",
+    "es": "Pan untado con mermelada",
+    "de": "Brot mit Marmeladenaufstrich",
+    "k": 42.0,
+    "p": 14.0,
+    "na": 88.0
+  },
+  {
+    "sr": "Hleb sa medom namaz",
+    "en": "Bread with honey spread,",
+    "es": "Pan untado con miel,",
+    "de": "Brot mit Honigaufstrich, in Scheiben",
+    "k": 106.0,
+    "p": 18.0,
+    "na": 192.0
+  },
+  {
+    "sr": "Kiflice sa dzemom",
+    "en": "Rolls with jam",
+    "es": "Rollitos con mermelada",
+    "de": "Brötchen mit Marmelade",
+    "k": 77.0,
+    "p": 47.0,
+    "na": 223.0
+  },
+  {
+    "sr": "Sprite, Schwepss + E330 limunska kiselina",
+    "en": "Sprite, schwepss + e330 citric acid",
+    "es": "Sprite, schwepss + ácido cítrico e330",
+    "de": "Sprite, Schwepss + E330 Zitronensäure",
+    "k": 1.0,
+    "p": 1.0,
+    "na": 10.0
+  },
+  {
+    "sr": "Sok Tonic water",
+    "en": "Juice tonic water",
+    "es": "agua tónica de jugo",
+    "de": "Entsaften Sie Tonic Water",
+    "k": 0.0,
+    "p": 0.0,
+    "na": 19.0
+  },
+  {
+    "sr": "Guarana Energy drink Upozorenje na kofein I secer",
+    "en": "Guarana Energy drink Caffeine and sugar warning",
+    "es": "Bebida energética Guaraná. Advertencia sobre cafeína y azúcar.",
+    "de": "Guarana-Energy-Drink – Warnhinweis zu Koffein und Zucker",
+    "k": 1.0,
+    "p": 0.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Coca Cola  +E338!",
+    "en": "Coca cola +e338!",
+    "es": "Cocacola +e338!",
+    "de": "Coca Cola +e338!",
+    "k": 1.0,
+    "p": 12.0,
+    "na": 8.0
+  },
+  {
+    "sr": "Red Bull  zeroo",
+    "en": "Red bull  zeroo",
+    "es": "Toro rojo  cero",
+    "de": "Red Bull Nullo",
+    "k": 4.5,
+    "p": 0.5,
+    "na": 1.5
+  },
+  {
+    "sr": "Red Bull  clasic",
+    "en": "Red bull  classic",
+    "es": "Red bull  clásico",
+    "de": "Red Bull  Klassiker",
+    "k": 0.0,
+    "p": 0.0,
+    "na": 15.0
+  },
+  {
+    "sr": "Caj biljni + secer",
+    "en": "Herbal tea + sugar",
+    "es": "Té de hierbas + azúcar",
+    "de": "Kräutertee + Zucker",
+    "k": 9.0,
+    "p": 2.0,
+    "na": 1.0
+  },
+  {
+    "sr": "Boza belo kukuruzno brasno",
+    "en": "Boza white corn flour",
+    "es": "Harina de maíz blanco boza",
+    "de": "Boza weißes Maismehl",
+    "k": 50.0,
+    "p": 50.0,
+    "na": 5.0
+  },
+  {
+    "sr": "Kvas sok",
+    "en": "Kvass juice",
+    "es": "Jugo de kvas",
+    "de": "Kwas-Saft",
+    "k": 10.0,
+    "p": 100.0,
+    "na": 12.0
+  },
+  {
+    "sr": "Caj indijski +secer",
+    "en": "Indian tea + sugar",
+    "es": "Té indio + azúcar",
+    "de": "Indischer Tee + Zucker",
+    "k": 37.0,
+    "p": 1.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Kakao + secer",
+    "en": "Cocoa + sugar",
+    "es": "Cacao + azúcar",
+    "de": "Kakao + Zucker",
+    "k": 400.0,
+    "p": 60.0,
+    "na": 10.0
+  },
+  {
+    "sr": "Kakao sa mlekom",
+    "en": "Cocoa with milk",
+    "es": "cacao con leche",
+    "de": "Kakao mit Milch",
+    "k": 549.0,
+    "p": 152.0,
+    "na": 26.0
+  },
+  {
+    "sr": "Mleko za kafu",
+    "en": "Milk for coffee",
+    "es": "Leche para café",
+    "de": "Milch für Kaffee",
+    "k": 150.0,
+    "p": 90.0,
+    "na": 150.0
+  },
+  {
+    "sr": "Kafa espresso",
+    "en": "Espresso coffee",
+    "es": "café expreso",
+    "de": "Espressokaffee",
+    "k": 49.0,
+    "p": 3.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Kafa Ness + secer",
+    "en": "Coffee ness + sugar",
+    "es": "Café + azúcar",
+    "de": "Kaffeegeschmack + Zucker",
+    "k": 80.0,
+    "p": 35.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Kafa Capuchino + secer",
+    "en": "Cappuccino coffee + sugar",
+    "es": "Café capuchino + azúcar",
+    "de": "Cappuccino-Kaffee + Zucker",
+    "k": 78.0,
+    "p": 80.0,
+    "na": 39.0
+  },
+  {
+    "sr": "Mineralna voda (San Pelegrino limun)",
+    "en": "Mineral water (san pelegrino lemon)",
+    "es": "Agua mineral (limón san pelegrino)",
+    "de": "Mineralwasser (San Pelegrino Zitrone)",
+    "k": 3.0,
+    "p": 0.0,
+    "na": 91.0
+  },
+  {
+    "sr": "Sok CEDEVITA sa kiselom vodom",
+    "en": "Cedevita juice with sour water",
+    "es": "Jugo de Cedevita con agua agria.",
+    "de": "Cedevita-Saft mit saurem Wasser",
+    "k": 1.9,
+    "p": 0.0,
+    "na": 920.0
+  },
+  {
+    "sr": "Sok CEDEVITA sa obicnom vodom",
+    "en": "Cedevita juice with plain water",
+    "es": "Jugo de Cedevita con agua corriente.",
+    "de": "Cedevita-Saft mit klarem Wasser",
+    "k": 0.0,
+    "p": 0.0,
+    "na": 870.0
+  },
+  {
+    "sr": "Sok Limunada 6%",
+    "en": "Lemonade 6%",
+    "es": "Limonada 6%",
+    "de": "Limonade 6%",
+    "k": 30.0,
+    "p": 7.0,
+    "na": 4.0
+  },
+  {
+    "sr": "Sok narandza bistri/mutni",
+    "en": "Clear/cloudy orange juice",
+    "es": "Jugo de naranja claro/turbio",
+    "de": "Klarer/trüber Orangensaft",
+    "k": 10.0,
+    "p": 3.0,
+    "na": 14.0
+  },
+  {
+    "sr": "Pivo bezalkoholno Heineken 0.0",
+    "en": "Non-alcoholic beer heineken 0.0",
+    "es": "Cerveza sin alcohol heineken 0.0",
+    "de": "Alkoholfreies Bier Heineken 0,0",
+    "k": 27.0,
+    "p": 20.0,
+    "na": 10.0
+  },
+  {
+    "sr": "Pivo 5% alk.",
+    "en": "Beer 5% alc.",
+    "es": "Cerveza 5% alc.",
+    "de": "Bier 5% Alkohol.",
+    "k": 27.0,
+    "p": 13.0,
+    "na": 5.0
+  },
+  {
+    "sr": "Vino belo 12.5% alk.",
+    "en": "White wine 12.5% ​​alc.",
+    "es": "Vino blanco 12,5% alc.",
+    "de": "Weißwein 12,5 % Alkohol.",
+    "k": 82.0,
+    "p": 15.0,
+    "na": 2.0
+  },
+  {
+    "sr": "Vino crno 12.5% alk.",
+    "en": "Red wine 12.5% ​​alc.",
+    "es": "Vino tinto 12,5% alc.",
+    "de": "Rotwein 12,5 % Alkohol.",
+    "k": 102.0,
+    "p": 10.0,
+    "na": 3.0
+  },
+  {
+    "sr": "Zestoka pica 40 % alk.",
+    "en": "Hot drink 40% alc.",
+    "es": "Bebida caliente 40% alc.",
+    "de": "Heißgetränk 40 % Alkohol.",
+    "k": 0.0,
+    "p": 0.0,
+    "na": 0.0
+  }
+]
