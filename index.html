@@ -73,7 +73,7 @@
       opacity: 1;
     }
 
-    select, input, button {
+    select, input {
       font: inherit;
       padding: 11px 12px;
       border-radius: 6px;
@@ -139,13 +139,76 @@
       white-space: pre-line;
     }
 
-    .field-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .combo-wrap {
+      position: relative;
+      width: 100%;
     }
 
-    .field input, .field select {
+    .combo-input {
+      width: 100%;
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: var(--card);
+      padding-right: 38px;
+    }
+
+    .combo-toggle {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1rem;
+      padding: 6px 8px;
+      cursor: pointer;
+    }
+
+    .combo-list {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 4px);
+      max-height: 260px;
+      overflow-y: auto;
+      background: var(--card);
+      border: 1px solid var(--green);
+      border-radius: 6px;
+      z-index: 50;
+      display: none;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .combo-list.open {
+      display: block;
+    }
+
+    .combo-item {
+      padding: 10px 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .combo-item:last-child {
+      border-bottom: none;
+    }
+
+    .combo-item:hover,
+    .combo-item.selected {
+      background: #283142;
+      color: var(--green);
+    }
+
+    .combo-empty {
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .field input {
       width: 100%;
       font-size: 1.05rem;
       font-weight: 700;
@@ -394,10 +457,18 @@
     <hr class="divider no-print" />
 
     <section class="no-print">
-      <h2 class="step-title" id="step1Title">🔍 Korak 1: Ukucajte ili izaberite namirnicu (Lista je sortirana po abecedi A-Z)</h2>
-      <div class="field field-stack">
-        <input id="foodFilterInput" type="search" placeholder="Ukucaj deo naziva (npr. pil)..." autocomplete="off" aria-label="Filter namirnica" />
-        <select id="foodSelect" aria-label="Namirnica"></select>
+      <h2 class="step-title" id="step1Title">🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)</h2>
+      <div class="combo-wrap" id="comboWrap">
+        <input
+          id="foodComboInput"
+          class="combo-input"
+          type="text"
+          placeholder="Ukucaj ili izaberi namirnicu..."
+          autocomplete="off"
+          aria-label="Namirnica"
+        />
+        <button id="comboToggleBtn" class="combo-toggle" type="button" aria-label="Prikaži listu">▼</button>
+        <div id="comboList" class="combo-list" role="listbox"></div>
       </div>
       <div id="foodPreview" class="preview-box"></div>
       <div class="status-note" id="dbStatus">Učitavanje baze...</div>
@@ -478,8 +549,8 @@
         subtitle: "provera nivoa minerala u namirnicama sa zbirom dnevnog unosa",
         unitNote: "⚠️ Vrednosti minerala u tabeli su izražene u miligramima (mg) na 100 grama namirnice.",
         dailyNote: "ℹ️ Preporučeni dnevni unos: Kalijum 1200-1500mg | Fosfor 800-1000mg | Natrijum max 1500-2000mg",
-        step1Title: "🔍 Korak 1: Ukucajte ili izaberite namirnicu (Lista je sortirana po abecedi A-Z)",
-        filterPlaceholder: "Ukucaj deo naziva (npr. pil)...",
+        step1Title: "🔍 Korak 1: Izaberite namirnicu (Lista je sortirana po abecedi A-Z)",
+        comboPlaceholder: "Ukucaj ili izaberi namirnicu...",
         step2Title: "⚖️ Korak 2: Upišite količinu namirnice u gramima",
         tableTitle: "📋 Vaš današnji dnevnik ishrane i uneti obroci",
         totalsHeading: "📊 UKUPAN DNEVNI ZBIR SVIH UNETIH OBROKA:",
@@ -508,7 +579,7 @@
         unitNote: "⚠️ Mineral values are expressed in milligrams (mg) per 100 grams of cleaned, raw food.",
         dailyNote: "ℹ️ Recommended daily intake: Potassium 1200-1500mg | Phosphorus 800-1000mg | Sodium max 1500-2000mg",
         step1Title: "🔍 Step 1: Type or select food (A-Z sorted):",
-        filterPlaceholder: "Type part of a name (e.g. chic)...",
+        comboPlaceholder: "Type or select a food item...",
         step2Title: "⚖️ Step 2: Enter the amount of food consumed (in grams):",
         tableTitle: "📋 Your daily diet log and entered meals",
         totalsHeading: "📊 TOTAL DAILY SUM OF ALL ENTERED MEALS:",
@@ -537,7 +608,7 @@
         unitNote: "⚠️ Los valores de minerales se expresan en miligramos (mg) por cada 100 gramos de alimento limpio y crudo.",
         dailyNote: "ℹ️ Ingesta diaria recomendada: Potasio 1200-1500mg | Fósforo 800-1000mg | Sodio máx 1500-2000mg",
         step1Title: "🔍 Paso 1: Escriba o elija un alimento (Ordenado A-Z):",
-        filterPlaceholder: "Escribe parte del nombre (ej. poll)...",
+        comboPlaceholder: "Escribe o elige un alimento...",
         step2Title: "⚖️ Paso 2: Ingrese la cantidad de alimento (en gramos):",
         tableTitle: "📋 Su registro diario de dieta y comidas ingresadas",
         totalsHeading: "📊 SUMA TOTAL DIARIA DE TODAS LAS COMIDAS INGRESADAS:",
@@ -566,7 +637,7 @@
         unitNote: "⚠️ Die Mineralstoffwerte sind in Milligramm (mg) pro 100 Gramm gereinigter, roher Lebensmittel angegeben.",
         dailyNote: "ℹ️ Empfohlene tägliche Aufnahme: Kalium 1200-1500mg | Phosphor 800-1000mg | Natrium max 1500-2000mg",
         step1Title: "🔍 Schritt 1: Lebensmittel eingeben oder wählen (A-Z sortiert):",
-        filterPlaceholder: "Teil des Namens eingeben (z.B. hähn)...",
+        comboPlaceholder: "Lebensmittel eingeben oder wählen...",
         step2Title: "⚖️ Schritt 2: Verzehrte Menge in Gramm eingeben:",
         tableTitle: "📋 Ihr tägliches Ernährungsprotokoll und eingegebene Mahlzeiten",
         totalsHeading: "📊 TÄGLICHE GESAMTSUMME ALLER EINGEGEBENEN MAHLZEITEN:",
@@ -593,6 +664,8 @@
 
     let foods = [];
     let visibleFoods = [];
+    let selectedFood = null;
+    let isFilteringTypedText = false;
     let diary = [];
     let currentLang = "sr";
 
@@ -649,21 +722,27 @@
       box.style.display = msg ? "block" : "none";
     }
 
+    function openComboList() {
+      el("comboList").classList.add("open");
+    }
+
+    function closeComboList() {
+      el("comboList").classList.remove("open");
+    }
+
     function updateFoodPreview() {
       const t = I18N[currentLang] || I18N.sr;
       const preview = el("foodPreview");
-      const idx = Number(el("foodSelect").value);
-      const item = visibleFoods[idx];
 
-      if (!item) {
+      if (!selectedFood) {
         preview.style.display = "none";
         el("addBtn").disabled = true;
         return;
       }
 
-      const k = toNum(item.k);
-      const p = toNum(item.p);
-      const na = toNum(item.na);
+      const k = toNum(selectedFood.k);
+      const p = toNum(selectedFood.p);
+      const na = toNum(selectedFood.na);
 
       const kCls = k > WARN_100G.k ? "val-high" : "val-ok";
       const pCls = p > WARN_100G.p ? "val-high" : "val-ok";
@@ -678,12 +757,11 @@
       el("addBtn").disabled = false;
     }
 
-    function populateFoodSelect() {
-      const select = el("foodSelect");
+    function renderComboList() {
       const t = I18N[currentLang] || I18N.sr;
-      const rawQuery = el("foodFilterInput").value.trim();
-      const qNorm = normalizeText(rawQuery);
-      const prevSelected = visibleFoods[Number(select.value)];
+      const listEl = el("comboList");
+      const rawText = el("foodComboInput").value.trim();
+      const qNorm = isFilteringTypedText ? normalizeText(rawText) : "";
 
       const sortedAll = [...foods].sort((a, b) =>
         getFoodName(a, currentLang).localeCompare(getFoodName(b, currentLang), currentLang, {
@@ -694,33 +772,49 @@
       visibleFoods = qNorm
         ? sortedAll.filter((item) => {
             const activeNameNorm = normalizeText(getFoodName(item, currentLang));
-            const anyNameNorm = normalizeText(
-              `${item.sr} ${item.en} ${item.es} ${item.de}`
-            );
+            const anyNameNorm = normalizeText(`${item.sr} ${item.en} ${item.es} ${item.de}`);
             return activeNameNorm.includes(qNorm) || anyNameNorm.includes(qNorm);
           })
         : sortedAll;
 
-      select.innerHTML = "";
-      let nextIndex = 0;
+      listEl.innerHTML = "";
 
-      visibleFoods.forEach((item, index) => {
-        const opt = document.createElement("option");
-        opt.value = String(index);
-        opt.textContent = getFoodName(item, currentLang);
-        select.appendChild(opt);
-        if (prevSelected && item === prevSelected) {
-          nextIndex = index;
+      if (visibleFoods.length === 0) {
+        selectedFood = null;
+        const emptyDiv = document.createElement("div");
+        emptyDiv.className = "combo-empty";
+        emptyDiv.textContent = t.noMatch;
+        listEl.appendChild(emptyDiv);
+        if (foods.length > 0) {
+          el("dbStatus").textContent = t.noMatch;
         }
+        updateFoodPreview();
+        return;
+      }
+
+      if (!selectedFood || !visibleFoods.includes(selectedFood)) {
+        selectedFood = visibleFoods[0];
+      }
+
+      visibleFoods.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "combo-item" + (item === selectedFood ? " selected" : "");
+        div.textContent = getFoodName(item, currentLang);
+        div.addEventListener("click", () => {
+          selectedFood = item;
+          isFilteringTypedText = false;
+          el("foodComboInput").value = getFoodName(item, currentLang);
+          renderComboList();
+          closeComboList();
+          updateFoodPreview();
+        });
+        listEl.appendChild(div);
       });
 
-      if (visibleFoods.length > 0) {
-        select.value = String(nextIndex);
+      if (foods.length > 0) {
         el("dbStatus").textContent = qNorm
           ? t.filtered(visibleFoods.length, foods.length)
           : t.loaded(foods.length);
-      } else if (foods.length > 0) {
-        el("dbStatus").textContent = t.noMatch;
       }
 
       updateFoodPreview();
@@ -821,7 +915,7 @@
       el("unitNote").textContent = t.unitNote;
       el("dailyNote").textContent = t.dailyNote;
       el("step1Title").textContent = t.step1Title;
-      el("foodFilterInput").placeholder = t.filterPlaceholder;
+      el("foodComboInput").placeholder = t.comboPlaceholder;
       el("step2Title").textContent = t.step2Title;
       el("tableTitle").textContent = t.tableTitle;
       el("totalsHeading").textContent = t.totalsHeading;
@@ -840,7 +934,10 @@
       el("printBtn").textContent = t.printBtn;
 
       if (foods.length > 0) {
-        populateFoodSelect();
+        if (selectedFood && !isFilteringTypedText) {
+          el("foodComboInput").value = getFoodName(selectedFood, currentLang);
+        }
+        renderComboList();
       } else {
         el("dbStatus").textContent = t.loading;
       }
@@ -885,7 +982,14 @@
       }
 
       foods = loadedData;
-      populateFoodSelect();
+      isFilteringTypedText = false;
+      selectedFood = null;
+      el("foodComboInput").value = "";
+      renderComboList();
+      if (selectedFood) {
+        el("foodComboInput").value = getFoodName(selectedFood, currentLang);
+        renderComboList();
+      }
     }
 
     el("langSelect").addEventListener("change", (e) => {
@@ -898,21 +1002,46 @@
       });
     });
 
-    el("foodFilterInput").addEventListener("input", () => {
-      populateFoodSelect();
+    el("foodComboInput").addEventListener("input", () => {
+      isFilteringTypedText = true;
+      renderComboList();
+      openComboList();
     });
 
-    el("foodSelect").addEventListener("change", () => {
-      updateFoodPreview();
+    el("foodComboInput").addEventListener("focus", () => {
+      if (foods.length > 0) {
+        renderComboList();
+        openComboList();
+      }
+    });
+
+    el("comboToggleBtn").addEventListener("click", () => {
+      if (foods.length === 0) return;
+      const isOpen = el("comboList").classList.contains("open");
+      if (isOpen) {
+        closeComboList();
+      } else {
+        isFilteringTypedText = false;
+        renderComboList();
+        openComboList();
+        el("foodComboInput").focus();
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!el("comboWrap").contains(e.target)) {
+        closeComboList();
+        if (selectedFood && !isFilteringTypedText) {
+          el("foodComboInput").value = getFoodName(selectedFood, currentLang);
+        }
+      }
     });
 
     el("addBtn").addEventListener("click", () => {
-      const idx = Number(el("foodSelect").value);
-      const item = visibleFoods[idx];
       const grams = Number(el("gramsInput").value);
-      if (!item || !Number.isFinite(grams) || grams <= 0) return;
+      if (!selectedFood || !Number.isFinite(grams) || grams <= 0) return;
 
-      diary.push({ food: item, grams });
+      diary.push({ food: selectedFood, grams });
       renderDiary();
     });
 
