@@ -1,4 +1,4 @@
-0<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sr">
 <head>
   <meta charset="UTF-8" />
@@ -496,7 +496,7 @@
         printBtn: "📄 Preuzmi / Štampaj PDF izveštaj",
         loading: "Učitavanje baze...",
         loaded: (n) => `Učitano namirnica: ${n}`,
-        loadError: "Nije moguće učitati foods.json (ili food.json).\nProveri da li se fajl nalazi u istom folderu kao index.html, da je ispravan JSON i da stranica radi preko HTTP/HTTPS (GitHub Pages), a ne direktno preko file://.",
+        loadError: "Nije moguće učitati food.json.\nProveri da li se food.json nalazi u istom folderu kao index.html i da je ispravan JSON.",
         emptyRow: "Još nema dodatih namirnica.",
         previewPrefix: "Vrednosti na 100g -> "
       },
@@ -522,7 +522,7 @@
         printBtn: "📄 Download / Print PDF report",
         loading: "Loading database...",
         loaded: (n) => `Foods loaded: ${n}`,
-        loadError: "Failed to load foods.json (or food.json).\nMake sure the file is in the same folder as index.html, contains valid JSON, and is served over HTTP/HTTPS (GitHub Pages), not file://.",
+        loadError: "Failed to load food.json.\nMake sure food.json is in the same folder as index.html and contains valid JSON.",
         emptyRow: "No foods added yet.",
         previewPrefix: "Values per 100g -> "
       },
@@ -548,7 +548,7 @@
         printBtn: "📄 Descargar / Imprimir informe PDF",
         loading: "Cargando base de datos...",
         loaded: (n) => `Alimentos cargados: ${n}`,
-        loadError: "No se pudo cargar foods.json (o food.json).\nVerifica que el archivo esté en la misma carpeta que index.html, tenga JSON válido y se abra por HTTP/HTTPS (GitHub Pages), no file://.",
+        loadError: "No se pudo cargar food.json.\nVerifica que food.json esté en la misma carpeta que index.html y tenga JSON válido.",
         emptyRow: "Aún no hay alimentos añadidos.",
         previewPrefix: "Valores por 100g -> "
       },
@@ -574,7 +574,7 @@
         printBtn: "📄 PDF-Bericht herunterladen / drucken",
         loading: "Datenbank wird geladen...",
         loaded: (n) => `Lebensmittel geladen: ${n}`,
-        loadError: "foods.json (oder food.json) konnte nicht geladen werden.\nStelle sicher, dass die Datei im selben Ordner wie index.html liegt, gültiges JSON enthält und über HTTP/HTTPS (GitHub Pages) läuft.",
+        loadError: "food.json konnte nicht geladen werden.\nStelle sicher, dass food.json im selben Ordner wie index.html liegt und gültiges JSON enthält.",
         emptyRow: "Noch keine Lebensmittel hinzugefügt.",
         previewPrefix: "Werte pro 100g -> "
       }
@@ -600,4 +600,301 @@
     function normalizeFoodItem(raw) {
       if (!raw || typeof raw !== "object") return null;
       const sr = raw.sr ?? raw.Namirnica ?? raw.namirnica ?? raw.name_sr ?? "";
-      const en = raw.en ?? raw.Namirnica_EN ?? raw.nam
+      const en = raw.en ?? raw.Namirnica_EN ?? raw.namirnica_en ?? raw.name_en ?? "";
+      const es = raw.es ?? raw.Namirnica_ES ?? raw.namirnica_es ?? raw.name_es ?? "";
+      const de = raw.de ?? raw.Namirnica_DE ?? raw.namirnica_de ?? raw.name_de ?? "";
+
+      const k = toNum(raw.k ?? raw.K ?? raw.kalijum ?? raw.Kalijum ?? raw.potassium ?? raw.Potassium);
+      const p = toNum(raw.p ?? raw.P ?? raw.fosfor ?? raw.Fosfor ?? raw.phosphorus ?? raw.Phosphorus);
+      const na = toNum(raw.na ?? raw.Na ?? raw.natrijum ?? raw.Natrijum ?? raw.sodium ?? raw.Sodium);
+
+      if (!sr && !en && !es && !de) return null;
+      return { sr: String(sr), en: String(en), es: String(es), de: String(de), k, p, na };
+    }
+
+    function getFoodName(item, lang = currentLang) {
+      return item[lang] || item.sr || item.en || item.es || item.de || "";
+    }
+
+    function format2(val) {
+      return toNum(val).toFixed(2);
+    }
+
+    function format0(val) {
+      return Math.round(toNum(val));
+    }
+
+    function showError(msg) {
+      const box = el("errorBox");
+      box.textContent = msg;
+      box.style.display = msg ? "block" : "none";
+    }
+
+    function updateFoodPreview() {
+      const t = I18N[currentLang] || I18N.sr;
+      const preview = el("foodPreview");
+      const idx = Number(el("foodSelect").value);
+      const item = sortedFoods[idx];
+
+      if (!item) {
+        preview.style.display = "none";
+        el("addBtn").disabled = true;
+        return;
+      }
+
+      const k = toNum(item.k);
+      const p = toNum(item.p);
+      const na = toNum(item.na);
+
+      const kCls = k > WARN_100G.k ? "val-high" : "val-ok";
+      const pCls = p > WARN_100G.p ? "val-high" : "val-ok";
+      const naCls = na > WARN_100G.na ? "val-high" : "val-ok";
+
+      preview.innerHTML =
+        `${t.previewPrefix}` +
+        `<span class="${kCls}">${t.kLabel}: ${format0(k)} mg</span> | ` +
+        `<span class="${pCls}">${t.pLabel}: ${format0(p)} mg</span> | ` +
+        `<span class="${naCls}">${t.naLabel}: ${format0(na)} mg</span>`;
+      preview.style.display = "block";
+      el("addBtn").disabled = false;
+    }
+
+    function populateFoodSelect() {
+      const select = el("foodSelect");
+      const t = I18N[currentLang] || I18N.sr;
+      const prevSelected = sortedFoods[Number(select.value)];
+
+      sortedFoods = [...foods].sort((a, b) =>
+        getFoodName(a, currentLang).localeCompare(getFoodName(b, currentLang), currentLang, {
+          sensitivity: "base"
+        })
+      );
+
+      select.innerHTML = "";
+      let nextIndex = 0;
+
+      sortedFoods.forEach((item, index) => {
+        const opt = document.createElement("option");
+        opt.value = String(index);
+        opt.textContent = getFoodName(item, currentLang);
+        select.appendChild(opt);
+        if (prevSelected && item === prevSelected) {
+          nextIndex = index;
+        }
+      });
+
+      select.value = String(nextIndex);
+
+      if (foods.length > 0) {
+        el("dbStatus").textContent = t.loaded(foods.length);
+      }
+
+      updateFoodPreview();
+    }
+
+    function renderDiary() {
+      const t = I18N[currentLang] || I18N.sr;
+      const tbody = el("diaryBody");
+      tbody.innerHTML = "";
+
+      let sumK = 0;
+      let sumP = 0;
+      let sumNa = 0;
+
+      if (diary.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 6;
+        td.style.textAlign = "center";
+        td.style.color = "var(--muted)";
+        td.textContent = t.emptyRow;
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      } else {
+        diary.forEach((entry, i) => {
+          const factor = entry.grams / 100;
+          const kVal = toNum(entry.food.k) * factor;
+          const pVal = toNum(entry.food.p) * factor;
+          const naVal = toNum(entry.food.na) * factor;
+
+          sumK += kVal;
+          sumP += pVal;
+          sumNa += naVal;
+
+          const tr = document.createElement("tr");
+
+          const tdName = document.createElement("td");
+          tdName.textContent = getFoodName(entry.food, currentLang);
+
+          const tdGrams = document.createElement("td");
+          tdGrams.className = "num";
+          tdGrams.textContent = format2(entry.grams);
+
+          const tdK = document.createElement("td");
+          tdK.className = "num";
+          tdK.textContent = format2(kVal);
+
+          const tdP = document.createElement("td");
+          tdP.className = "num";
+          tdP.textContent = format2(pVal);
+
+          const tdNa = document.createElement("td");
+          tdNa.className = "num";
+          tdNa.textContent = format2(naVal);
+
+          const tdAct = document.createElement("td");
+          tdAct.className = "num no-print";
+          const delBtn = document.createElement("button");
+          delBtn.type = "button";
+          delBtn.className = "btn-danger";
+          delBtn.textContent = t.removeBtn;
+          delBtn.addEventListener("click", () => {
+            diary.splice(i, 1);
+            renderDiary();
+          });
+          tdAct.appendChild(delBtn);
+
+          tr.append(tdName, tdGrams, tdK, tdP, tdNa, tdAct);
+          tbody.appendChild(tr);
+        });
+      }
+
+      el("totalK").textContent = `${format2(sumK)} mg`;
+      el("totalP").textContent = `${format2(sumP)} mg`;
+      el("totalNa").textContent = `${format2(sumNa)} mg`;
+
+      el("cardK").classList.toggle("over", sumK > LIMITS.k);
+      el("cardP").classList.toggle("over", sumP > LIMITS.p);
+      el("cardNa").classList.toggle("over", sumNa > LIMITS.na);
+
+      el("undoBtn").disabled = diary.length === 0;
+      el("clearBtn").disabled = diary.length === 0;
+    }
+
+    function setLanguage(lang) {
+      currentLang = I18N[lang] ? lang : "sr";
+      const t = I18N[currentLang];
+
+      document.documentElement.lang = currentLang;
+      el("langSelect").value = currentLang;
+
+      document.querySelectorAll(".flag-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === currentLang);
+      });
+
+      el("appTitle").textContent = t.title;
+      el("appSubtitle").textContent = t.subtitle;
+      el("unitNote").textContent = t.unitNote;
+      el("dailyNote").textContent = t.dailyNote;
+      el("step1Title").textContent = t.step1Title;
+      el("step2Title").textContent = t.step2Title;
+      el("tableTitle").textContent = t.tableTitle;
+      el("totalsHeading").textContent = t.totalsHeading;
+      el("addBtn").textContent = t.addBtn;
+      el("kLabel").textContent = t.kLabel;
+      el("pLabel").textContent = t.pLabel;
+      el("naLabel").textContent = t.naLabel;
+      el("thK").textContent = t.kLabel;
+      el("thP").textContent = t.pLabel;
+      el("thNa").textContent = t.naLabel;
+      el("thFood").textContent = t.thFood;
+      el("thGrams").textContent = t.thGrams;
+      el("thAction").textContent = t.thAction;
+      el("undoBtn").textContent = t.undoBtn;
+      el("clearBtn").textContent = t.clearBtn;
+      el("printBtn").textContent = t.printBtn;
+
+      if (foods.length > 0) {
+        populateFoodSelect();
+      } else {
+        el("dbStatus").textContent = t.loading;
+      }
+
+      renderDiary();
+    }
+
+    async function loadFoods() {
+      const t = I18N[currentLang] || I18N.sr;
+      el("addBtn").disabled = true;
+      el("dbStatus").textContent = t.loading;
+      showError("");
+
+      const candidates = ["./food.json", "food.json", "./foods.json", "foods.json"];
+      let loadedData = null;
+
+      for (const path of candidates) {
+        try {
+          const res = await fetch(path, { cache: "no-store" });
+          if (!res.ok) continue;
+          const json = await res.json();
+          const rawList = Array.isArray(json)
+            ? json
+            : Array.isArray(json?.foods)
+              ? json.foods
+              : Array.isArray(json?.data)
+                ? json.data
+                : null;
+          if (rawList) {
+            loadedData = rawList.map(normalizeFoodItem).filter(Boolean);
+            break;
+          }
+        } catch (_) {
+          // probaj sledeću putanju
+        }
+      }
+
+      if (!loadedData || loadedData.length === 0) {
+        el("dbStatus").textContent = "";
+        showError(I18N[currentLang].loadError);
+        return;
+      }
+
+      foods = loadedData;
+      populateFoodSelect();
+    }
+
+    el("langSelect").addEventListener("change", (e) => {
+      setLanguage(e.target.value);
+    });
+
+    document.querySelectorAll(".flag-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setLanguage(btn.dataset.lang);
+      });
+    });
+
+    el("foodSelect").addEventListener("change", () => {
+      updateFoodPreview();
+    });
+
+    el("addBtn").addEventListener("click", () => {
+      const idx = Number(el("foodSelect").value);
+      const item = sortedFoods[idx];
+      const grams = Number(el("gramsInput").value);
+      if (!item || !Number.isFinite(grams) || grams <= 0) return;
+
+      diary.push({ food: item, grams });
+      renderDiary();
+    });
+
+    el("undoBtn").addEventListener("click", () => {
+      if (diary.length > 0) {
+        diary.pop();
+        renderDiary();
+      }
+    });
+
+    el("clearBtn").addEventListener("click", () => {
+      diary = [];
+      renderDiary();
+    });
+
+    el("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+
+    setLanguage("sr");
+    loadFoods();
+  </script>
+</body>
+</html>
