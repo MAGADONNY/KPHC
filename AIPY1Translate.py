@@ -215,4 +215,346 @@ def generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_podaci, uk_k, uk_f, uk_
     pdf.set_auto_page_break(auto=False, margin=5)
 
     # 1. Zeleno polje na vrhu
-    pdf.set_fill_color(46, 20
+    pdf.set_fill_color(46, 204, 113)
+    pdf.rect(0, 0, 210, 17, "F")
+
+    if os.path.exists("QRF.png"):
+        pdf.image("QRF.png", x=175, y=3, w=20)
+
+    pdf.set_text_color(100, 100, 100)
+    pdf.set_font("Helvetica", "B", 14)
+    pdf.cell(180, 11, text="DNEVNIK ISHRANE & UNOSA MINERALA", border=0, ln=1, align="C")
+
+    pdf.set_text_color(44, 62, 80)
+    pdf.ln(5)
+
+    # 2. Blok sa podacima
+    pdf.set_y(27)
+    pdf.set_text_color(0, 0, 0)
+    pdf.set_font("Helvetica", "", 9)
+    pdf.cell(120, 5, text="Ime i prezime / godina rodjenja:", border=0, ln=0)
+    pdf.cell(60, 5, text="Datum:", border=0, ln=1, align="R")
+
+    pdf.set_y(32)
+    pdf.set_fill_color(205, 212, 218)
+    pdf.rect(15, 32, 180, 12, "F")
+
+    pdf.set_font("Helvetica", "B", 10)
+    cisto_ime = ocisti_tekst(ime_pacijenta).upper()
+    cista_godina = ocisti_tekst(godina_rodjenja)
+    pdf.cell(120, 12, text=f" {cisto_ime} ({cista_godina})", border=0, ln=0)
+    pdf.cell(60, 12, text=f"{datetime.now().strftime('%d.%m.%Y.')} ", border=0, ln=1, align="R")
+
+    pdf.set_y(48)
+
+    # 3. Tabela obroka
+    pdf.set_font("Courier", "", 10)
+    pdf.set_fill_color(52, 73, 94)
+    pdf.set_text_color(255, 255, 255)
+
+    pdf.cell(65, 5, text=" Namirnica", border=0, fill=True)
+    pdf.cell(25, 5, text="Kolicina (g)", border=0, fill=True, align="C")
+    pdf.cell(30, 5, text="Kalijum (mg)", border=0, fill=True, align="C")
+    pdf.cell(30, 5, text="Fosfor (mg)", border=0, fill=True, align="C")
+    pdf.cell(30, 5, text="Natrijum (mg)", border=0, fill=True, align="C")
+    pdf.ln()
+
+    pdf.set_text_color(44, 62, 80)
+    pdf.set_font("Helvetica", size=10)
+
+    brojac_reda = 0
+    for _, red in df_podaci.iterrows():
+        is_fill = brojac_reda % 2 == 0
+        if is_fill:
+            pdf.set_fill_color(248, 250, 252)
+
+        cista_hrana = ocisti_tekst(red["food"])[:28]
+        pdf.cell(65, 5, text=f" {cista_hrana}", border="B", fill=is_fill)
+        pdf.cell(25, 5, text=f"{red['amount']:.1f} g", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 5, text=f"{red['potassium']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 5, text=f"{red['phosphorus']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.cell(30, 5, text=f"{red['sodium']:.1f}", border="B", fill=is_fill, align="C")
+        pdf.ln()
+        brojac_reda += 1
+
+    pdf.ln(10)
+
+    # Tabela rezime
+    pdf.cell(180, 8, "REZIME UKUPNOG DNEVNOG UNOSA:", 0, 1)
+    pdf.ln(2)
+
+    pdf.set_font("Courier", "", 10)
+    pdf.set_fill_color(230, 235, 240)
+    pdf.cell(40, 5.5, " Mineral", 1, 0, "C", True)
+    pdf.cell(45, 5.5, "Ukupno uneto", 1, 0, "C", True)
+    pdf.cell(45, 5.5, "Preporuceni limit", 1, 0, "C", True)
+    pdf.cell(50, 5.5, "Status", 1, 1, "C", True)
+
+    for naziv_min, vrednost, limit_val, ok_tekst in [
+        (" Kalijum", uk_k, 1500.0, " [OK] U granicama"),
+        (" Fosfor", uk_f, 1000.0, " [OK] U granicama"),
+        (" Natrijum", uk_n, 2000.0, " [OK] U granicama"),
+    ]:
+        pdf.set_text_color(44, 62, 80)
+        pdf.cell(40, 5.5, naziv_min, 1)
+        pdf.cell(45, 5.5, f"{vrednost:.2f} mg", 1, 0, "C")
+        pdf.cell(45, 5.5, f"{limit_val:.2f} mg", 1, 0, "C")
+        if vrednost > limit_val:
+            pdf.set_text_color(231, 76, 60)
+            pdf.cell(50, 5.5, " Prekoraceno", 1, 1, "C")
+        else:
+            pdf.set_text_color(39, 174, 96)
+            pdf.cell(50, 5.5, ok_tekst, 1, 1, "C")
+
+    pdf.set_text_color(44, 62, 80)
+    pdf.set_y(-60)
+
+    pdf.set_font("Courier", "U", 10)
+    pdf.set_text_color(100, 100, 100)
+    pdf.cell(180, 5, "LEGENDA - GRANICNE VREDNOSTI (24h):", 0, 1)
+
+    pdf.set_font("Courier", "", 8)
+    pdf.cell(180, 4, "* KALIJUM:  Zelena boja = do 1500.00 mg  |  Crvena boja ! = preko 1500.00 mg", 0, 1)
+    pdf.cell(180, 4, "* FOSFOR:   Zelena boja = do 1000.00 mg  |  Crvena boja ! = preko 1000.00 mg", 0, 1)
+    pdf.cell(180, 4, "* NATRIJUM: Zelena boja = do 2000.00 mg  |  Crvena boja ! = preko 2000.00 mg (oko 5g soli)", 0, 1)
+
+    pdf.ln(15)
+    pdf.set_font("Courier", "", 8)
+    pdf.cell(0, 8, "Izvestaj generisan putem AI je informativnog karaktera i ne predstavlja medicinski savet.", 0, 1, "C", fill=False)
+
+    pdf.set_fill_color(205, 212, 218)
+    pdf.cell(0, 8, "Written by MAGICOMP magicom@bluewin.ch +38163310850 | Powered by Python", 0, 1, "C", fill=True)
+
+    pdf.set_font("Helvetica", "", 9)
+    pdf.set_text_color(44, 62, 80)
+    buffer = io.BytesIO()
+    pdf.output(buffer)
+    return buffer.getvalue()
+
+
+# --- GLAVNI RENDER STRANICE ---
+if df is not None:
+    df_sortirano = df.dropna(subset=[ime_kolone_baza]).sort_values(by=ime_kolone_baza)
+    kompletna_lista = df_sortirano[ime_kolone_baza].tolist()
+
+    st.write("---")
+    st.subheader(t_korak1)
+
+    izbor = st.selectbox("👇", kompletna_lista, key="trenutni_izbor", label_visibility="collapsed")
+
+    trenutni_red = df[df[ime_kolone_baza] == izbor]
+    if not trenutni_red.empty:
+        k_100 = float(trenutni_red["Kalijum"].iloc[0])
+        f_100 = float(trenutni_red["Fosfor"].iloc[0])
+        n_100 = float(trenutni_red["Natrijum"].iloc[0])
+
+        k_boja = "#FF4B4B" if k_100 > 200.0 else "#2ECC71"
+        f_boja = "#FF4B4B" if f_100 > 150.0 else "#2ECC71"
+        n_boja = "#FF4B4B" if n_100 > 400.0 else "#2ECC71"
+
+        st.markdown(
+            f"""
+            <div style='background-color: #1e2430; padding: 12px; border-left: 4px solid #2ECC71; border-radius: 4px; color: #ffffff; font-weight: bold; font-size: 15px;'>
+                {t_okvir_baza}
+                <span style='color: {k_boja};'>{l_kalijum}: {k_100:.0f} mg</span> |
+                <span style='color: {f_boja};'>{l_fosfor}: {f_100:.0f} mg</span> |
+                <span style='color: {n_boja};'>{l_natrijum}: {n_100:.0f} mg</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.write("---")
+    st.subheader(t_korak2)
+
+    kolicina_g = st.number_input(
+        t_labela_unos,
+        min_value=1.0,
+        max_value=5000.0,
+        value=100.0,
+        step=10.0,
+        label_visibility="collapsed",
+        key="trenutna_kolicina",
+    )
+
+    st.write("")
+
+    if st.button(t_dugme_dodaj):
+        red_dodaj = df[df[ime_kolone_baza] == izbor]
+        if not red_dodaj.empty:
+            k_d = float(red_dodaj["Kalijum"].iloc[0])
+            f_d = float(red_dodaj["Fosfor"].iloc[0])
+            n_d = float(red_dodaj["Natrijum"].iloc[0])
+
+            st.session_state["dnevnik_obroka"].append(
+                {
+                    "food": izbor,
+                    "amount": kolicina_g,
+                    "potassium": round((k_d * kolicina_g) / 100.0, 2),
+                    "phosphorus": round((f_d * kolicina_g) / 100.0, 2),
+                    "sodium": round((n_d * kolicina_g) / 100.0, 2),
+                }
+            )
+            st.rerun()
+
+    # --- TABELA DNEVNOG UNOSA NAMIRNICA ---
+    if st.session_state["dnevnik_obroka"]:
+        st.write("---")
+        st.subheader(t_naslov_tabele)
+
+        df_prikaz = pd.DataFrame(st.session_state["dnevnik_obroka"])
+        df_prikaz["ID"] = df_prikaz.index
+
+        df_prikaz_prevedeno = df_prikaz.rename(
+            columns={
+                "food": l_namirnica,
+                "amount": l_kolicina,
+                "potassium": l_kalijum,
+                "phosphorus": l_fosfor,
+                "sodium": l_natrijum,
+            }
+        )[["ID", l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum]]
+
+        izmenjeni_df = st.data_editor(
+            df_prikaz_prevedeno,
+            use_container_width=True,
+            hide_index=True,
+            num_rows="dynamic",
+            disabled=[l_namirnica, l_kolicina, l_kalijum, l_fosfor, l_natrijum],
+            column_config={"ID": None},
+        )
+
+        st.markdown(
+            f"<p style='color: #ffffff; font-size: 16px; line-height: 1.4; margin-top: 10px;'>{t_uputstvo_brisanje}</p>",
+            unsafe_allow_html=True,
+        )
+
+        if len(izmenjeni_df) != len(df_prikaz_prevedeno):
+            preostali_id_lista = izmenjeni_df["ID"].tolist()
+            st.session_state["dnevnik_obroka"] = [
+                st.session_state["dnevnik_obroka"][i] for i in preostali_id_lista
+            ]
+            st.rerun()
+
+        if st.button(t_dugme_obrisi_zadnji):
+            st.session_state["dnevnik_obroka"].pop()
+            st.rerun()
+
+        uk_k = df_prikaz["potassium"].sum()
+        uk_f = df_prikaz["phosphorus"].sum()
+        uk_n = df_prikaz["sodium"].sum()
+
+        st.write("")
+        st.markdown(f"### {t_zbir_okvir}")
+
+        dnevna_k_boja = "#FF4B4B" if uk_k > 1500.0 else "#2ECC71"
+        dnevna_f_boja = "#FF4B4B" if uk_f > 1000.0 else "#2ECC71"
+        dnevna_n_boja = "#FF4B4B" if uk_n > 2000.0 else "#2ECC71"
+
+        col_m1, col_m2, col_m3 = st.columns(3)
+        for col, naziv_m, vred_m, boja_m in [
+            (col_m1, l_kalijum, uk_k, dnevna_k_boja),
+            (col_m2, l_fosfor, uk_f, dnevna_f_boja),
+            (col_m3, l_natrijum, uk_n, dnevna_n_boja),
+        ]:
+            with col:
+                st.markdown(
+                    f"""
+                    <div style='background-color: #1e2430; padding: 12px; border-radius: 6px; text-align: center; border-top: 3px solid {boja_m};'>
+                        <p style='margin: 0px; color: #a0aec0; font-size: 15px; font-weight: bold;'>{naziv_m}</p>
+                        <p style='margin: 5px 0px 0px 0px; color: {boja_m}; font-size: 22px; font-weight: 900;'>{vred_m:.2f} mg</p>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+        st.write("---")
+
+        # 3 KRUŽNA GRAFIKONA (GAUGE)
+        max_k = max(2000.0, float(uk_k) * 1.2)
+        max_f = max(1300.0, float(uk_f) * 1.2)
+        max_n = max(2500.0, float(uk_n) * 1.2)
+
+        col_g1, col_g2, col_g3 = st.columns(3, gap="small")
+        grafikoni = [
+            (col_g1, l_kalijum, uk_k, max_k, 1500.0, dnevna_k_boja),
+            (col_g2, l_fosfor, uk_f, max_f, 1000.0, dnevna_f_boja),
+            (col_g3, l_natrijum, uk_n, max_n, 2000.0, dnevna_n_boja),
+        ]
+
+        for col, naziv_g, vred_g, max_os, limit_g, boja_g in grafikoni:
+            with col:
+                st.markdown(
+                    f"<p style='text-align: center; margin: 0px; font-weight: bold; color: white; font-size: 15px;'>{naziv_g}</p>",
+                    unsafe_allow_html=True,
+                )
+                fig = go.Figure(
+                    go.Indicator(
+                        mode="gauge+number",
+                        value=vred_g,
+                        number={"suffix": " mg", "font": {"size": 15, "color": "#a0aec0"}},
+                        gauge={
+                            "axis": {"range": [None, max_os], "tickwidth": 1, "tickcolor": "#a0aec0"},
+                            "bar": {"color": boja_g},
+                            "bgcolor": "#1e2430",
+                            "threshold": {
+                                "line": {"color": "#FF4B4B", "width": 3},
+                                "thickness": 0.75,
+                                "value": limit_g,
+                            },
+                        },
+                    )
+                )
+                fig.update_layout(
+                    template="plotly_dark",
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    margin=dict(l=10, r=10, t=0, b=0),
+                    height=110,
+                )
+                st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+        # POLJA ZA UNOS PODATAKA ZA PDF
+        col_inp1, col_inp2 = st.columns(2)
+        with col_inp1:
+            st.markdown(f"**{t_labela_ime}**")
+            ime_pacijenta = st.text_input("Ime", placeholder=t_placeholder_ime, label_visibility="collapsed")
+        with col_inp2:
+            st.markdown(f"**{t_labela_godina}**")
+            godina_rodjenja = st.text_input("Godina", placeholder=t_placeholder_godina, label_visibility="collapsed")
+
+        col_btn1, col_btn2 = st.columns(2)
+        with col_btn1:
+            if ime_pacijenta and godina_rodjenja:
+                try:
+                    pdf_bytes = generisi_pdf_file(ime_pacijenta, godina_rodjenja, df_prikaz, uk_k, uk_f, uk_n)
+                    st.download_button(
+                        label=t_dugme_pdf,
+                        data=pdf_bytes,
+                        file_name=f"Izvestaj_{ime_pacijenta.replace(' ', '_')}.pdf",
+                        mime="application/pdf",
+                        use_container_width=True,
+                    )
+                except Exception as e:
+                    st.error(f"Greška: {e}")
+            else:
+                st.button(t_dugme_pdf, disabled=True, use_container_width=True)
+        with col_btn2:
+            if st.button(t_dugme_obrisi, use_container_width=True):
+                st.session_state["dnevnik_obroka"] = []
+                st.rerun()
+else:
+    st.error("Baza podataka 'KPH-AI-GLOBAL.xlsx' nije pronađena ili je oštećena.")
+
+# --- FUTER ---
+st.write("---")
+st.markdown(
+    """
+    <div style='text-align: center; line-height: 1.2;'>
+        <p style='margin: 5px 0px 0px 0px; font-weight: bold; color: #ffffff;'>♣️♦️♥️♠️ MAGICOMP & AI Gemini</p>
+        <p style='margin: 0px; color: #279FF5;'>magy@usa.com &nbsp;&nbsp;|&nbsp;&nbsp; Tel.+38163310850</p>
+        <p style='margin: 0px; color: #888888; font-size: 12px;'>Powered by PYTHON</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
